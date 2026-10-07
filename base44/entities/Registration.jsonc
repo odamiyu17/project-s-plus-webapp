@@ -1,0 +1,111 @@
+{
+  "name": "Registration",
+  "type": "object",
+  "properties": {
+    "game": {
+      "type": "string",
+      "enum": [
+        "mlbb",
+        "tekken8"
+      ],
+      "description": "Which bracket the entry belongs to"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Staff review state; only approved entries appear on the public page"
+    },
+    "team_name": {
+      "type": "string",
+      "description": "MLBB team name"
+    },
+    "team_tag": {
+      "type": "string",
+      "description": "Short MLBB team tag"
+    },
+    "region": {
+      "type": "string",
+      "description": "City or region the entry plays from"
+    },
+    "roster": {
+      "type": "array",
+      "description": "The five MLBB starters",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ign": {
+            "type": "string"
+          },
+          "game_id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "player_name": {
+      "type": "string",
+      "description": "TEKKEN 8 fighter's full name"
+    },
+    "in_game_id": {
+      "type": "string",
+      "description": "TEKKEN 8 in-game / platform handle"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "discord": {
+      "type": "string"
+    },
+    "reference_code": {
+      "type": "string",
+      "description": "Code shown to the competitor after submitting"
+    },
+    "reviewed_at": {
+      "type": "string"
+    },
+    "reviewed_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "game",
+    "contact_name",
+    "contact_email"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

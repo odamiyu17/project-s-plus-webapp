@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Project S+ — "Tectonic Volt": obsidian forest, moss, gilded bronze. */
+    --background: 172 29% 5%;
+    --foreground: 160 13% 95%;
+    --card: 169 26% 8%;
+    --card-foreground: 160 13% 95%;
+    --popover: 169 28% 7%;
+    --popover-foreground: 160 13% 95%;
+    --primary: 46 65% 52%;
+    --primary-foreground: 172 29% 5%;
+    --secondary: 169 22% 15%;
+    --secondary-foreground: 160 13% 95%;
+    --muted: 170 20% 12%;
+    --muted-foreground: 162 9% 68%;
+    --accent: 41 30% 48%;
+    --accent-foreground: 160 13% 96%;
+    --destructive: 356 78% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 169 19% 18%;
+    --input: 169 19% 18%;
+    --ring: 46 65% 52%;
+    --chart-1: 46 65% 52%;
+    --chart-2: 169 30% 40%;
+    --chart-3: 199 60% 45%;
+    --chart-4: 41 30% 48%;
+    --chart-5: 160 18% 72%;
+    --radius: 0.125rem;
+    --font-heading: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sidebar-background: 169 26% 7%;
+    --sidebar-foreground: 160 13% 95%;
+    --sidebar-primary: 46 65% 52%;
+    --sidebar-primary-foreground: 172 29% 5%;
+    --sidebar-accent: 169 22% 15%;
+    --sidebar-accent-foreground: 160 13% 95%;
+    --sidebar-border: 169 19% 18%;
+    --sidebar-ring: 46 65% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+@layer utilities {
+  /* The "charging battery" pulse on primary actions. */
+  .glow-pulse {
+    animation: volt-pulse 3.4s ease-in-out infinite;
+  }
+
+  /* A 15-degree lightning shear on a section's lower edge. */
+  .shear-b {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.5rem), 0 100%);
+  }
+
+  .gilded-rule {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.55) 20%,
+      hsl(var(--primary) / 0.9) 50%,
+      hsl(var(--primary) / 0.55) 80%,
+      transparent
+    );
+  }
+}
+
+@keyframes volt-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 hsl(var(--primary) / 0.35),
+      0 0 18px -8px hsl(var(--primary) / 0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px hsl(var(--primary) / 0),
+      0 0 32px -4px hsl(var(--primary) / 0.85);
+  }
+}
