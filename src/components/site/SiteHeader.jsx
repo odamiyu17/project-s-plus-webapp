@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Shield, X, Zap } from "lucide-react";
+import { Menu, Shield, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/AuthContext";
@@ -20,12 +20,15 @@ export default function SiteHeader() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:h-20 sm:px-8">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid h-9 w-9 place-items-center border border-primary/40 bg-secondary/50">
-            <Zap className="h-4 w-4 text-primary" strokeWidth={2.4} />
-          </span>
-          <span className="font-display text-sm font-bold uppercase leading-none tracking-[0.22em] text-foreground sm:text-base">
-            Project<span className="text-primary"> S+</span>
-          </span>
+<img
+  src="/images/branding/project-s-logo.png"
+  alt="Project S+"
+  className="h-10 w-10 object-contain sm:h-12 sm:w-12"
+/>
+
+<span className="font-display text-sm font-bold uppercase leading-none tracking-[0.22em] text-foreground sm:text-base">
+  Project<span className="text-primary"> S+</span>
+</span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

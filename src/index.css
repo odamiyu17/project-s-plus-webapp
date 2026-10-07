@@ -11,23 +11,23 @@
     --card-foreground: 160 13% 95%;
     --popover: 169 28% 7%;
     --popover-foreground: 160 13% 95%;
-    --primary: 46 65% 52%;
+    --primary: 39 46% 61%;
     --primary-foreground: 172 29% 5%;
     --secondary: 169 22% 15%;
     --secondary-foreground: 160 13% 95%;
     --muted: 170 20% 12%;
     --muted-foreground: 162 9% 68%;
-    --accent: 41 30% 48%;
+    --accent: 39 46% 61%;
     --accent-foreground: 160 13% 96%;
     --destructive: 356 78% 56%;
     --destructive-foreground: 0 0% 100%;
     --border: 169 19% 18%;
     --input: 169 19% 18%;
-    --ring: 46 65% 52%;
-    --chart-1: 46 65% 52%;
+    --ring: 39 46% 61%;
+    --chart-1: 39 46% 61%;
     --chart-2: 169 30% 40%;
     --chart-3: 199 60% 45%;
-    --chart-4: 41 30% 48%;
+    --chart-4: 39 46% 61%;
     --chart-5: 160 18% 72%;
     --radius: 0.125rem;
     --font-heading: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
@@ -36,12 +36,12 @@
     --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
     --sidebar-background: 169 26% 7%;
     --sidebar-foreground: 160 13% 95%;
-    --sidebar-primary: 46 65% 52%;
+    --sidebar-primary: 39 46% 61%;
     --sidebar-primary-foreground: 172 29% 5%;
     --sidebar-accent: 169 22% 15%;
     --sidebar-accent-foreground: 160 13% 95%;
     --sidebar-border: 169 19% 18%;
-    --sidebar-ring: 46 65% 52%;
+    --sidebar-ring: 39 46% 61%;
   }
 }
 

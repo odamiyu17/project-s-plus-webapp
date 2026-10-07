@@ -15,7 +15,7 @@ export default function HeroSection({ entries = [] }) {
     { label: "Prize pool", value: "₱60,000" },
     { label: "MLBB squad slots", value: `${Math.max(SQUAD_SLOTS - squads, 0)} left` },
     { label: "TEKKEN 8 slots", value: `${Math.max(FIGHTER_SLOTS - fighters, 0)} left` },
-    { label: "Entry fee", value: "Free" },
+    { label: "Entry fee", value: "₱250" },
   ];
 
   return (

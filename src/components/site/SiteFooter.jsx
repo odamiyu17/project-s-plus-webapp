@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Zap } from "lucide-react";
+import { Mail } from "lucide-react";
 
 const NAV = [
   { label: "The Event", hash: "tournament" },
@@ -15,9 +15,11 @@ export default function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center border border-primary/40 bg-secondary/50">
-                <Zap className="h-4 w-4 text-primary" strokeWidth={2.4} />
-              </span>
+<img
+  src="/images/branding/project-s-logo.png"
+  alt="Project S+"
+  className="h-10 w-10 object-contain"
+/>
               <span className="font-display text-base font-bold uppercase tracking-[0.22em] text-foreground">
                 Project<span className="text-primary"> S+</span>
               </span>
@@ -62,7 +64,7 @@ export default function SiteFooter() {
                   className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
                 >
                   <Mail className="h-3.5 w-3.5" />
-                  tournaments@projectsplus.gg
+                  project.splus.esports@gmail.com
                 </a>
               </li>
               <li>

@@ -1,11 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
+import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
+
 import { requireUser } from "@/lib/auth-middleware";
 import { supabase } from "@/api/supabaseClient";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// A public endpoint, so every value is bounded before it reaches the database.
 const RegistrationInput = z
   .object({
     game: z.enum(["mlbb", "tekken8"]),
@@ -38,6 +40,21 @@ const RegistrationInput = z
 
     contact_phone: z.string().trim().max(30).optional(),
     discord: z.string().trim().max(40).optional(),
+    payment_method: z.enum(["gcash", "bank"]),
+
+payment_receipt_path: z
+  .string()
+  .trim()
+  .regex(
+    /^receipts\/[a-zA-Z0-9._-]+$/,
+    "Invalid receipt path",
+  ),
+
+payment_reference: z
+  .string()
+  .trim()
+  .max(100)
+  .optional(),
   })
   .superRefine((value, ctx) => {
     if (value.game === "mlbb") {
@@ -65,12 +82,15 @@ const RegistrationInput = z
     }
   });
 
-// Empty optional fields are left out entirely so a record never stores blanks.
 function withoutBlanks(record) {
   const cleaned = {};
 
   for (const [key, value] of Object.entries(record)) {
-    if (value === undefined || value === null || value === "") {
+    if (
+      value === undefined ||
+      value === null ||
+      value === ""
+    ) {
       continue;
     }
 
@@ -98,11 +118,47 @@ const makeReference = () =>
     .slice(0, 6)
     .toUpperCase()}`;
 
+/**
+ * Create a Supabase client that acts as the currently
+ * logged-in user.
+ *
+ * This is important for RLS. The normal public Supabase
+ * client uses the publishable key only, so PostgreSQL sees
+ * it as anon.
+ */
+function getAuthenticatedSupabase() {
+  const request = getRequest();
+
+  const authorization =
+    request.headers.get("authorization");
+
+  return createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+    {
+      global: {
+        headers: authorization
+          ? {
+              Authorization: authorization,
+            }
+          : {},
+      },
+
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    },
+  );
+}
+
 // ---------------------------------------------------------
 // SUBMIT REGISTRATION
 // ---------------------------------------------------------
 
-export const submitRegistration = createServerFn({ method: "POST" })
+export const submitRegistration = createServerFn({
+  method: "POST",
+})
   .validator(RegistrationInput)
   .handler(async ({ data }) => {
     const id = crypto.randomUUID();
@@ -114,14 +170,19 @@ export const submitRegistration = createServerFn({ method: "POST" })
         id,
         ...withoutBlanks(data),
         status: "pending",
+        payment_status: "pending",
         reference_code: reference,
       });
 
     if (error) {
-      console.error("Registration insert failed:", error);
+      console.error(
+        "Registration insert failed:",
+        error,
+      );
 
       throw new Error(
-        error.message || "Unable to submit registration",
+        error.message ||
+          "Unable to submit registration",
       );
     }
 
@@ -133,8 +194,6 @@ export const submitRegistration = createServerFn({ method: "POST" })
 
 // ---------------------------------------------------------
 // PUBLIC ROSTER
-// Only approved registrations are returned.
-// Contact information is intentionally excluded.
 // ---------------------------------------------------------
 
 export const listPublicEntries = createServerFn({
@@ -162,10 +221,14 @@ export const listPublicEntries = createServerFn({
     .limit(200);
 
   if (error) {
-    console.error("Public registrations fetch failed:", error);
+    console.error(
+      "Public registrations fetch failed:",
+      error,
+    );
 
     throw new Error(
-      error.message || "Unable to load registrations",
+      error.message ||
+        "Unable to load registrations",
     );
   }
 
@@ -191,7 +254,7 @@ export const listPublicEntries = createServerFn({
 });
 
 // ---------------------------------------------------------
-// STAFF REGISTRATION QUEUE
+// ADMIN / STAFF QUEUE
 // ---------------------------------------------------------
 
 export const listRegistrations = createServerFn({
@@ -206,19 +269,27 @@ export const listRegistrations = createServerFn({
       };
     }
 
-    const { data: items, error } = await supabase
-      .from("registrations")
-      .select("*")
-      .order("created_at", {
-        ascending: false,
-      })
-      .limit(300);
+    const adminSupabase =
+      getAuthenticatedSupabase();
+
+    const { data: items, error } =
+      await adminSupabase
+        .from("registrations")
+        .select("*")
+        .order("created_at", {
+          ascending: false,
+        })
+        .limit(300);
 
     if (error) {
-      console.error("Staff registration fetch failed:", error);
+      console.error(
+        "Admin registration fetch failed:",
+        error,
+      );
 
       throw new Error(
-        error.message || "Unable to load registrations",
+        error.message ||
+          "Unable to load registrations",
       );
     }
 
@@ -229,7 +300,7 @@ export const listRegistrations = createServerFn({
   });
 
 // ---------------------------------------------------------
-// UPDATE REGISTRATION STATUS
+// APPROVE / REJECT REGISTRATION
 // ---------------------------------------------------------
 
 export const setRegistrationStatus = createServerFn({
@@ -257,22 +328,31 @@ export const setRegistrationStatus = createServerFn({
       );
     }
 
-    const reviewedAt = new Date().toISOString();
+    const adminSupabase =
+      getAuthenticatedSupabase();
 
-    const { data: updated, error } = await supabase
-      .from("registrations")
-      .update({
-        status: data.status,
-        reviewed_at: reviewedAt,
-        reviewed_by: context.user.email ?? "",
-        updated_at: reviewedAt,
-      })
-      .eq("id", data.id)
-      .select("id, status")
-      .single();
+    const now =
+      new Date().toISOString();
+
+    const { data: updated, error } =
+      await adminSupabase
+        .from("registrations")
+        .update({
+          status: data.status,
+          reviewed_at: now,
+          reviewed_by:
+            context.user.email ?? "",
+          updated_at: now,
+        })
+        .eq("id", data.id)
+        .select("id, status")
+        .single();
 
     if (error) {
-      console.error("Registration status update failed:", error);
+      console.error(
+        "Registration status update failed:",
+        error,
+      );
 
       throw new Error(
         error.message ||
@@ -283,5 +363,145 @@ export const setRegistrationStatus = createServerFn({
     return {
       id: updated.id,
       status: updated.status,
+    };
+  });
+// ---------------------------------------------------------
+// PAYMENT VERIFICATION
+// ---------------------------------------------------------
+
+export const setPaymentStatus = createServerFn({
+  method: "POST",
+})
+  .middleware([requireUser])
+  .validator(
+    z.object({
+      id: z.string().min(1).max(64),
+
+      status: z.enum([
+        "pending",
+        "verified",
+        "rejected",
+      ]),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    if (context.user?.role !== "admin") {
+      throw Object.assign(
+        new Error("Staff access required"),
+        {
+          status: 403,
+        },
+      );
+    }
+
+    const adminSupabase =
+      getAuthenticatedSupabase();
+
+    const { data: updated, error } =
+      await adminSupabase
+        .from("registrations")
+        .update({
+          payment_status: data.status,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", data.id)
+        .select("id, payment_status")
+        .single();
+
+    if (error) {
+      console.error(
+        "Payment status update failed:",
+        error,
+      );
+
+      throw new Error(
+        error.message ||
+          "Unable to update payment status",
+      );
+    }
+
+    return {
+      id: updated.id,
+      payment_status: updated.payment_status,
+    };
+  });
+
+// ---------------------------------------------------------
+// PRIVATE PAYMENT RECEIPT
+// ---------------------------------------------------------
+
+export const getPaymentReceiptUrl = createServerFn({
+  method: "POST",
+})
+  .middleware([requireUser])
+  .validator(
+    z.object({
+      id: z.string().min(1).max(64),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    if (context.user?.role !== "admin") {
+      throw Object.assign(
+        new Error("Staff access required"),
+        {
+          status: 403,
+        },
+      );
+    }
+
+    const adminSupabase =
+      getAuthenticatedSupabase();
+
+    const {
+      data: registration,
+      error: registrationError,
+    } = await adminSupabase
+      .from("registrations")
+      .select("payment_receipt_path")
+      .eq("id", data.id)
+      .single();
+
+    if (registrationError) {
+      console.error(
+        "Receipt lookup failed:",
+        registrationError,
+      );
+
+      throw new Error(
+        registrationError.message ||
+          "Unable to find payment receipt",
+      );
+    }
+
+    if (!registration?.payment_receipt_path) {
+      throw new Error(
+        "No payment receipt has been uploaded",
+      );
+    }
+
+    const {
+      data: signed,
+      error: signedUrlError,
+    } = await adminSupabase.storage
+      .from("payment-receipts")
+      .createSignedUrl(
+        registration.payment_receipt_path,
+        300,
+      );
+
+    if (signedUrlError) {
+      console.error(
+        "Receipt signed URL failed:",
+        signedUrlError,
+      );
+
+      throw new Error(
+        signedUrlError.message ||
+          "Unable to open payment receipt",
+      );
+    }
+
+    return {
+      signedUrl: signed.signedUrl,
     };
   });

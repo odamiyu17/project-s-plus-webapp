@@ -12,6 +12,9 @@ import TekkenFields from "@/components/registration/TekkenFields";
 import { Button } from "@/components/ui/button";
 import { submitRegistration } from "@/lib/server-fns";
 
+import PaymentFields from "@/components/registration/PaymentFields";
+import { supabase } from "@/api/supabaseClient";
+
 const EMPTY_VALUES = {
   team_name: "",
   team_tag: "",
@@ -47,6 +50,41 @@ const compact = (source) =>
   );
 
 export default function RegistrationWizard() {
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentReference, setPaymentReference] = useState("");
+  const [paymentReceipt, setPaymentReceipt] = useState(null);
+
+  function paymentErrors() {
+  const next = {};
+
+  if (!paymentMethod) {
+    next.payment_method = "Choose a payment method";
+  }
+
+  if (!paymentReceipt) {
+    next.payment_receipt = "Upload your payment receipt";
+  } else {
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+    ];
+
+    if (!allowed.includes(paymentReceipt.type)) {
+      next.payment_receipt =
+        "Receipt must be JPG, PNG, or WEBP";
+    }
+
+    if (paymentReceipt.size > 5 * 1024 * 1024) {
+      next.payment_receipt =
+        "Receipt must be 5 MB or smaller";
+    }
+  }
+
+  return next;
+}
+
   const submit =
     useServerFn(submitRegistration);
 
@@ -215,129 +253,130 @@ export default function RegistrationWizard() {
     return next;
   }
 
-  function goNext() {
-    const next =
-      step === 1
-        ? identityErrors()
-        : {};
+function goNext() {
+  let next = {};
 
-    if (
-      Object.keys(next).length
-    ) {
-      setErrors(next);
-      return;
-    }
-
-    setErrors({});
-    setStep(
-      (current) =>
-        current + 1,
-    );
+  if (step === 1) {
+    next = identityErrors();
   }
 
-  async function handleSubmit(
-    event,
-  ) {
-    event.preventDefault();
+  if (step === 2) {
+    next = contactErrors();
+  }
 
-    if (step < 2) {
-      goNext();
-      return;
-    }
+  if (Object.keys(next).length) {
+    setErrors(next);
+    return;
+  }
 
-    const invalid =
-      contactErrors();
+  setErrors({});
+  setStep((current) => current + 1);
+}
 
-    if (
-      Object.keys(invalid).length
-    ) {
-      setErrors(invalid);
-      return;
-    }
+async function handleSubmit(event) {
+  event.preventDefault();
 
-    setBusy(true);
+  if (step < 3) {
+    goNext();
+    return;
+  }
 
-    try {
-      const shared =
-        compact({
-          region:
-            values.region.trim(),
+  const invalid = paymentErrors();
 
-          contact_name:
-            values.contact_name.trim(),
+  if (Object.keys(invalid).length) {
+    setErrors(invalid);
+    return;
+  }
 
-          contact_email:
-            values.contact_email.trim(),
+  setBusy(true);
 
-          contact_phone:
-            values.contact_phone.trim(),
+  try {
+    const extensionMap = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/webp": "webp",
+    };
 
-          discord:
-            values.discord.trim(),
+    const extension =
+      extensionMap[paymentReceipt.type] ?? "jpg";
+
+    const receiptPath =
+      `receipts/${crypto.randomUUID()}.${extension}`;
+
+    const { error: uploadError } =
+      await supabase.storage
+        .from("payment-receipts")
+        .upload(receiptPath, paymentReceipt, {
+          contentType: paymentReceipt.type,
+          upsert: false,
         });
 
-      const payload =
-        game === "mlbb"
-          ? {
-              game,
-
-              ...shared,
-
-              ...compact({
-                team_name:
-                  values.team_name.trim(),
-
-                team_tag:
-                  values.team_tag
-                    .trim()
-                    .toUpperCase(),
-              }),
-
-              roster:
-                roster.map(
-                  (player) =>
-                    compact({
-                      ign:
-                        player.ign.trim(),
-
-                      game_id:
-                        player.game_id.trim(),
-
-                      role:
-                        player.role,
-                    }),
-                ),
-            }
-          : {
-              game,
-
-              ...shared,
-
-              ...compact({
-                player_name:
-                  values.player_name.trim(),
-
-                in_game_id:
-                  values.in_game_id.trim(),
-              }),
-            };
-
-      const created =
-        await submit({
-          data: payload,
-        });
-
-      setResult(created);
-    } catch (error) {
-      toast.error(
-        error?.message ||
-          "We couldn't submit your entry. Please try again.",
+    if (uploadError) {
+      throw new Error(
+        uploadError.message ||
+          "Unable to upload payment receipt",
       );
-    } finally {
-      setBusy(false);
     }
-  }
 
+    const shared = compact({
+      region: values.region.trim(),
+      contact_name: values.contact_name.trim(),
+      contact_email: values.contact_email.trim(),
+      contact_phone: values.contact_phone.trim(),
+      discord: values.discord.trim(),
+
+      payment_method: paymentMethod,
+      payment_reference: paymentReference.trim(),
+      payment_receipt_path: receiptPath,
+    });
+
+    const payload =
+      game === "mlbb"
+        ? {
+            game,
+
+            ...shared,
+
+            ...compact({
+              team_name: values.team_name.trim(),
+              team_tag: values.team_tag
+                .trim()
+                .toUpperCase(),
+            }),
+
+            roster: roster.map((player) =>
+              compact({
+                ign: player.ign.trim(),
+                game_id: player.game_id.trim(),
+                role: player.role,
+              }),
+            ),
+          }
+        : {
+            game,
+
+            ...shared,
+
+            ...compact({
+              player_name: values.player_name.trim(),
+              in_game_id: values.in_game_id.trim(),
+            }),
+          };
+
+    const created = await submit({
+      data: payload,
+    });
+
+    setResult(created);
+  } catch (error) {
+    toast.error(
+      error?.message ||
+        "We couldn't submit your entry. Please try again.",
+    );
+  } finally {
+    setBusy(false);
+  }
+}
   if (result) {
     return (
       <div className="mx-auto max-w-4xl px-4 sm:px-8">
@@ -351,13 +390,12 @@ export default function RegistrationWizard() {
     );
   }
 
-  const labels = [
-    "Realm",
-    game === "tekken8"
-      ? "Fighter"
-      : "Squad",
-    "Contact",
-  ];
+const labels = [
+  "Realm",
+  game === "tekken8" ? "Fighter" : "Squad",
+  "Contact",
+  "Payment",
+];
 
   return (
     <div className="mx-auto max-w-4xl px-4 pt-12 sm:px-8 sm:pt-16">
@@ -404,7 +442,7 @@ export default function RegistrationWizard() {
           className="h-px bg-primary transition-all duration-500"
           style={{
             width: `${
-              ((step + 1) / 3) *
+              ((step + 1) / 4) *
               100
             }%`,
           }}
@@ -452,6 +490,32 @@ export default function RegistrationWizard() {
           />
         ) : null}
 
+{step === 3 ? (
+  <PaymentFields
+    method={paymentMethod}
+    onMethodChange={(value) => {
+      setPaymentMethod(value);
+
+      setErrors((prev) => ({
+        ...prev,
+        payment_method: undefined,
+      }));
+    }}
+    receipt={paymentReceipt}
+    onReceiptChange={(file) => {
+      setPaymentReceipt(file);
+
+      setErrors((prev) => ({
+        ...prev,
+        payment_receipt: undefined,
+      }));
+    }}
+    reference={paymentReference}
+    onReferenceChange={setPaymentReference}
+    errors={errors}
+  />
+) : null}
+
         {step === 2 ? (
           <ContactFields
             values={values}
@@ -482,33 +546,25 @@ export default function RegistrationWizard() {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
-
-            {step === 1 ? (
-              <Button
-                type="button"
-                onClick={
-                  goNext
-                }
-                className="h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]"
-              >
-                Continue
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                disabled={
-                  busy
-                }
-                className="h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]"
-              >
-                {busy
-                  ? "Transmitting…"
-                  : "Submit entry"}
-
-                <Send className="ml-2 h-4 w-4" />
-              </Button>
-            )}
+{step < 3 ? (
+  <Button
+    type="button"
+    onClick={goNext}
+    className="h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]"
+  >
+    Continue
+    <ArrowRight className="ml-2 h-4 w-4" />
+  </Button>
+) : (
+  <Button
+    type="submit"
+    disabled={busy}
+    className="h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]"
+  >
+    {busy ? "Transmitting…" : "Submit entry"}
+    <Send className="ml-2 h-4 w-4" />
+  </Button>
+)}
           </div>
         ) : null}
       </form>
