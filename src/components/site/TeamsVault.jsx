@@ -5,7 +5,7 @@ import FighterList from "@/components/site/FighterList";
 import SectionHeading from "@/components/site/SectionHeading";
 import VaultCarousel from "@/components/site/VaultCarousel";
 
-const SQUAD_IMAGE = "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/211d824f3_generated_image.png";
+const SQUAD_IMAGE = "/images/site/squad.png";
 const SQUAD_SLOTS = 16;
 const FIGHTER_SLOTS = 32;
 

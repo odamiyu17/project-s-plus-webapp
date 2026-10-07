@@ -1,60 +1,206 @@
-import { createClientFromRequest, getAccessToken } from "@base44/sdk";
 import { createMiddleware } from "@tanstack/react-start";
-import { getRequest, setResponseStatus } from "@tanstack/react-start/server";
+import {
+  getRequest,
+  setResponseStatus,
+} from "@tanstack/react-start/server";
 
-// Both middlewares hand handlers the same lazy `context.getBase44()`: a
-// function, not the client, because the client needs the platform headers and
-// a handler that never touches Base44 must still answer without them. The
-// platform sets those headers on every request that reaches the server; a
-// visitor's Authorization header makes the client act as that visitor.
-const withGetBase44 = (next, request = getRequest()) => {
-  let client;
-  return next({ context: { getBase44: () => (client ??= createClientFromRequest(request)) } });
-};
+import { supabase } from "@/api/supabaseClient";
 
-// Applied to every server function by src/start.js: sends the visitor's Base44
-// access token with the call so `context.getBase44()` acts as the visitor (entity
-// access rules apply). Anonymous visitors send nothing and get an anonymous client.
-export const authMiddleware = createMiddleware({ type: "function" })
-  .client(async ({ next }) => {
-    const token = typeof window === "undefined" ? null : getAccessToken();
-    return next({ headers: token ? { Authorization: `Bearer ${token}` } : {} });
-  })
-  .server(({ next }) => withGetBase44(next));
-
-// Applied to every request by src/start.js, so a server route handler
-// (`server.handlers`) receives the same `context.getBase44()` as a server function.
-export const base44RequestMiddleware = createMiddleware({ type: "request" }).server(({ next, request }) =>
-  withGetBase44(next, request),
-);
-
-// Only an auth rejection means "not signed in"; outages and rate limits propagate as themselves.
-const currentUser = (context) =>
-  context
-    .getBase44()
-    .auth.me()
-    .catch((error) => {
-      if (error?.status === 401 || error?.status === 403) return null;
-      throw error;
-    });
-
-// Neither middleware authenticates anyone. Add this to a server function that
-// needs a signed-in caller; it rejects anonymous callers and sets `context.user`:
-//   createServerFn().middleware([requireUser]).handler(({ context }) => context.user.id)
-export const requireUser = createMiddleware({ type: "function" }).server(async ({ next, context }) => {
-  const user = await currentUser(context);
-  if (!user) {
-    setResponseStatus(401);
-    throw Object.assign(new Error("Unauthorized"), { status: 401, code: "UNAUTHORIZED" });
+/**
+ * Get the Supabase access token from the current browser session.
+ */
+async function getBrowserAccessToken() {
+  if (typeof window === "undefined") {
+    return null;
   }
-  return next({ context: { user } });
+
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error("Unable to read Supabase session:", error);
+    return null;
+  }
+
+  return session?.access_token ?? null;
+}
+
+/**
+ * Extract the Bearer token from a request.
+ */
+function getBearerToken(request) {
+  const authorization = request?.headers?.get("authorization");
+
+  if (!authorization) {
+    return null;
+  }
+
+  const [type, token] = authorization.split(" ");
+
+  if (type?.toLowerCase() !== "bearer" || !token) {
+    return null;
+  }
+
+  return token;
+}
+
+/**
+ * Validate the supplied access token with Supabase and return
+ * a normalized user object.
+ */
+async function getCurrentUser(request = getRequest()) {
+  const token = getBearerToken(request);
+
+  if (!token) {
+    return null;
+  }
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser(token);
+
+  if (error || !user) {
+    return null;
+  }
+
+  /**
+   * Our existing app expects:
+   *
+   * context.user.id
+   * context.user.email
+   * context.user.role
+   *
+   * Supabase stores custom role information in metadata,
+   * so expose it as a normal `role` property.
+   */
+  return {
+    ...user,
+
+    email: user.email ?? "",
+
+    role:
+      user.app_metadata?.role ??
+      user.user_metadata?.role ??
+      "user",
+  };
+}
+
+/**
+ * Applied to server functions.
+ *
+ * The browser sends the current Supabase access token with
+ * every TanStack server-function request.
+ */
+export const authMiddleware = createMiddleware({
+  type: "function",
+})
+  .client(async ({ next }) => {
+    const token = await getBrowserAccessToken();
+
+    return next({
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {},
+    });
+  })
+  .server(async ({ next }) => {
+    return next();
+  });
+
+/**
+ * Request-level middleware.
+ *
+ * This replaces the old Base44 request middleware.
+ * Supabase does not require us to construct a Base44-style
+ * request client, so this simply continues the request.
+ */
+export const supabaseRequestMiddleware = createMiddleware({
+  type: "request",
+}).server(async ({ next }) => {
+  return next();
 });
 
-// The same for a server route: `server: { middleware: [requireUserRoute], handlers }` answers
-// anonymous callers with 401 and sets `context.user`. Only on src/routes/api/* files: a route's
-// middleware also runs for every route under it, and page navigations carry no token.
-export const requireUserRoute = createMiddleware({ type: "request" }).server(async ({ next, context }) => {
-  const user = await currentUser(context);
-  if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
-  return next({ context: { user } });
+/**
+ * TEMPORARY compatibility alias.
+ *
+ * src/start.js currently still imports:
+ *
+ * base44RequestMiddleware
+ *
+ * Keeping this alias prevents the app from breaking before
+ * we update start.js in the next migration step.
+ *
+ * There is NO Base44 SDK usage here.
+ */
+
+/**
+ * Protect a TanStack server function.
+ *
+ * Example:
+ *
+ * createServerFn()
+ *   .middleware([requireUser])
+ *   .handler(({ context }) => {
+ *     return context.user;
+ *   });
+ */
+export const requireUser = createMiddleware({
+  type: "function",
+}).server(async ({ next }) => {
+  const request = getRequest();
+
+  const user = await getCurrentUser(request);
+
+  if (!user) {
+    setResponseStatus(401);
+
+    throw Object.assign(
+      new Error("Unauthorized"),
+      {
+        status: 401,
+        code: "UNAUTHORIZED",
+      },
+    );
+  }
+
+  return next({
+    context: {
+      user,
+    },
+  });
+});
+
+/**
+ * Protect a server route.
+ *
+ * Used for routes such as:
+ *
+ * src/routes/api/*
+ */
+export const requireUserRoute = createMiddleware({
+  type: "request",
+}).server(async ({ next, request }) => {
+  const user = await getCurrentUser(request);
+
+  if (!user) {
+    return Response.json(
+      {
+        error: "Unauthorized",
+      },
+      {
+        status: 401,
+      },
+    );
+  }
+
+  return next({
+    context: {
+      user,
+    },
+  });
 });

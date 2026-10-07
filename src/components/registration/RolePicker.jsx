@@ -6,27 +6,27 @@ const MLBB_ROLES = [
   {
     value: "Gold lane",
     short: "Gold",
-    icon: "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/85e965d84_gold.png",
+    icon: "/images/roles/gold.png",
   },
   {
     value: "EXP lane",
     short: "EXP",
-    icon: "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/5fd555cc4_exp.png",
+    icon: "/images/roles/exp.png",
   },
   {
     value: "Jungler",
     short: "Jungle",
-    icon: "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/60caacf70_junggle.png",
+    icon: "/images/roles/junggle.png",
   },
   {
     value: "Mid lane",
     short: "Mid",
-    icon: "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/e1edf8eab_mid.png",
+    icon: "/images/roles/mid.png",
   },
   {
     value: "Roamer",
     short: "Roam",
-    icon: "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/f301c3349_roam.png",
+    icon: "/images/roles/roam.png",
   },
 ];
 

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 
-const HERO_IMAGE = "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/f75edada1_generated_image.png";
+const HERO_IMAGE = "/images/site/hero.png";
 const SQUAD_SLOTS = 16;
 const FIGHTER_SLOTS = 32;
 

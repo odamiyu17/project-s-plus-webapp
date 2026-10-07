@@ -1,8 +1,8 @@
 import SectionHeading from "@/components/site/SectionHeading";
 import { Image } from "@/components/ui/image";
 
-const ARENA_IMAGE = "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/5c426ecd0_generated_image.png";
-const FIST_IMAGE = "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/6a0ed3c0e_generated_image.png";
+const ARENA_IMAGE = "/images/site/arena.png";
+const FIST_IMAGE = "/images/site/fist.png";
 
 const BRACKETS = [
   {

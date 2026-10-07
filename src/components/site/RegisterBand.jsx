@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 
-const FIST_IMAGE = "https://media.base44.com/images/public/6ac5d321f4c314d5b46ac183/6a0ed3c0e_generated_image.png";
+const FIST_IMAGE = "/images/site/fist.png";
 
 const CHECKLIST = [
   "A full squad of five, or a single fighter for TEKKEN 8",

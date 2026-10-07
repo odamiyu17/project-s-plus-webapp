@@ -1,8 +1,11 @@
 import { createStart } from "@tanstack/react-start";
-import { authMiddleware, base44RequestMiddleware } from "@/lib/auth-middleware";
+import {
+  authMiddleware,
+  supabaseRequestMiddleware,
+} from "@/lib/auth-middleware";
 
-// Every server function and server route gets `context.getBase44()`, acting as the visitor.
+// Global middleware for Supabase authentication.
 export const startInstance = createStart(() => ({
-  requestMiddleware: [base44RequestMiddleware],
+  requestMiddleware: [supabaseRequestMiddleware],
   functionMiddleware: [authMiddleware],
 }));
