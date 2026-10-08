@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   ClipboardList,
+  LogIn,
   LogOut,
   Menu,
   Shield,
@@ -109,6 +110,21 @@ export default function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {!user ? (
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="hidden h-11 rounded-none px-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:bg-secondary/40 hover:text-primary sm:inline-flex"
+            >
+              <Link to="/login">
+                <LogIn className="mr-2 h-3.5 w-3.5" />
+
+                Login
+              </Link>
+            </Button>
+          ) : null}
+
           {user ? (
             <Button
               asChild
@@ -209,6 +225,22 @@ export default function SiteHeader() {
               </li>
             ))}
 
+            {!user ? (
+              <li>
+                <Link
+                  to="/login"
+                  onClick={() =>
+                    setOpen(false)
+                  }
+                  className="flex items-center border-b border-border/60 py-4 font-mono text-xs uppercase tracking-[0.22em] text-primary"
+                >
+                  <LogIn className="mr-2 h-4 w-4" />
+
+                  Login
+                </Link>
+              </li>
+            ) : null}
+
             {user ? (
               <li>
                 <Link
@@ -260,19 +292,7 @@ export default function SiteHeader() {
                     : "Logout"}
                 </button>
               </li>
-            ) : (
-              <li>
-                <Link
-                  to="/login"
-                  onClick={() =>
-                    setOpen(false)
-                  }
-                  className="block py-4 font-mono text-xs uppercase tracking-[0.22em] text-primary"
-                >
-                  Staff Login
-                </Link>
-              </li>
-            )}
+            ) : null}
           </ul>
         </nav>
       ) : null}
