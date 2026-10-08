@@ -159,8 +159,18 @@ function getAuthenticatedSupabase() {
 export const submitRegistration = createServerFn({
   method: "POST",
 })
+  .middleware([requireUser])
   .validator(RegistrationInput)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    if (!context.user?.id) {
+      throw Object.assign(
+        new Error("You must be signed in to register"),
+        {
+          status: 401,
+        },
+      );
+    }
+
     const id = crypto.randomUUID();
     const reference = makeReference();
 
@@ -168,7 +178,11 @@ export const submitRegistration = createServerFn({
       .from("registrations")
       .insert({
         id,
+
+        user_id: context.user.id,
+
         ...withoutBlanks(data),
+
         status: "pending",
         payment_status: "pending",
         reference_code: reference,
