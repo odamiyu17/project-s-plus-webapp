@@ -267,6 +267,73 @@ export const listPublicEntries = createServerFn({
   }));
 });
 
+
+// ---------------------------------------------------------
+// CURRENT USER REGISTRATIONS
+// ---------------------------------------------------------
+
+export const listMyRegistrations = createServerFn({
+  method: "GET",
+})
+  .middleware([requireUser])
+  .handler(async ({ context }) => {
+    const userSupabase =
+      getAuthenticatedSupabase();
+
+    const { data: items, error } =
+      await userSupabase
+        .from("registrations")
+        .select(
+          `
+            id,
+            game,
+            team_name,
+            team_tag,
+            region,
+            roster,
+            player_name,
+            in_game_id,
+            contact_name,
+            contact_email,
+            contact_phone,
+            discord,
+            status,
+            reference_code,
+            payment_method,
+            payment_status,
+            payment_reference,
+            payment_receipt_path,
+            created_at,
+            updated_at
+          `,
+        )
+        .eq("user_id", context.user.id)
+        .order("created_at", {
+          ascending: false,
+        });
+
+    if (error) {
+      console.error(
+        "User registrations fetch failed:",
+        error,
+      );
+
+      throw new Error(
+        error.message ||
+          "Unable to load your registrations",
+      );
+    }
+
+    return (items ?? []).map((item) => ({
+      ...item,
+
+      has_payment_receipt:
+        Boolean(item.payment_receipt_path),
+
+      payment_receipt_path: undefined,
+    }));
+  });
+  
 // ---------------------------------------------------------
 // ADMIN / STAFF QUEUE
 // ---------------------------------------------------------
