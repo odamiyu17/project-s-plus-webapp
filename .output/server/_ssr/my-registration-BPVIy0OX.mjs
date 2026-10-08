@@ -1,13 +1,14 @@
 import { Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
-import { Button } from "./server-fns-CND7qUSL.mjs";
-import { CircleCheck, CircleX, Clock3, CreditCard, ShieldCheck, Users } from "../_libs/lucide-react.mjs";
-import { Route$3 } from "./router-BzYIxyQJ.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/my-registration-DMRWy_cl.js
+import { Button } from "./server-fns-7A-z4xbZ.mjs";
+import { ArrowLeft, CircleCheck, CircleX, Clock3, CreditCard, Pencil, ShieldCheck, Users } from "../_libs/lucide-react.mjs";
+import { Route$3 } from "./router-eOUMIcI1.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/my-registration-BPVIy0OX.js
 var import_jsx_runtime = require_jsx_runtime();
 var STATUS_STYLES = {
 	pending: "border-primary/40 bg-primary/10 text-primary",
 	approved: "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
+	verified: "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
 	rejected: "border-destructive/40 bg-destructive/10 text-destructive"
 };
 function StatusBadge({ status }) {
@@ -33,6 +34,11 @@ function MyRegistrationPage() {
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "mx-auto max-w-5xl px-4 py-14 sm:px-8 sm:py-20",
 				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+						to: "/",
+						className: "mb-8 inline-flex items-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "mr-2 h-4 w-4" }), "Back to Site"]
+					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						className: "font-mono text-[10px] uppercase tracking-[0.3em] text-primary",
 						children: "Competitor Portal"
@@ -74,6 +80,7 @@ function MyRegistrationPage() {
 				className: "space-y-6",
 				children: registrations.map((registration) => {
 					const isSquad = registration.game === "mlbb";
+					const canEdit = registration.status === "pending";
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
 						className: "border border-border/80 bg-card/60",
 						children: [
@@ -222,9 +229,9 @@ function MyRegistrationPage() {
 									})
 								] })
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "flex flex-wrap items-center justify-between gap-3 border-t border-border/70 px-5 py-4 sm:px-6",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex flex-wrap items-center justify-between gap-4 border-t border-border/70 px-5 py-4 sm:px-6",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "flex items-center gap-2 text-xs text-muted-foreground",
 									children: [
 										registration.status === "approved" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "h-4 w-4 text-emerald-400" }) : registration.status === "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "h-4 w-4 text-destructive" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Clock3, { className: "h-4 w-4 text-primary" }),
@@ -232,7 +239,20 @@ function MyRegistrationPage() {
 										" ",
 										formatDate(registration.updated_at)
 									]
-								})
+								}), canEdit ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+									asChild: true,
+									variant: "outline",
+									size: "sm",
+									className: "h-10 rounded-none border-primary/40 px-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary hover:bg-primary/10 hover:text-primary",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+										to: "/edit-registration",
+										search: { id: registration.id },
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pencil, { className: "mr-2 h-3.5 w-3.5" }), "Edit Submission"]
+									})
+								}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+									children: "Editing locked"
+								})]
 							})
 						]
 					}, registration.id);

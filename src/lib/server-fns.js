@@ -607,7 +607,6 @@ export const updateMyRegistration =
         const userSupabase =
           getAuthenticatedSupabase();
 
-        // Confirm ownership and status first.
         const {
           data: existing,
           error: lookupError,
@@ -768,6 +767,172 @@ export const updateMyRegistration =
     );
 
 // ---------------------------------------------------------
+// UPDATE CURRENT USER PAYMENT
+// ---------------------------------------------------------
+
+export const updateMyPayment =
+  createServerFn({
+    method: "POST",
+  })
+    .middleware([requireUser])
+    .validator(
+      z.object({
+        id: z.string().uuid(),
+
+        payment_method: z.enum([
+          "gcash",
+          "bank",
+        ]),
+
+        payment_reference: z
+          .string()
+          .trim()
+          .max(100)
+          .optional(),
+
+        payment_receipt_path: z
+          .string()
+          .trim()
+          .regex(
+            /^receipts\/[a-zA-Z0-9._-]+$/,
+            "Invalid receipt path",
+          )
+          .optional(),
+      }),
+    )
+    .handler(
+      async ({ data, context }) => {
+        const userSupabase =
+          getAuthenticatedSupabase();
+
+        const {
+          data: existing,
+          error: lookupError,
+        } = await userSupabase
+          .from("registrations")
+          .select(
+            `
+              id,
+              user_id,
+              status,
+              payment_status,
+              payment_receipt_path
+            `,
+          )
+          .eq("id", data.id)
+          .eq(
+            "user_id",
+            context.user.id,
+          )
+          .single();
+
+        if (
+          lookupError ||
+          !existing
+        ) {
+          throw Object.assign(
+            new Error(
+              "Registration not found",
+            ),
+            {
+              status: 404,
+            },
+          );
+        }
+
+        if (
+          existing.status !==
+          "pending"
+        ) {
+          throw Object.assign(
+            new Error(
+              "Payment details can only be edited while the registration is pending",
+            ),
+            {
+              status: 409,
+            },
+          );
+        }
+
+        if (
+          existing.payment_status ===
+          "verified"
+        ) {
+          throw Object.assign(
+            new Error(
+              "Verified payment details can no longer be changed",
+            ),
+            {
+              status: 409,
+            },
+          );
+        }
+
+        const updateData = {
+          payment_method:
+            data.payment_method,
+
+          payment_reference:
+            data.payment_reference?.trim() ||
+            null,
+
+          updated_at:
+            new Date().toISOString(),
+        };
+
+        if (
+          data.payment_receipt_path
+        ) {
+          updateData.payment_receipt_path =
+            data.payment_receipt_path;
+        }
+
+        const {
+          data: updated,
+          error: updateError,
+        } = await userSupabase
+          .from("registrations")
+          .update(updateData)
+          .eq("id", data.id)
+          .eq(
+            "user_id",
+            context.user.id,
+          )
+          .eq(
+            "status",
+            "pending",
+          )
+          .neq(
+            "payment_status",
+            "verified",
+          )
+          .select(
+            `
+              id,
+              payment_method,
+              payment_reference,
+              payment_status,
+              updated_at
+            `,
+          )
+          .single();
+
+        if (updateError) {
+          console.error(
+            "User payment update failed:",
+            updateError,
+          );
+
+          throw new Error(
+            updateError.message ||
+              "Unable to update payment details",
+          );
+        }
+
+        return updated;
+      },
+    );
+// ---------------------------------------------------------
 // ADMIN / STAFF QUEUE
 // ---------------------------------------------------------
 
@@ -903,6 +1068,7 @@ export const setRegistrationStatus =
 
         return {
           id: updated.id,
+
           status:
             updated.status,
         };

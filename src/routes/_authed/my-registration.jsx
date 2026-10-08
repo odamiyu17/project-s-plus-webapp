@@ -4,6 +4,7 @@ import {
 } from "@tanstack/react-router";
 
 import {
+  ArrowLeft,
   CheckCircle2,
   Clock3,
   CreditCard,
@@ -86,6 +87,14 @@ function MyRegistrationPage() {
     <main className="min-h-screen pb-24">
       <header className="border-b border-border/70 bg-secondary/20">
         <div className="mx-auto max-w-5xl px-4 py-14 sm:px-8 sm:py-20">
+          <Link
+            to="/"
+            className="mb-8 inline-flex items-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Site
+          </Link>
+
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
             Competitor Portal
           </p>

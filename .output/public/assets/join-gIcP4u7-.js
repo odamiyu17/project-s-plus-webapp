@@ -1,1 +1,0 @@
-import{l as e}from"./index-CJLGP2VE.js";var t=e;export{t as errorComponent};

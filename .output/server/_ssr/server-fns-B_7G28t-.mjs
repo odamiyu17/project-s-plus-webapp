@@ -2,7 +2,7 @@ import { TSS_SERVER_FUNCTION, createServerFn, getRequest } from "./ssr.mjs";
 import { createClient } from "../_libs/supabase__supabase-js.mjs";
 import { requireUser, supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { _enum, array, object, string } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/server-fns-5PUQVAr5.js
+//#region node_modules/.nitro/vite/services/ssr/assets/server-fns-B_7G28t-.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {
@@ -269,6 +269,47 @@ var updateMyRegistration = createServerFn({ method: "POST" }).middleware([requir
 	}
 	return updated;
 });
+var updateMyPayment_createServerFn_handler = createServerRpc({
+	id: "b241d33abcfb5410fafc884b75859a24bb8b3c4a3baea48652b07601762af44c",
+	name: "updateMyPayment",
+	filename: "src/lib/server-fns.js"
+}, (opts) => updateMyPayment.__executeServer(opts));
+var updateMyPayment = createServerFn({ method: "POST" }).middleware([requireUser]).validator(object({
+	id: string().uuid(),
+	payment_method: _enum(["gcash", "bank"]),
+	payment_reference: string().trim().max(100).optional(),
+	payment_receipt_path: string().trim().regex(/^receipts\/[a-zA-Z0-9._-]+$/, "Invalid receipt path").optional()
+})).handler(updateMyPayment_createServerFn_handler, async ({ data, context }) => {
+	const userSupabase = getAuthenticatedSupabase();
+	const { data: existing, error: lookupError } = await userSupabase.from("registrations").select(`
+              id,
+              user_id,
+              status,
+              payment_status,
+              payment_receipt_path
+            `).eq("id", data.id).eq("user_id", context.user.id).single();
+	if (lookupError || !existing) throw Object.assign(/* @__PURE__ */ new Error("Registration not found"), { status: 404 });
+	if (existing.status !== "pending") throw Object.assign(/* @__PURE__ */ new Error("Payment details can only be edited while the registration is pending"), { status: 409 });
+	if (existing.payment_status === "verified") throw Object.assign(/* @__PURE__ */ new Error("Verified payment details can no longer be changed"), { status: 409 });
+	const updateData = {
+		payment_method: data.payment_method,
+		payment_reference: data.payment_reference?.trim() || null,
+		updated_at: (/* @__PURE__ */ new Date()).toISOString()
+	};
+	if (data.payment_receipt_path) updateData.payment_receipt_path = data.payment_receipt_path;
+	const { data: updated, error: updateError } = await userSupabase.from("registrations").update(updateData).eq("id", data.id).eq("user_id", context.user.id).eq("status", "pending").neq("payment_status", "verified").select(`
+              id,
+              payment_method,
+              payment_reference,
+              payment_status,
+              updated_at
+            `).single();
+	if (updateError) {
+		console.error("User payment update failed:", updateError);
+		throw new Error(updateError.message || "Unable to update payment details");
+	}
+	return updated;
+});
 var listRegistrations_createServerFn_handler = createServerRpc({
 	id: "de3d95986ac2fb5bf12bd5ed2d1674833fc4ef58be352b8a3abc4f06889c7c3f",
 	name: "listRegistrations",
@@ -369,4 +410,4 @@ var getPaymentReceiptUrl = createServerFn({ method: "POST" }).middleware([requir
 	return { signedUrl: signed.signedUrl };
 });
 //#endregion
-export { getPaymentReceiptUrl_createServerFn_handler, listMyRegistrations_createServerFn_handler, listPublicEntries_createServerFn_handler, listRegistrations_createServerFn_handler, setPaymentStatus_createServerFn_handler, setRegistrationStatus_createServerFn_handler, submitRegistration_createServerFn_handler, updateMyRegistration_createServerFn_handler };
+export { getPaymentReceiptUrl_createServerFn_handler, listMyRegistrations_createServerFn_handler, listPublicEntries_createServerFn_handler, listRegistrations_createServerFn_handler, setPaymentStatus_createServerFn_handler, setRegistrationStatus_createServerFn_handler, submitRegistration_createServerFn_handler, updateMyPayment_createServerFn_handler, updateMyRegistration_createServerFn_handler };

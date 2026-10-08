@@ -116,7 +116,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-L6-CLtE7.mjs");
+	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-Cd15ByWT.mjs");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -138,35 +138,39 @@ async function getStartManifest(matchedRoutes) {
 var manifest = {
 	"328c346a62196f7a40cb59a05cbdaaccca3dae99f5b5c0bd4ccebd396eec7575": {
 		functionName: "listPublicEntries_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"4348003b04dece62dae06f472050ca106be4b50a19c11e6bc4f6806ae24755fc": {
 		functionName: "updateMyRegistration_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"4b3cc5de4578eb15beed9950583e3a2ee97afff668e6ac24fbaa3278b13f9b51": {
 		functionName: "setRegistrationStatus_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"8fe5b28dcae6c62a97a57309582306fb0ad093d7fc386bb34800a2a3be8f4eaa": {
 		functionName: "submitRegistration_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
+	},
+	"b241d33abcfb5410fafc884b75859a24bb8b3c4a3baea48652b07601762af44c": {
+		functionName: "updateMyPayment_createServerFn_handler",
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"c28043b19361a053fd857f2d676d8a2a91cc365f0a97f2a7313b946e0092d0e8": {
 		functionName: "listMyRegistrations_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"ccc2bc90cd12b6097230326e9a7987ddedd79ce21f51168d66ca2cf378155a62": {
 		functionName: "getPaymentReceiptUrl_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"d512ec672a10bf7ae7bbe7c216edecbe2f444e99b82a3f853950f2b26d80befb": {
 		functionName: "setPaymentStatus_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	},
 	"de3d95986ac2fb5bf12bd5ed2d1674833fc4ef58be352b8a3abc4f06889c7c3f": {
 		functionName: "listRegistrations_createServerFn_handler",
-		importer: () => import("./server-fns-5PUQVAr5.mjs")
+		importer: () => import("./server-fns-B_7G28t-.mjs")
 	}
 };
 async function getServerFnById(id, access) {
@@ -1571,7 +1575,7 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./router-BzYIxyQJ.mjs").then((n) => n.router_exports),
+		import("./router-eOUMIcI1.mjs").then((n) => n.router_exports),
 		import("./start-Bgz9vSWj.mjs"),
 		import("./empty-plugin-adapters-D9UWiqvJ.mjs")
 	]);

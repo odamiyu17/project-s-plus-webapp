@@ -2,12 +2,12 @@ import { __toESM } from "../_runtime.mjs";
 import { require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { Link, useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
-import { Button, getPaymentReceiptUrl, setPaymentStatus, setRegistrationStatus } from "./server-fns-CND7qUSL.mjs";
+import { Button, getPaymentReceiptUrl, setPaymentStatus, setRegistrationStatus } from "./server-fns-7A-z4xbZ.mjs";
 import { toast } from "../_libs/sonner.mjs";
 import { BadgeCheck, Check, Eye, LogOut, RotateCcw, ShieldAlert, X } from "../_libs/lucide-react.mjs";
-import { Route$4, useAuth } from "./router-BzYIxyQJ.mjs";
+import { Route$5, useAuth } from "./router-eOUMIcI1.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/admin-DMMsTO3N.js
+//#region node_modules/.nitro/vite/services/ssr/assets/admin-B-modZw6.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function AccessDenied({ email, onSignOut }) {
@@ -481,7 +481,7 @@ function AdminDashboard({ items, email, onSignOut }) {
 	});
 }
 function AdminPage() {
-	const { authorized, items } = Route$4.useLoaderData();
+	const { authorized, items } = Route$5.useLoaderData();
 	const { user, logout } = useAuth();
 	if (!authorized) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AccessDenied, {
 		email: user?.email,
