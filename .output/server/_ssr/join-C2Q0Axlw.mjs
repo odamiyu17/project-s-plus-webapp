@@ -3,14 +3,14 @@ import { require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
-import { Button, cn, submitRegistration } from "./server-fns-C3c5mFhO.mjs";
+import { Button, cn, submitRegistration } from "./server-fns-CND7qUSL.mjs";
 import { toast } from "../_libs/sonner.mjs";
 import { ArrowLeft, ArrowRight, CircleCheck, CreditCard, Gamepad2, Send, Swords, Upload } from "../_libs/lucide-react.mjs";
 import { Image } from "./image-BPY2V0qk.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
 import { Input, Label } from "./label-0leyqT9h.mjs";
 import { motion } from "../_libs/framer-motion.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/join-DQfqSREn.js
+//#region node_modules/.nitro/vite/services/ssr/assets/join-C2Q0Axlw.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var inputClass = "h-12 rounded-none border-border/80 bg-background/70 px-4 text-base tracking-wide text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary";
@@ -876,7 +876,7 @@ function JoinPage() {
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						className: "mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg",
-						children: "Mobile Legends: Bang Bang squads of five, or TEKKEN 8 fighters flying solo. Entry is free — slots are limited and staff verify every roster before it enters the vault."
+						children: "Mobile Legends: Bang Bang squads of five, or TEKKEN 8 fighters flying solo. Complete your registration and payment, then tournament staff will review your entry."
 					})
 				]
 			})]

@@ -167,6 +167,80 @@ var CircleCheck = createLucideIcon("CircleCheck", [["circle", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var CircleX = createLucideIcon("CircleX", [
+	["circle", {
+		cx: "12",
+		cy: "12",
+		r: "10",
+		key: "1mglay"
+	}],
+	["path", {
+		d: "m15 9-6 6",
+		key: "1uzhvr"
+	}],
+	["path", {
+		d: "m9 9 6 6",
+		key: "z0biqf"
+	}]
+]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var ClipboardList = createLucideIcon("ClipboardList", [
+	["rect", {
+		width: "8",
+		height: "4",
+		x: "8",
+		y: "2",
+		rx: "1",
+		ry: "1",
+		key: "tgr4d6"
+	}],
+	["path", {
+		d: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2",
+		key: "116196"
+	}],
+	["path", {
+		d: "M12 11h4",
+		key: "1jrz19"
+	}],
+	["path", {
+		d: "M12 16h4",
+		key: "n85exb"
+	}],
+	["path", {
+		d: "M8 11h.01",
+		key: "1dfujw"
+	}],
+	["path", {
+		d: "M8 16h.01",
+		key: "18s6g9"
+	}]
+]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var Clock3 = createLucideIcon("Clock3", [["circle", {
+	cx: "12",
+	cy: "12",
+	r: "10",
+	key: "1mglay"
+}], ["polyline", {
+	points: "12 6 12 12 16.5 12",
+	key: "1aq6pp"
+}]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var CreditCard = createLucideIcon("CreditCard", [["rect", {
 	width: "20",
 	height: "14",
@@ -433,6 +507,19 @@ var ShieldAlert = createLucideIcon("ShieldAlert", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var ShieldCheck = createLucideIcon("ShieldCheck", [["path", {
+	d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+	key: "oel41y"
+}], ["path", {
+	d: "m9 12 2 2 4-4",
+	key: "dzmm74"
+}]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Shield = createLucideIcon("Shield", [["path", {
 	d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
 	key: "oel41y"
@@ -664,6 +751,32 @@ var UserX = createLucideIcon("UserX", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var Users = createLucideIcon("Users", [
+	["path", {
+		d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",
+		key: "1yyitq"
+	}],
+	["circle", {
+		cx: "9",
+		cy: "7",
+		r: "4",
+		key: "nufk8"
+	}],
+	["path", {
+		d: "M22 21v-2a4 4 0 0 0-3-3.87",
+		key: "kshegd"
+	}],
+	["path", {
+		d: "M16 3.13a4 4 0 0 1 0 7.75",
+		key: "1da9ce"
+	}]
+]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var X = createLucideIcon("X", [["path", {
 	d: "M18 6 6 18",
 	key: "1bl5f8"
@@ -672,4 +785,4 @@ var X = createLucideIcon("X", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { ArrowLeft, ArrowRight, BadgeCheck, Calendar, Check, CircleCheck, CreditCard, Eye, Gamepad2, LoaderCircle, Lock, LogIn, LogOut, Mail, MapPin, Menu, Minus, RotateCcw, Send, Shield, ShieldAlert, Swords, Ticket, TriangleAlert, Trophy, Upload, UserPlus, UserX, X };
+export { ArrowLeft, ArrowRight, BadgeCheck, Calendar, Check, CircleCheck, CircleX, ClipboardList, Clock3, CreditCard, Eye, Gamepad2, LoaderCircle, Lock, LogIn, LogOut, Mail, MapPin, Menu, Minus, RotateCcw, Send, Shield, ShieldAlert, ShieldCheck, Swords, Ticket, TriangleAlert, Trophy, Upload, UserPlus, UserX, Users, X };

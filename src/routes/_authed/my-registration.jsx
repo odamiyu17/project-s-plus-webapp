@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   Clock3,
   CreditCard,
+  Pencil,
   ShieldCheck,
   Users,
   XCircle,
@@ -41,6 +42,9 @@ const STATUS_STYLES = {
   approved:
     "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
 
+  verified:
+    "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
+
   rejected:
     "border-destructive/40 bg-destructive/10 text-destructive",
 };
@@ -66,13 +70,12 @@ function formatDate(value) {
     return "—";
   }
 
-  return new Date(value).toLocaleString(
-    "en-PH",
-    {
-      dateStyle: "medium",
-      timeStyle: "short",
-    },
-  );
+  return new Date(
+    value,
+  ).toLocaleString("en-PH", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }
 
 function MyRegistrationPage() {
@@ -109,8 +112,9 @@ function MyRegistrationPage() {
             </h2>
 
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-              You haven't submitted a tournament
-              registration using this account yet.
+              You haven't submitted a
+              tournament registration using
+              this account yet.
             </p>
 
             <Button
@@ -130,6 +134,10 @@ function MyRegistrationPage() {
                   registration.game ===
                   "mlbb";
 
+                const canEdit =
+                  registration.status ===
+                  "pending";
+
                 return (
                   <article
                     key={registration.id}
@@ -143,7 +151,9 @@ function MyRegistrationPage() {
                               ? "MLBB Squad"
                               : "TEKKEN 8 Fighter"}
                             {" · "}
-                            {registration.reference_code}
+                            {
+                              registration.reference_code
+                            }
                           </p>
 
                           <h2 className="mt-2 font-display text-2xl font-bold uppercase text-foreground sm:text-3xl">
@@ -309,7 +319,7 @@ function MyRegistrationPage() {
                       )}
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/70 px-5 py-4 sm:px-6">
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border/70 px-5 py-4 sm:px-6">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         {registration.status ===
                         "approved" ? (
@@ -326,6 +336,30 @@ function MyRegistrationPage() {
                           registration.updated_at,
                         )}
                       </div>
+
+                      {canEdit ? (
+                        <Button
+                          asChild
+                          variant="outline"
+                          size="sm"
+                          className="h-10 rounded-none border-primary/40 px-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary hover:bg-primary/10 hover:text-primary"
+                        >
+                          <Link
+                            to="/edit-registration"
+                            search={{
+                              id: registration.id,
+                            }}
+                          >
+                            <Pencil className="mr-2 h-3.5 w-3.5" />
+
+                            Edit Submission
+                          </Link>
+                        </Button>
+                      ) : (
+                        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                          Editing locked
+                        </span>
+                      )}
                     </div>
                   </article>
                 );

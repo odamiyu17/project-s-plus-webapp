@@ -3,7 +3,7 @@ import { require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { ErrorComponent, HeadContent, Link, Outlet, Scripts, createFileRoute, createRootRoute, createRouter, lazyRouteComponent, redirect, rootRouteId, useMatch, useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
-import { Button, listPublicEntries, listRegistrations } from "./server-fns-C3c5mFhO.mjs";
+import { Button, listMyRegistrations, listPublicEntries, listRegistrations } from "./server-fns-CND7qUSL.mjs";
 import { queryOptions, useQuery, useQueryClient } from "../_libs/tanstack__react-query.mjs";
 import { QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { setupRouterSsrQueryIntegration } from "../_libs/@tanstack/react-router-ssr-query+[...].mjs";
@@ -56,7 +56,7 @@ function returnToSearch(returnTo) {
 	return returnTo && returnTo !== "/" ? { returnTo } : {};
 }
 //#endregion
-//#region node_modules/.nitro/vite/services/ssr/assets/router-BIqeqhEH.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-BzYIxyQJ.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var __defProp = Object.defineProperty;
@@ -244,8 +244,8 @@ function useAuth() {
 	if (!ctx) throw new Error("useAuth must be used within <AuthProvider>");
 	return ctx;
 }
-var src_default = "/assets/index-mmhxNv9V.css";
-var Route$10 = createRootRoute({
+var src_default = "/assets/index-DEF2FOiH.css";
+var Route$11 = createRootRoute({
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },
@@ -378,47 +378,55 @@ async function requireSignedIn({ context, location }) {
 function AuthGateError({ error }) {
 	return error instanceof NotRegisteredError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(UserNotRegistered, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DefaultCatchBoundary, { error });
 }
-var $$splitErrorComponentImporter = () => import("../_authed-8JQ8VHfy.mjs");
-var Route$9 = createFileRoute("/_authed")({
+var $$splitErrorComponentImporter$1 = () => import("../_authed-BB43HA3R.mjs");
+var Route$10 = createFileRoute("/_authed")({
 	ssr: false,
 	beforeLoad: requireSignedIn,
-	errorComponent: lazyRouteComponent($$splitErrorComponentImporter, "errorComponent")
+	errorComponent: lazyRouteComponent($$splitErrorComponentImporter$1, "errorComponent")
 });
-var $$splitComponentImporter$7 = () => import("../_site-BUndvpnf.mjs");
-var Route$8 = createFileRoute("/_site")({ component: lazyRouteComponent($$splitComponentImporter$7, "component") });
-var $$splitComponentImporter$6 = () => import("./forgot-password-BgfMZbwL.mjs");
-var Route$7 = createFileRoute("/forgot-password")({
+var $$splitComponentImporter$8 = () => import("../_site-BFcld8-F.mjs");
+var Route$9 = createFileRoute("/_site")({ component: lazyRouteComponent($$splitComponentImporter$8, "component") });
+var $$splitComponentImporter$7 = () => import("./forgot-password-C64kgini.mjs");
+var Route$8 = createFileRoute("/forgot-password")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Reset your password — Project S+" }] }),
-	component: lazyRouteComponent($$splitComponentImporter$6, "component")
+	component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-var $$splitComponentImporter$5 = () => import("./login-C984PZNW.mjs");
-var Route$6 = createFileRoute("/login")({
+var $$splitComponentImporter$6 = () => import("./login-DfjPaZtI.mjs");
+var Route$7 = createFileRoute("/login")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Staff login — Project S+" }] }),
-	component: lazyRouteComponent($$splitComponentImporter$5, "component")
+	component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-var $$splitComponentImporter$4 = () => import("./register-BadqXGTr.mjs");
-var Route$5 = createFileRoute("/register")({
+var $$splitComponentImporter$5 = () => import("./register-CJPYDFXY.mjs");
+var Route$6 = createFileRoute("/register")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Create an account — Project S+" }] }),
-	component: lazyRouteComponent($$splitComponentImporter$4, "component")
+	component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-var $$splitComponentImporter$3 = () => import("./reset-password-C8vvJ5X1.mjs");
-var Route$4 = createFileRoute("/reset-password")({
+var $$splitComponentImporter$4 = () => import("./reset-password-CxE9fTwU.mjs");
+var Route$5 = createFileRoute("/reset-password")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Set a new password — Project S+" }] }),
-	component: lazyRouteComponent($$splitComponentImporter$3, "component")
+	component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-var $$splitComponentImporter$2 = () => import("./admin-DI4YMb6k.mjs");
-var Route$3 = createFileRoute("/_authed/admin")({
+var $$splitComponentImporter$3 = () => import("./admin-DMMsTO3N.mjs");
+var Route$4 = createFileRoute("/_authed/admin")({
 	ssr: false,
 	loader: () => listRegistrations(),
 	shouldReload: true,
 	head: () => ({ meta: [{ title: "Command Center — Project S+" }] }),
+	component: lazyRouteComponent($$splitComponentImporter$3, "component")
+});
+var $$splitComponentImporter$2 = () => import("./my-registration-DMRWy_cl.mjs");
+var Route$3 = createFileRoute("/_authed/my-registration")({
+	loader: async () => {
+		return await listMyRegistrations();
+	},
+	head: () => ({ meta: [{ title: "My Registration — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-var $$splitComponentImporter$1 = () => import("../_site-DC5Elozn.mjs");
+var $$splitComponentImporter$1 = () => import("../_site-C-tRYHnW.mjs");
 var Route$2 = createFileRoute("/_site/")({
 	loader: () => listPublicEntries(),
 	shouldReload: true,
@@ -443,46 +451,55 @@ var Route$2 = createFileRoute("/_site/")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-var $$splitComponentImporter = () => import("./join-DQfqSREn.mjs");
+var $$splitComponentImporter = () => import("./join-C2Q0Axlw.mjs");
+var $$splitErrorComponentImporter = () => import("./join-D2rz3uAS.mjs");
 var Route$1 = createFileRoute("/_site/join")({
+	ssr: false,
+	beforeLoad: requireSignedIn,
+	errorComponent: lazyRouteComponent($$splitErrorComponentImporter, "errorComponent"),
 	head: () => ({ meta: [{ title: "Register — HAGIT Esports Tournament" }, {
 		name: "description",
-		content: "Free entry for MLBB squads of five and TEKKEN 8 solo fighters. Submit your roster and tournament staff verify it within 48 hours."
+		content: "Register your MLBB squad or TEKKEN 8 entry for the HAGIT Esports Tournament."
 	}] }),
 	component: lazyRouteComponent($$splitComponentImporter, "component")
 });
 var Route = createFileRoute("/api/time")({ server: { handlers: { GET: async () => Response.json({ now: (/* @__PURE__ */ new Date()).toISOString() }, { headers: { "cache-control": "no-store" } }) } } });
-var AuthedRoute = Route$9.update({
+var AuthedRoute = Route$10.update({
 	id: "/_authed",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var SiteRoute = Route$8.update({
+var SiteRoute = Route$9.update({
 	id: "/_site",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var ForgotPasswordRoute = Route$7.update({
+var ForgotPasswordRoute = Route$8.update({
 	id: "/forgot-password",
 	path: "/forgot-password",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var LoginRoute = Route$6.update({
+var LoginRoute = Route$7.update({
 	id: "/login",
 	path: "/login",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var RegisterRoute = Route$5.update({
+var RegisterRoute = Route$6.update({
 	id: "/register",
 	path: "/register",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var ResetPasswordRoute = Route$4.update({
+var ResetPasswordRoute = Route$5.update({
 	id: "/reset-password",
 	path: "/reset-password",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var AuthedAdminRoute = Route$3.update({
+var AuthedAdminRoute = Route$4.update({
 	id: "/admin",
 	path: "/admin",
+	getParentRoute: () => AuthedRoute
+});
+var AuthedMyRegistrationRoute = Route$3.update({
+	id: "/my-registration",
+	path: "/my-registration",
 	getParentRoute: () => AuthedRoute
 });
 var SiteIndexRoute = Route$2.update({
@@ -498,9 +515,12 @@ var SiteJoinRoute = Route$1.update({
 var ApiTimeRoute = Route.update({
 	id: "/api/time",
 	path: "/api/time",
-	getParentRoute: () => Route$10
+	getParentRoute: () => Route$11
 });
-var AuthedRouteChildren = { AuthedAdminRoute };
+var AuthedRouteChildren = {
+	AuthedAdminRoute,
+	AuthedMyRegistrationRoute
+};
 var AuthedRouteWithChildren = AuthedRoute._addFileChildren(AuthedRouteChildren);
 var SiteRouteChildren = {
 	SiteJoinRoute,
@@ -515,7 +535,7 @@ var rootRouteChildren = {
 	ResetPasswordRoute,
 	ApiTimeRoute
 };
-var routeTree = Route$10._addFileChildren(rootRouteChildren)._addFileTypes();
+var routeTree = Route$11._addFileChildren(rootRouteChildren)._addFileTypes();
 var createQueryClient = () => new QueryClient({ defaultOptions: { queries: {
 	staleTime: 3e4,
 	refetchOnWindowFocus: false
@@ -539,4 +559,4 @@ function getRouter() {
 	return router;
 }
 //#endregion
-export { AuthGateError, AuthLayout, Route$2, Route$3, returnToSearch, router_exports, safeReturnTo, useAuth };
+export { AuthGateError, AuthLayout, Route$2, Route$3, Route$4, returnToSearch, router_exports, safeReturnTo, useAuth };

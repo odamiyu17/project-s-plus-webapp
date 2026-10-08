@@ -1,9 +1,9 @@
 import { Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
-import { Button } from "./server-fns-C3c5mFhO.mjs";
+import { Button } from "./server-fns-CND7qUSL.mjs";
 import { LoaderCircle } from "../_libs/lucide-react.mjs";
-import { returnToSearch } from "./router-BIqeqhEH.mjs";
+import { returnToSearch } from "./router-BzYIxyQJ.mjs";
 //#region node_modules/.nitro/vite/services/ssr/assets/parts-CKf_TMKz.js
 var import_jsx_runtime = require_jsx_runtime();
 function GoogleIcon({ className = "h-5 w-5" }) {

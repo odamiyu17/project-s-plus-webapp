@@ -2,7 +2,7 @@ import { TSS_SERVER_FUNCTION, createServerFn, getRequest } from "./ssr.mjs";
 import { createClient } from "../_libs/supabase__supabase-js.mjs";
 import { requireUser, supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { _enum, array, object, string } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/server-fns-iQsLoL3-.js
+//#region node_modules/.nitro/vite/services/ssr/assets/server-fns-5PUQVAr5.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {
@@ -11,6 +11,7 @@ var createServerRpc = (serverFnMeta, splitImportFn) => {
 		[TSS_SERVER_FUNCTION]: true
 	});
 };
+var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 var RegistrationInput = object({
 	game: _enum(["mlbb", "tekken8"]),
 	team_name: string().trim().min(2).max(60).optional(),
@@ -24,12 +25,46 @@ var RegistrationInput = object({
 	player_name: string().trim().max(80).optional(),
 	in_game_id: string().trim().max(40).optional(),
 	contact_name: string().trim().min(2).max(80),
-	contact_email: string().trim().max(120).regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Enter a valid email address"),
+	contact_email: string().trim().max(120).regex(EMAIL_RE, "Enter a valid email address"),
 	contact_phone: string().trim().max(30).optional(),
 	discord: string().trim().max(40).optional(),
 	payment_method: _enum(["gcash", "bank"]),
 	payment_receipt_path: string().trim().regex(/^receipts\/[a-zA-Z0-9._-]+$/, "Invalid receipt path"),
 	payment_reference: string().trim().max(100).optional()
+}).superRefine((value, ctx) => {
+	if (value.game === "mlbb") {
+		if (!value.team_name) ctx.addIssue({
+			code: "custom",
+			path: ["team_name"],
+			message: "Team name is required"
+		});
+		if ((value.roster ?? []).length !== 5) ctx.addIssue({
+			code: "custom",
+			path: ["roster"],
+			message: "Exactly five starters are required"
+		});
+	} else if (!value.in_game_id) ctx.addIssue({
+		code: "custom",
+		path: ["in_game_id"],
+		message: "In-game ID is required"
+	});
+});
+var EditableRegistrationInput = object({
+	game: _enum(["mlbb", "tekken8"]),
+	team_name: string().trim().min(2).max(60).optional(),
+	team_tag: string().trim().min(2).max(6).optional(),
+	region: string().trim().max(40).optional(),
+	roster: array(object({
+		ign: string().trim().min(1).max(40),
+		game_id: string().trim().min(1).max(40),
+		role: string().trim().max(24).optional()
+	})).max(6).optional(),
+	player_name: string().trim().max(80).optional(),
+	in_game_id: string().trim().max(40).optional(),
+	contact_name: string().trim().min(2).max(80),
+	contact_email: string().trim().max(120).regex(EMAIL_RE, "Enter a valid email address"),
+	contact_phone: string().trim().max(30).optional(),
+	discord: string().trim().max(40).optional()
 }).superRefine((value, ctx) => {
 	if (value.game === "mlbb") {
 		if (!value.team_name) ctx.addIssue({
@@ -86,11 +121,13 @@ var submitRegistration_createServerFn_handler = createServerRpc({
 	name: "submitRegistration",
 	filename: "src/lib/server-fns.js"
 }, (opts) => submitRegistration.__executeServer(opts));
-var submitRegistration = createServerFn({ method: "POST" }).validator(RegistrationInput).handler(submitRegistration_createServerFn_handler, async ({ data }) => {
+var submitRegistration = createServerFn({ method: "POST" }).middleware([requireUser]).validator(RegistrationInput).handler(submitRegistration_createServerFn_handler, async ({ data, context }) => {
+	if (!context.user?.id) throw Object.assign(/* @__PURE__ */ new Error("You must be signed in to register"), { status: 401 });
 	const id = crypto.randomUUID();
 	const reference = makeReference();
 	const { error } = await supabase.from("registrations").insert({
 		id,
+		user_id: context.user.id,
 		...withoutBlanks(data),
 		status: "pending",
 		payment_status: "pending",
@@ -112,16 +149,16 @@ var listPublicEntries_createServerFn_handler = createServerRpc({
 }, (opts) => listPublicEntries.__executeServer(opts));
 var listPublicEntries = createServerFn({ method: "GET" }).handler(listPublicEntries_createServerFn_handler, async () => {
 	const { data: rows, error } = await supabase.from("registrations").select(`
-        id,
-        game,
-        team_name,
-        team_tag,
-        region,
-        player_name,
-        in_game_id,
-        roster,
-        updated_at
-      `).eq("status", "approved").order("updated_at", { ascending: false }).limit(200);
+          id,
+          game,
+          team_name,
+          team_tag,
+          region,
+          player_name,
+          in_game_id,
+          roster,
+          updated_at
+        `).eq("status", "approved").order("updated_at", { ascending: false }).limit(200);
 	if (error) {
 		console.error("Public registrations fetch failed:", error);
 		throw new Error(error.message || "Unable to load registrations");
@@ -140,6 +177,97 @@ var listPublicEntries = createServerFn({ method: "GET" }).handler(listPublicEntr
 			role: player?.role ?? ""
 		})) : []
 	}));
+});
+var listMyRegistrations_createServerFn_handler = createServerRpc({
+	id: "c28043b19361a053fd857f2d676d8a2a91cc365f0a97f2a7313b946e0092d0e8",
+	name: "listMyRegistrations",
+	filename: "src/lib/server-fns.js"
+}, (opts) => listMyRegistrations.__executeServer(opts));
+var listMyRegistrations = createServerFn({ method: "GET" }).middleware([requireUser]).handler(listMyRegistrations_createServerFn_handler, async ({ context }) => {
+	const { data: items, error } = await getAuthenticatedSupabase().from("registrations").select(`
+              id,
+              game,
+              team_name,
+              team_tag,
+              region,
+              roster,
+              player_name,
+              in_game_id,
+              contact_name,
+              contact_email,
+              contact_phone,
+              discord,
+              status,
+              reference_code,
+              payment_method,
+              payment_status,
+              payment_reference,
+              payment_receipt_path,
+              created_at,
+              updated_at
+            `).eq("user_id", context.user.id).order("created_at", { ascending: false });
+	if (error) {
+		console.error("User registrations fetch failed:", error);
+		throw new Error(error.message || "Unable to load your registrations");
+	}
+	return (items ?? []).map((item) => ({
+		...item,
+		has_payment_receipt: Boolean(item.payment_receipt_path),
+		payment_receipt_path: void 0
+	}));
+});
+var updateMyRegistration_createServerFn_handler = createServerRpc({
+	id: "4348003b04dece62dae06f472050ca106be4b50a19c11e6bc4f6806ae24755fc",
+	name: "updateMyRegistration",
+	filename: "src/lib/server-fns.js"
+}, (opts) => updateMyRegistration.__executeServer(opts));
+var updateMyRegistration = createServerFn({ method: "POST" }).middleware([requireUser]).validator(object({
+	id: string().uuid(),
+	registration: EditableRegistrationInput
+})).handler(updateMyRegistration_createServerFn_handler, async ({ data, context }) => {
+	const userSupabase = getAuthenticatedSupabase();
+	const { data: existing, error: lookupError } = await userSupabase.from("registrations").select(`
+              id,
+              user_id,
+              status
+            `).eq("id", data.id).eq("user_id", context.user.id).single();
+	if (lookupError || !existing) throw Object.assign(/* @__PURE__ */ new Error("Registration not found"), { status: 404 });
+	if (existing.status !== "pending") throw Object.assign(/* @__PURE__ */ new Error("Only pending registrations can be edited"), { status: 409 });
+	const form = data.registration;
+	const common = {
+		game: form.game,
+		region: form.region?.trim() || null,
+		contact_name: form.contact_name.trim(),
+		contact_email: form.contact_email.trim(),
+		contact_phone: form.contact_phone?.trim() || null,
+		discord: form.discord?.trim() || null,
+		updated_at: (/* @__PURE__ */ new Date()).toISOString()
+	};
+	const updateData = form.game === "mlbb" ? {
+		...common,
+		team_name: form.team_name?.trim() || null,
+		team_tag: form.team_tag?.trim().toUpperCase() || null,
+		roster: (form.roster ?? []).map((player) => ({
+			ign: player.ign.trim(),
+			game_id: player.game_id.trim(),
+			role: player.role?.trim() || ""
+		})),
+		player_name: null,
+		in_game_id: null
+	} : {
+		...common,
+		player_name: form.player_name?.trim() || null,
+		in_game_id: form.in_game_id?.trim() || null,
+		team_name: null,
+		team_tag: null,
+		roster: null
+	};
+	const { data: updated, error: updateError } = await userSupabase.from("registrations").update(updateData).eq("id", data.id).eq("user_id", context.user.id).eq("status", "pending").select("*").single();
+	if (updateError) {
+		console.error("User registration update failed:", updateError);
+		throw new Error(updateError.message || "Unable to update your registration");
+	}
+	return updated;
 });
 var listRegistrations_createServerFn_handler = createServerRpc({
 	id: "de3d95986ac2fb5bf12bd5ed2d1674833fc4ef58be352b8a3abc4f06889c7c3f",
@@ -241,4 +369,4 @@ var getPaymentReceiptUrl = createServerFn({ method: "POST" }).middleware([requir
 	return { signedUrl: signed.signedUrl };
 });
 //#endregion
-export { getPaymentReceiptUrl_createServerFn_handler, listPublicEntries_createServerFn_handler, listRegistrations_createServerFn_handler, setPaymentStatus_createServerFn_handler, setRegistrationStatus_createServerFn_handler, submitRegistration_createServerFn_handler };
+export { getPaymentReceiptUrl_createServerFn_handler, listMyRegistrations_createServerFn_handler, listPublicEntries_createServerFn_handler, listRegistrations_createServerFn_handler, setPaymentStatus_createServerFn_handler, setRegistrationStatus_createServerFn_handler, submitRegistration_createServerFn_handler, updateMyRegistration_createServerFn_handler };
