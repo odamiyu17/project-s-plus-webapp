@@ -1,12 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import {
   ClipboardList,
+  LogOut,
   Menu,
   Shield,
   X,
 } from "lucide-react";
 import { useState } from "react";
 
+import { supabase } from "@/api/supabaseClient";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/AuthContext";
 
@@ -30,12 +32,43 @@ const NAV = [
 ];
 
 export default function SiteHeader() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] =
+    useState(false);
+
+  const [loggingOut, setLoggingOut] =
+    useState(false);
 
   const { user } = useAuth();
 
   const isStaff =
     user?.role === "admin";
+
+  async function handleLogout() {
+    if (loggingOut) {
+      return;
+    }
+
+    setLoggingOut(true);
+
+    try {
+      const { error } =
+        await supabase.auth.signOut();
+
+      if (error) {
+        console.error(
+          "Logout failed:",
+          error,
+        );
+
+        return;
+      }
+
+      window.location.href = "/";
+    } finally {
+      setLoggingOut(false);
+      setOpen(false);
+    }
+  }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-xl">
@@ -85,6 +118,7 @@ export default function SiteHeader() {
             >
               <Link to="/my-registration">
                 <ClipboardList className="mr-2 h-3.5 w-3.5" />
+
                 My Registration
               </Link>
             </Button>
@@ -99,8 +133,28 @@ export default function SiteHeader() {
             >
               <Link to="/admin">
                 <Shield className="mr-2 h-3.5 w-3.5" />
+
                 Command Center
               </Link>
+            </Button>
+          ) : null}
+
+          {user ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              disabled={loggingOut}
+              onClick={
+                handleLogout
+              }
+              className="hidden h-11 rounded-none px-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:bg-destructive/10 hover:text-destructive sm:inline-flex"
+            >
+              <LogOut className="mr-2 h-3.5 w-3.5" />
+
+              {loggingOut
+                ? "Logging Out..."
+                : "Logout"}
             </Button>
           ) : null}
 
@@ -165,33 +219,60 @@ export default function SiteHeader() {
                   className="flex items-center border-b border-border/60 py-4 font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground"
                 >
                   <ClipboardList className="mr-2 h-4 w-4" />
+
                   My Registration
                 </Link>
               </li>
             ) : null}
 
-            <li>
-              <Link
-                to={
-                  isStaff
-                    ? "/admin"
-                    : "/login"
-                }
-                onClick={() =>
-                  setOpen(false)
-                }
-                className="flex items-center py-4 font-mono text-xs uppercase tracking-[0.22em] text-primary"
-              >
-                {isStaff ? (
-                  <>
-                    <Shield className="mr-2 h-4 w-4" />
-                    Command Center
-                  </>
-                ) : (
-                  "Staff Login"
-                )}
-              </Link>
-            </li>
+            {isStaff ? (
+              <li>
+                <Link
+                  to="/admin"
+                  onClick={() =>
+                    setOpen(false)
+                  }
+                  className="flex items-center border-b border-border/60 py-4 font-mono text-xs uppercase tracking-[0.22em] text-primary"
+                >
+                  <Shield className="mr-2 h-4 w-4" />
+
+                  Command Center
+                </Link>
+              </li>
+            ) : null}
+
+            {user ? (
+              <li>
+                <button
+                  type="button"
+                  disabled={
+                    loggingOut
+                  }
+                  onClick={
+                    handleLogout
+                  }
+                  className="flex w-full items-center py-4 text-left font-mono text-xs uppercase tracking-[0.22em] text-destructive transition-colors hover:text-destructive/80 disabled:opacity-50"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+
+                  {loggingOut
+                    ? "Logging Out..."
+                    : "Logout"}
+                </button>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  to="/login"
+                  onClick={() =>
+                    setOpen(false)
+                  }
+                  className="block py-4 font-mono text-xs uppercase tracking-[0.22em] text-primary"
+                >
+                  Staff Login
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       ) : null}
