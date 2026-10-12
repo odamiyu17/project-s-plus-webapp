@@ -90,21 +90,33 @@ function LandingPage() {
           HOMEPAGE CONTENT
           ===================================================== */}
       <div className="relative z-10">
-        <HeroSection
-          entries={entries}
-        />
+        <div className="motion-fade">
+          <HeroSection
+            entries={entries}
+          />
+        </div>
 
-        <TournamentFacts />
+        <div className="motion-rise motion-delay-1">
+          <TournamentFacts />
+        </div>
 
-        <FormatSection />
+        <div className="motion-rise motion-delay-2">
+          <FormatSection />
+        </div>
 
-        <PrizesSection />
+        <div className="motion-rise motion-delay-2">
+          <PrizesSection />
+        </div>
 
-        <TeamsVault
-          entries={entries}
-        />
+        <div className="motion-rise motion-delay-3">
+          <TeamsVault
+            entries={entries}
+          />
+        </div>
 
-        <RegisterBand />
+        <div className="motion-scale-in motion-delay-4">
+          <RegisterBand />
+        </div>
       </div>
     </main>
   );

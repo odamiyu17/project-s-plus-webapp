@@ -7,6 +7,8 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   AlertTriangle,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
   CreditCard,
   Gamepad2,
   ListFilter,
@@ -113,6 +115,9 @@ export default function AdminDashboard({
 
   const [paymentFilter, setPaymentFilter] =
     useState("all");
+
+  const [expandedId, setExpandedId] =
+    useState(null);
 
   const [busyId, setBusyId] =
     useState(null);
@@ -635,32 +640,172 @@ export default function AdminDashboard({
             ) : null}
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-3">
             {visible.length ? (
-              visible.map((item) => (
-                <RegistrationRow
-                  key={item.id}
-                  item={item}
-                  busy={
-                    busyId === item.id
-                  }
-                  paymentBusy={
-                    paymentBusyId ===
-                    item.id
-                  }
-                  receiptBusy={
-                    receiptBusyId ===
-                    item.id
-                  }
-                  onDecide={decide}
-                  onPaymentDecide={
-                    decidePayment
-                  }
-                  onViewReceipt={
-                    viewReceipt
-                  }
-                />
-              ))
+              visible.map((item) => {
+                const isExpanded =
+                  expandedId === item.id;
+
+                const registrationStatus =
+                  statusOf(item);
+
+                const currentPaymentStatus =
+                  paymentStatusOf(item);
+
+                const isSquad =
+                  item.game === "mlbb";
+
+                const entryName =
+                  isSquad
+                    ? item.team_name ||
+                      "Untitled Squad"
+                    : item.in_game_id ||
+                      item.player_name ||
+                      "Unnamed Fighter";
+
+                return (
+                  <div
+                    key={item.id}
+                    className="overflow-hidden border border-border/50 bg-card/30 backdrop-blur-sm"
+                  >
+                    <div className="card-interactive relative p-4 sm:p-5">
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+                      />
+
+                      <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="border border-primary/30 bg-primary/[0.05] px-2 py-1 font-mono text-[8px] uppercase tracking-[0.16em] text-primary">
+                              {isSquad
+                                ? "MLBB"
+                                : "TEKKEN 8"}
+                            </span>
+
+                            <span
+                              className={`border px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] ${
+                                registrationStatus ===
+                                "approved"
+                                  ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400"
+                                  : registrationStatus ===
+                                      "rejected"
+                                    ? "border-destructive/35 bg-destructive/[0.06] text-destructive"
+                                    : "border-primary/30 bg-primary/[0.05] text-primary"
+                              }`}
+                            >
+                              Registration:{" "}
+                              {registrationStatus}
+                            </span>
+
+                            <span
+                              className={`border px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] ${
+                                currentPaymentStatus ===
+                                "verified"
+                                  ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400"
+                                  : currentPaymentStatus ===
+                                      "rejected"
+                                    ? "border-destructive/35 bg-destructive/[0.06] text-destructive"
+                                    : "border-amber-500/30 bg-amber-500/[0.05] text-amber-300"
+                              }`}
+                            >
+                              Payment:{" "}
+                              {currentPaymentStatus}
+                            </span>
+                          </div>
+
+                          <h3 className="mt-3 break-words font-display text-2xl font-bold uppercase leading-tight tracking-[0.03em] text-foreground sm:text-3xl">
+                            {entryName}
+                          </h3>
+
+                          <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                            <span>
+                              Ref:{" "}
+                              {item.reference_code ||
+                                "—"}
+                            </span>
+
+                            <span>
+                              Submitted:{" "}
+                              {item.created_at
+                                ? new Date(
+                                    item.created_at,
+                                  ).toLocaleDateString(
+                                    "en-PH",
+                                    {
+                                      year: "numeric",
+                                      month: "short",
+                                      day: "numeric",
+                                    },
+                                  )
+                                : "—"}
+                            </span>
+                          </div>
+                        </div>
+
+                        <Button
+                          type="button"
+                          variant={
+                            isExpanded
+                              ? "secondary"
+                              : "outline"
+                          }
+                          size="sm"
+                          onClick={() =>
+                            setExpandedId(
+                              isExpanded
+                                ? null
+                                : item.id,
+                            )
+                          }
+                          aria-expanded={
+                            isExpanded
+                          }
+                          className="w-full shrink-0 sm:w-auto"
+                        >
+                          {isExpanded ? (
+                            <>
+                              <ChevronUp className="mr-2 h-4 w-4" />
+                              Close Entry
+                            </>
+                          ) : (
+                            <>
+                              <ChevronDown className="mr-2 h-4 w-4" />
+                              Review Entry
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {isExpanded ? (
+                      <div className="border-t border-border/50 p-2 sm:p-3">
+                        <RegistrationRow
+                          item={item}
+                          busy={
+                            busyId === item.id
+                          }
+                          paymentBusy={
+                            paymentBusyId ===
+                            item.id
+                          }
+                          receiptBusy={
+                            receiptBusyId ===
+                            item.id
+                          }
+                          onDecide={decide}
+                          onPaymentDecide={
+                            decidePayment
+                          }
+                          onViewReceipt={
+                            viewReceipt
+                          }
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })
             ) : (
               <div className="border border-dashed border-border/55 bg-card/20 p-6 text-center sm:p-10">
                 <ShieldCheck className="mx-auto h-8 w-8 text-primary/45" />

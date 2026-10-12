@@ -5,10 +5,10 @@ import { require_jsx_runtime } from "./_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./_ssr/auth-middleware-CmY4KpCX.mjs";
 import { Button, cn } from "./_ssr/server-fns-D7ymjI7_.mjs";
 import { ArrowLeft, ArrowRight, Calendar, MapPin, Plus, Ticket, Trophy, Users } from "./_libs/lucide-react.mjs";
-import { Route$2 } from "./_ssr/router-DetUDRa4.mjs";
+import { Route$2 } from "./_ssr/router-CW0eFnIh.mjs";
 import { Image } from "./_ssr/image-BwNFCwj5.mjs";
 import { useEmblaCarousel } from "./_libs/embla-carousel-react+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/_site-BuOH6PjG.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_site-Bbzz5cEH.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function SectionHeading({ eyebrow, title, description, align = "left", className }) {
@@ -1469,12 +1469,30 @@ function LandingPage() {
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "relative z-10",
 			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeroSection, { entries }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TournamentFacts, {}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormatSection, {}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrizesSection, {}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TeamsVault, { entries }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegisterBand, {})
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "motion-fade",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeroSection, { entries })
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "motion-rise motion-delay-1",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TournamentFacts, {})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "motion-rise motion-delay-2",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormatSection, {})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "motion-rise motion-delay-2",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrizesSection, {})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "motion-rise motion-delay-3",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TeamsVault, { entries })
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "motion-scale-in motion-delay-4",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegisterBand, {})
+				})
 			]
 		})]
 	});
