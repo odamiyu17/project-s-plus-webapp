@@ -102,6 +102,10 @@
   }
 }
 
+/* =========================================================
+   BASE
+   ========================================================= */
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -117,20 +121,11 @@
     @apply bg-background text-foreground font-body antialiased;
   }
 
-  /*
-   * Makes the display font feel more intentional
-   * throughout Project S+ without having to edit
-   * every individual heading.
-   */
   .font-display {
     font-family: var(--font-display);
     font-weight: 600;
   }
 
-  /*
-   * Used for compact labels, navigation,
-   * tournament states, codes and metadata.
-   */
   .font-mono {
     font-family: var(--font-mono);
   }
@@ -141,10 +136,13 @@
   }
 }
 
+/* =========================================================
+   PROJECT S+ UTILITIES
+   ========================================================= */
+
 @layer utilities {
-  /*
-   * Primary CTA pulse.
-   */
+  /* Primary CTA pulse */
+
   .glow-pulse {
     animation:
       volt-pulse
@@ -153,9 +151,8 @@
       infinite;
   }
 
-  /*
-   * Lightning-style section edge.
-   */
+  /* Lightning-style section edge */
+
   .shear-b {
     clip-path:
       polygon(
@@ -166,9 +163,8 @@
       );
   }
 
-  /*
-   * Project S+ gold divider.
-   */
+  /* Project S+ gold divider */
+
   .gilded-rule {
     background-image:
       linear-gradient(
@@ -180,23 +176,493 @@
         transparent
       );
   }
+
+  /* =====================================================
+     PROJECT S+ INTERACTIVE CARD SYSTEM
+     ===================================================== */
+
+  .card-interactive {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    transition:
+      transform 300ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        ),
+      border-color 300ms ease,
+      background-color 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .card-interactive:hover {
+    transform:
+      translate3d(
+        0,
+        -4px,
+        0
+      );
+
+    border-color:
+      hsl(
+        var(--primary) /
+          0.55
+      );
+
+    box-shadow:
+      0 16px 40px -28px
+        hsl(
+          var(--primary) /
+            0.55
+        ),
+      0 0 24px -18px
+        hsl(
+          var(--primary) /
+            0.75
+        );
+  }
+
+  /*
+   * Thin gold highlight that appears
+   * across the top of cards.
+   */
+
+  .card-interactive::before {
+    content: "";
+
+    position: absolute;
+    z-index: 2;
+
+    top: 0;
+    left: 12%;
+    right: 12%;
+
+    height: 1px;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        hsl(
+          var(--primary) /
+            0.9
+        ),
+        transparent
+      );
+
+    opacity: 0;
+
+    transform: scaleX(0.4);
+
+    transition:
+      opacity 300ms ease,
+      transform 450ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        );
+  }
+
+  .card-interactive:hover::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /*
+   * Soft internal ambient glow.
+   */
+
+  .card-interactive::after {
+    content: "";
+
+    position: absolute;
+
+    z-index: -1;
+
+    width: 9rem;
+    height: 9rem;
+
+    top: -4.5rem;
+    right: -4.5rem;
+
+    border-radius: 9999px;
+
+    pointer-events: none;
+
+    background:
+      hsl(
+        var(--primary) /
+          0.10
+      );
+
+    filter: blur(35px);
+
+    opacity: 0;
+
+    transform:
+      scale(0.7);
+
+    transition:
+      opacity 350ms ease,
+      transform 500ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        );
+  }
+
+  .card-interactive:hover::after {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+
+  /*
+   * Stronger version for important cards:
+   * prize cards, selected cards, etc.
+   */
+
+  .card-interactive-glow:hover {
+    box-shadow:
+      0 20px 50px -30px
+        hsl(
+          var(--primary) /
+            0.7
+        ),
+      0 0 32px -20px
+        hsl(
+          var(--primary) /
+            0.9
+        );
+  }
+
+  /*
+   * Content inside the card can use this
+   * for a small horizontal motion.
+   */
+
+  .card-interactive-shift {
+    transition:
+      transform 300ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        );
+  }
+
+  .card-interactive:hover
+    .card-interactive-shift {
+    transform:
+      translateX(3px);
+  }
+
+  /*
+   * Icon animation.
+   */
+
+  .card-interactive-icon {
+    transition:
+      transform 350ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        ),
+      color 300ms ease,
+      filter 300ms ease;
+  }
+
+  .card-interactive:hover
+    .card-interactive-icon {
+    transform:
+      translateY(-2px)
+      scale(1.05);
+
+    color:
+      hsl(
+        var(--primary)
+      );
+
+    filter:
+      drop-shadow(
+        0 0 8px
+        hsl(
+          var(--primary) /
+            0.3
+        )
+      );
+  }
+
+  /*
+   * Optional image treatment for cards
+   * with screenshots/artwork.
+   */
+
+  .card-interactive-image {
+    transition:
+      transform 700ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        ),
+      opacity 400ms ease;
+  }
+
+  .card-interactive:hover
+    .card-interactive-image {
+    transform:
+      scale(1.035);
+
+    opacity: 0.95;
+  }
 }
+
+/* =========================================================
+   PRIMARY CTA PULSE
+   ========================================================= */
 
 @keyframes volt-pulse {
   0%,
   100% {
     box-shadow:
       0 0 0 0
-        hsl(var(--primary) / 0.35),
+        hsl(
+          var(--primary) /
+            0.35
+        ),
       0 0 18px -8px
-        hsl(var(--primary) / 0.6);
+        hsl(
+          var(--primary) /
+            0.6
+        );
   }
 
   50% {
     box-shadow:
       0 0 0 6px
-        hsl(var(--primary) / 0),
+        hsl(
+          var(--primary) /
+            0
+        ),
       0 0 32px -4px
-        hsl(var(--primary) / 0.85);
+        hsl(
+          var(--primary) /
+            0.85
+        );
+  }
+}
+
+/* =========================================================
+   HERO ANIMATIONS
+   ========================================================= */
+
+@keyframes hero-glow-float {
+  0%,
+  100% {
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      )
+      scale(1);
+
+    opacity: 0.65;
+  }
+
+  50% {
+    transform:
+      translate3d(
+        -30px,
+        24px,
+        0
+      )
+      scale(1.08);
+
+    opacity: 1;
+  }
+}
+
+@keyframes hero-energy-scan {
+  0% {
+    opacity: 0.15;
+
+    transform:
+      translateY(-15%)
+      rotate(14deg);
+  }
+
+  50% {
+    opacity: 0.75;
+  }
+
+  100% {
+    opacity: 0.15;
+
+    transform:
+      translateY(15%)
+      rotate(14deg);
+  }
+}
+
+@keyframes hero-rule-expand {
+  from {
+    transform:
+      scaleX(0);
+
+    transform-origin:
+      left;
+  }
+
+  to {
+    transform:
+      scaleX(1);
+
+    transform-origin:
+      left;
+  }
+}
+
+@keyframes hero-accent-glow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 0
+      hsl(
+        var(--primary) /
+          0
+      );
+  }
+
+  50% {
+    text-shadow:
+      0 0 26px
+      hsl(
+        var(--primary) /
+          0.35
+      );
+  }
+}
+
+.hero-glow {
+  animation:
+    hero-glow-float
+    8s
+    ease-in-out
+    infinite;
+}
+
+.hero-glow-delayed {
+  animation:
+    hero-glow-float
+    10s
+    ease-in-out
+    1.5s
+    infinite
+    reverse;
+}
+
+.hero-energy-line {
+  animation:
+    hero-energy-scan
+    6s
+    ease-in-out
+    infinite;
+}
+
+.hero-rule {
+  animation:
+    hero-rule-expand
+    900ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    )
+    both;
+}
+
+.hero-title-accent {
+  animation:
+    hero-accent-glow
+    4s
+    ease-in-out
+    infinite;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(
+      hsl(
+        var(--primary) /
+          0.35
+      )
+        1px,
+      transparent
+        1px
+    ),
+    linear-gradient(
+      90deg,
+      hsl(
+        var(--primary) /
+          0.35
+      )
+        1px,
+      transparent
+        1px
+    );
+
+  background-size:
+    64px 64px;
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   Reduce motion for users who request it.
+   ========================================================= */
+
+@media (
+  prefers-reduced-motion:
+    reduce
+) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+
+  .card-interactive:hover {
+    transform: none;
   }
 }

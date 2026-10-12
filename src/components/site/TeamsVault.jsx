@@ -1,28 +1,49 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Image } from "@/components/ui/image";
+
 import FighterList from "@/components/site/FighterList";
 import SectionHeading from "@/components/site/SectionHeading";
 import VaultCarousel from "@/components/site/VaultCarousel";
+import { Button } from "@/components/ui/button";
+import { Image } from "@/components/ui/image";
 
 const SQUAD_IMAGE = "/images/site/squad.png";
+
 const SQUAD_SLOTS = 16;
 const FIGHTER_SLOTS = 32;
 
-export default function TeamsVault({ entries = [] }) {
-  const squads = entries.filter((entry) => entry.game === "mlbb");
-  const fighters = entries.filter((entry) => entry.game !== "mlbb");
-  const openSquads = Math.max(SQUAD_SLOTS - squads.length, 0);
-  const openFighters = Math.max(FIGHTER_SLOTS - fighters.length, 0);
+export default function TeamsVault({
+  entries = [],
+}) {
+  const squads = entries.filter(
+    (entry) => entry.game === "mlbb",
+  );
+
+  const fighters = entries.filter(
+    (entry) => entry.game !== "mlbb",
+  );
+
+  const openSquads = Math.max(
+    SQUAD_SLOTS - squads.length,
+    0,
+  );
+
+  const openFighters = Math.max(
+    FIGHTER_SLOTS - fighters.length,
+    0,
+  );
 
   return (
-    <section id="roster" className="relative scroll-mt-24 overflow-hidden border-b border-border/70 py-20 sm:py-28">
+    <section
+      id="roster"
+      className="relative scroll-mt-24 overflow-hidden border-b border-border/70 py-20 sm:py-28"
+    >
       <Image
         src={SQUAD_IMAGE}
         alt=""
         fittingType="fill"
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-15"
+        className="pointer-events-none absolute inset-0 h-full w-full scale-[1.02] opacity-15 transition-transform duration-[8000ms] ease-out"
       />
+
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-8">
@@ -33,31 +54,56 @@ export default function TeamsVault({ entries = [] }) {
         />
 
         <div className="mt-10 flex flex-wrap gap-x-10 gap-y-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-          <span>
-            <span className="text-primary">{String(squads.length).padStart(2, "0")}</span> / {SQUAD_SLOTS} MLBB squads
+          <span className="transition-colors duration-300 hover:text-foreground">
+            <span className="text-primary">
+              {String(
+                squads.length,
+              ).padStart(2, "0")}
+            </span>{" "}
+            / {SQUAD_SLOTS} MLBB squads
             locked
           </span>
-          <span>
-            <span className="text-primary">{String(fighters.length).padStart(2, "0")}</span> / {FIGHTER_SLOTS} TEKKEN
+
+          <span className="transition-colors duration-300 hover:text-foreground">
+            <span className="text-primary">
+              {String(
+                fighters.length,
+              ).padStart(2, "0")}
+            </span>{" "}
+            / {FIGHTER_SLOTS} TEKKEN
             fighters locked
           </span>
         </div>
 
         {squads.length ? (
-          <VaultCarousel squads={squads} openSquads={openSquads} />
+          <VaultCarousel
+            squads={squads}
+            openSquads={openSquads}
+          />
         ) : (
-          <div className="mt-10 flex flex-col items-start gap-6 border border-border/80 bg-card/60 p-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="card-interactive mt-10 flex flex-col items-start gap-6 border border-border/80 bg-card/60 p-8 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="font-display text-xl font-bold uppercase tracking-[0.06em] text-foreground">
+              <p className="card-interactive-shift font-display text-xl font-bold uppercase tracking-[0.06em] text-foreground">
                 The vault is still sealed
               </p>
+
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                All {SQUAD_SLOTS} squad slots are open. Register your five and your name goes on this board the moment
-                staff approve your roster.
+                All {SQUAD_SLOTS} squad
+                slots are open. Register
+                your five and your name
+                goes on this board the
+                moment staff approve your
+                roster.
               </p>
             </div>
-            <Button asChild className="h-12 shrink-0 rounded-none px-6 font-mono text-[11px] uppercase tracking-[0.22em]">
-              <Link to="/join">Register now</Link>
+
+            <Button
+              asChild
+              className="h-12 shrink-0 rounded-none px-6 font-mono text-[11px] uppercase tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.98]"
+            >
+              <Link to="/join">
+                Register now
+              </Link>
             </Button>
           </div>
         )}
@@ -66,10 +112,14 @@ export default function TeamsVault({ entries = [] }) {
           <h3 className="font-display text-xl font-bold uppercase tracking-[0.08em] text-foreground sm:text-2xl">
             TEKKEN 8 fighters
           </h3>
+
           <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
             {openFighters} slots remaining
           </p>
-          <FighterList fighters={fighters} />
+
+          <FighterList
+            fighters={fighters}
+          />
         </div>
       </div>
     </section>

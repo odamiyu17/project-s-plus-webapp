@@ -14,7 +14,14 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const RegistrationInput = z
   .object({
-    game: z.enum(["mlbb", "tekken8"]),
+    game: z.enum([
+      "mlbb",
+      "tekken8",
+    ]),
+
+    // -----------------------------------------------------
+    // TEAM
+    // -----------------------------------------------------
 
     team_name: z
       .string()
@@ -30,36 +37,128 @@ const RegistrationInput = z
       .max(6)
       .optional(),
 
+    team_logo_path: z
+      .string()
+      .trim()
+      .regex(
+        /^[a-f0-9-]+\/[a-zA-Z0-9._-]+$/,
+        "Invalid team logo path",
+      )
+      .optional(),
+
     region: z
       .string()
       .trim()
       .max(40)
       .optional(),
 
+    // -----------------------------------------------------
+    // MLBB ROSTER
+    // 5 main players + 2 substitutes
+    // -----------------------------------------------------
+
     roster: z
       .array(
         z.object({
+          /*
+           * Keep IGN because the existing
+           * Roster Vault already uses it.
+           */
           ign: z
             .string()
             .trim()
-            .min(1)
+            .min(
+              1,
+              "IGN is required",
+            )
             .max(40),
 
+          full_name: z
+            .string()
+            .trim()
+            .min(
+              2,
+              "Full name is required",
+            )
+            .max(100),
+
+          birthdate: z
+            .string()
+            .trim()
+            .regex(
+              /^\d{4}-\d{2}-\d{2}$/,
+              "Birthdate must use YYYY-MM-DD",
+            ),
+
+          age: z
+            .number()
+            .int()
+            .min(10)
+            .max(100),
+
+          /*
+           * Existing MLID / Game ID field.
+           */
           game_id: z
             .string()
             .trim()
-            .min(1)
-            .max(40),
+            .min(
+              1,
+              "MLID is required",
+            )
+            .max(60),
+
+          school: z
+            .string()
+            .trim()
+            .max(120)
+            .optional(),
+
+          organization: z
+            .string()
+            .trim()
+            .max(120)
+            .optional(),
+
+          facebook_link: z
+            .string()
+            .trim()
+            .url(
+              "Enter a valid Facebook link",
+            )
+            .max(250),
+
+          contact_number: z
+            .string()
+            .trim()
+            .min(
+              7,
+              "Contact number is required",
+            )
+            .max(30),
 
           role: z
             .string()
             .trim()
             .max(24)
             .optional(),
+
+          /*
+           * main = Players 1–5
+           * substitute = Players 6–7
+           */
+          roster_type: z.enum([
+            "main",
+            "substitute",
+          ]),
         }),
       )
-      .max(6)
+      .max(7)
       .optional(),
+
+    // -----------------------------------------------------
+    // TEKKEN
+    // -----------------------------------------------------
 
     player_name: z
       .string()
@@ -72,6 +171,10 @@ const RegistrationInput = z
       .trim()
       .max(40)
       .optional(),
+
+    // -----------------------------------------------------
+    // MAIN CONTACT
+    // -----------------------------------------------------
 
     contact_name: z
       .string()
@@ -100,6 +203,10 @@ const RegistrationInput = z
       .max(40)
       .optional(),
 
+    // -----------------------------------------------------
+    // PAYMENT
+    // -----------------------------------------------------
+
     payment_method: z.enum([
       "gcash",
       "bank",
@@ -119,36 +226,180 @@ const RegistrationInput = z
       .max(100)
       .optional(),
   })
-  .superRefine((value, ctx) => {
-    if (value.game === "mlbb") {
-      if (!value.team_name) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["team_name"],
-          message:
-            "Team name is required",
-        });
-      }
 
-      if (
-        (value.roster ?? []).length !== 5
-      ) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["roster"],
-          message:
-            "Exactly five starters are required",
-        });
+  .superRefine(
+    (value, ctx) => {
+      if (value.game === "mlbb") {
+        /*
+         * TEAM NAME
+         */
+        if (!value.team_name) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["team_name"],
+            message:
+              "Team name is required",
+          });
+        }
+
+        /*
+         * TEAM LOGO
+         */
+        if (!value.team_logo_path) {
+          ctx.addIssue({
+            code: "custom",
+            path: [
+              "team_logo_path",
+            ],
+            message:
+              "Team logo is required",
+          });
+        }
+
+        /*
+         * EXACTLY 7 PLAYERS
+         */
+        if (
+          (value.roster ?? [])
+            .length !== 7
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["roster"],
+            message:
+              "Exactly 7 players are required",
+          });
+
+          return;
+        }
+
+        const roster =
+          value.roster ?? [];
+
+        const mainPlayers =
+          roster.filter(
+            (player) =>
+              player.roster_type ===
+              "main",
+          );
+
+        const substitutes =
+          roster.filter(
+            (player) =>
+              player.roster_type ===
+              "substitute",
+          );
+
+        /*
+         * EXACTLY 5 MAIN PLAYERS
+         */
+        if (
+          mainPlayers.length !== 5
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["roster"],
+            message:
+              "Exactly 5 main players are required",
+          });
+        }
+
+        /*
+         * EXACTLY 2 SUBSTITUTES
+         */
+        if (
+          substitutes.length !== 2
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["roster"],
+            message:
+              "Exactly 2 substitutes are required",
+          });
+        }
+
+        /*
+         * VERIFY AGE AGAINST BIRTHDATE
+         */
+        roster.forEach(
+          (player, index) => {
+            const birthdate =
+              new Date(
+                `${player.birthdate}T00:00:00Z`,
+              );
+
+            if (
+              Number.isNaN(
+                birthdate.getTime(),
+              )
+            ) {
+              ctx.addIssue({
+                code: "custom",
+                path: [
+                  "roster",
+                  index,
+                  "birthdate",
+                ],
+                message:
+                  "Enter a valid birthdate",
+              });
+
+              return;
+            }
+
+            const today =
+              new Date();
+
+            let calculatedAge =
+              today.getUTCFullYear() -
+              birthdate.getUTCFullYear();
+
+            const monthDifference =
+              today.getUTCMonth() -
+              birthdate.getUTCMonth();
+
+            if (
+              monthDifference < 0 ||
+              (monthDifference ===
+                0 &&
+                today.getUTCDate() <
+                  birthdate.getUTCDate())
+            ) {
+              calculatedAge -= 1;
+            }
+
+            if (
+              calculatedAge !==
+              player.age
+            ) {
+              ctx.addIssue({
+                code: "custom",
+                path: [
+                  "roster",
+                  index,
+                  "age",
+                ],
+                message:
+                  "Age does not match birthdate",
+              });
+            }
+          },
+        );
+      } else {
+        /*
+         * TEKKEN
+         */
+        if (!value.in_game_id) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["in_game_id"],
+            message:
+              "In-game ID is required",
+          });
+        }
       }
-    } else if (!value.in_game_id) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["in_game_id"],
-        message:
-          "In-game ID is required",
-      });
-    }
-  });
+    },
+  );
 
 // ---------------------------------------------------------
 // EDITABLE REGISTRATION VALIDATION
@@ -932,6 +1183,7 @@ export const updateMyPayment =
         return updated;
       },
     );
+    
 // ---------------------------------------------------------
 // ADMIN / STAFF QUEUE
 // ---------------------------------------------------------
