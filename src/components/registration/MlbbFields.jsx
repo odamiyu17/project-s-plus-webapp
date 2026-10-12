@@ -309,6 +309,19 @@ export default function MlbbFields({
 
                 {/* PLAYER FIELDS */}
                 <div className="grid gap-5 p-4 sm:grid-cols-2 sm:p-5">
+                  <PlayerPhotoField
+                    player={player}
+                    index={index}
+                    error={
+                      errors[
+                        `photo_${index}`
+                      ]
+                    }
+                    onChange={
+                      onRosterChange
+                    }
+                  />
+
                   <Field
                     label="Player full name"
                     htmlFor={`full_name_${index}`}
@@ -617,3 +630,102 @@ export default function MlbbFields({
     </fieldset>
   );
 }
+
+function PlayerPhotoField({
+  player,
+  index,
+  error,
+  onChange,
+}) {
+  const [
+    preview,
+    setPreview,
+  ] = useState(null);
+
+  useEffect(() => {
+    if (!player.photo) {
+      setPreview(null);
+      return;
+    }
+
+    const url =
+      URL.createObjectURL(
+        player.photo,
+      );
+
+    setPreview(url);
+
+    return () => {
+      URL.revokeObjectURL(
+        url,
+      );
+    };
+  }, [player.photo]);
+
+  return (
+    <div className="sm:col-span-2">
+      <p className={labelClass}>
+        Player photo
+      </p>
+
+      <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="h-24 w-24 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+          {preview ? (
+            <img
+              src={preview}
+              alt={`Player ${index + 1} preview`}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="grid h-full w-full place-items-center">
+              <ImagePlus className="h-7 w-7 text-primary/60" />
+            </div>
+          )}
+        </div>
+
+        <div className="flex-1">
+          <label
+            htmlFor={`player_photo_${index}`}
+            className="flex cursor-pointer items-center gap-3 border border-dashed border-border/80 px-4 py-4 transition-colors hover:border-primary/60 hover:bg-secondary/20"
+          >
+            <Upload className="h-5 w-5 shrink-0 text-primary" />
+
+            <span>
+              <span className="block text-sm text-foreground">
+                {player.photo
+                  ? player.photo.name
+                  : "Choose player photo"}
+              </span>
+
+              <span className="mt-1 block text-xs text-muted-foreground">
+                JPG, PNG or WEBP · maximum 5 MB
+              </span>
+            </span>
+          </label>
+
+          <input
+            id={`player_photo_${index}`}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={(event) =>
+              onChange(
+                index,
+                "photo",
+                event.target.files?.[0] ??
+                  null,
+              )
+            }
+          />
+
+          {error ? (
+            <p className={`${errorClass} mt-2`}>
+              {error}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+

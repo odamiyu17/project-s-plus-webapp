@@ -3,10 +3,307 @@ import { getRequest } from "@tanstack/react-start/server";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
-import { requireUser } from "@/lib/auth-middleware";
 import { supabase } from "@/api/supabaseClient";
+import { requireUser } from "@/lib/auth-middleware";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_RE =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const TEAM_LOGO_PATH_RE =
+  /^[a-f0-9-]+\/[a-zA-Z0-9._-]+$/;
+
+const MLBB_PHOTO_PATH_RE =
+  /^[a-f0-9-]+\/mlbb\/[a-zA-Z0-9._-]+$/;
+
+const TEKKEN_PHOTO_PATH_RE =
+  /^[a-f0-9-]+\/tekken8\/[a-zA-Z0-9._-]+$/;
+
+const PAYMENT_RECEIPT_PATH_RE =
+  /^receipts\/[a-zA-Z0-9._-]+$/;
+
+// ---------------------------------------------------------
+// PLAYER VALIDATION
+// ---------------------------------------------------------
+
+const MlbbPlayerInput = z.object({
+  player_photo_path: z
+    .string()
+    .trim()
+    .regex(
+      MLBB_PHOTO_PATH_RE,
+      "Invalid player photo path",
+    ),
+
+  full_name: z
+    .string()
+    .trim()
+    .min(
+      2,
+      "Full name is required",
+    )
+    .max(100),
+
+  ign: z
+    .string()
+    .trim()
+    .min(
+      1,
+      "IGN is required",
+    )
+    .max(40),
+
+  birthdate: z
+    .string()
+    .trim()
+    .regex(
+      /^\d{4}-\d{2}-\d{2}$/,
+      "Birthdate must use YYYY-MM-DD",
+    ),
+
+  age: z
+    .number()
+    .int()
+    .min(10)
+    .max(100),
+
+  game_id: z
+    .string()
+    .trim()
+    .min(
+      1,
+      "MLID is required",
+    )
+    .max(60),
+
+  school: z
+    .string()
+    .trim()
+    .max(120)
+    .optional(),
+
+  organization: z
+    .string()
+    .trim()
+    .max(120)
+    .optional(),
+
+  facebook_link: z
+    .string()
+    .trim()
+    .url(
+      "Enter a valid Facebook link",
+    )
+    .max(250),
+
+  contact_number: z
+    .string()
+    .trim()
+    .min(
+      7,
+      "Contact number is required",
+    )
+    .max(30),
+
+  role: z
+    .string()
+    .trim()
+    .max(24)
+    .optional(),
+
+  roster_type: z.enum([
+    "main",
+    "substitute",
+  ]),
+});
+
+// ---------------------------------------------------------
+// SHARED REGISTRATION VALIDATION
+// ---------------------------------------------------------
+
+function addRegistrationIssues(
+  value,
+  ctx,
+) {
+  if (
+    value.game === "mlbb"
+  ) {
+    if (!value.team_name) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["team_name"],
+        message:
+          "Team name is required",
+      });
+    }
+
+    if (
+      !value.team_logo_path
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        path: [
+          "team_logo_path",
+        ],
+        message:
+          "Team logo is required",
+      });
+    }
+
+    const roster =
+      value.roster ?? [];
+
+    if (
+      roster.length !== 7
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["roster"],
+        message:
+          "Exactly 7 players are required",
+      });
+
+      return;
+    }
+
+    const mainPlayers =
+      roster.filter(
+        (player) =>
+          player.roster_type ===
+          "main",
+      );
+
+    const substitutes =
+      roster.filter(
+        (player) =>
+          player.roster_type ===
+          "substitute",
+      );
+
+    if (
+      mainPlayers.length !== 5
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["roster"],
+        message:
+          "Exactly 5 main players are required",
+      });
+    }
+
+    if (
+      substitutes.length !== 2
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["roster"],
+        message:
+          "Exactly 2 substitutes are required",
+      });
+    }
+
+    roster.forEach(
+      (player, index) => {
+        const birthdate =
+          new Date(
+            `${player.birthdate}T00:00:00Z`,
+          );
+
+        if (
+          Number.isNaN(
+            birthdate.getTime(),
+          )
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: [
+              "roster",
+              index,
+              "birthdate",
+            ],
+            message:
+              "Enter a valid birthdate",
+          });
+
+          return;
+        }
+
+        const today =
+          new Date();
+
+        let calculatedAge =
+          today.getUTCFullYear() -
+          birthdate.getUTCFullYear();
+
+        const monthDifference =
+          today.getUTCMonth() -
+          birthdate.getUTCMonth();
+
+        if (
+          monthDifference < 0 ||
+          (monthDifference ===
+            0 &&
+            today.getUTCDate() <
+              birthdate.getUTCDate())
+        ) {
+          calculatedAge -= 1;
+        }
+
+        if (
+          calculatedAge !==
+          player.age
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: [
+              "roster",
+              index,
+              "age",
+            ],
+            message:
+              "Age does not match birthdate",
+          });
+        }
+      },
+    );
+
+    return;
+  }
+
+  if (
+    !value.player_name
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["player_name"],
+      message:
+        "Full name is required",
+    });
+  }
+
+  if (
+    !value.in_game_id
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["in_game_id"],
+      message:
+        "In-game ID is required",
+    });
+  }
+
+  if (
+    !value.player_photo_path
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      path: [
+        "player_photo_path",
+      ],
+      message:
+        "Player photo is required",
+    });
+  }
+}
 
 // ---------------------------------------------------------
 // REGISTRATION VALIDATION
@@ -18,10 +315,6 @@ const RegistrationInput = z
       "mlbb",
       "tekken8",
     ]),
-
-    // -----------------------------------------------------
-    // TEAM
-    // -----------------------------------------------------
 
     team_name: z
       .string()
@@ -41,7 +334,7 @@ const RegistrationInput = z
       .string()
       .trim()
       .regex(
-        /^[a-f0-9-]+\/[a-zA-Z0-9._-]+$/,
+        TEAM_LOGO_PATH_RE,
         "Invalid team logo path",
       )
       .optional(),
@@ -52,117 +345,17 @@ const RegistrationInput = z
       .max(40)
       .optional(),
 
-    // -----------------------------------------------------
-    // MLBB ROSTER
-    // 5 main players + 2 substitutes
-    // -----------------------------------------------------
-
     roster: z
       .array(
-        z.object({
-          /*
-           * Keep IGN because the existing
-           * Roster Vault already uses it.
-           */
-          ign: z
-            .string()
-            .trim()
-            .min(
-              1,
-              "IGN is required",
-            )
-            .max(40),
-
-          full_name: z
-            .string()
-            .trim()
-            .min(
-              2,
-              "Full name is required",
-            )
-            .max(100),
-
-          birthdate: z
-            .string()
-            .trim()
-            .regex(
-              /^\d{4}-\d{2}-\d{2}$/,
-              "Birthdate must use YYYY-MM-DD",
-            ),
-
-          age: z
-            .number()
-            .int()
-            .min(10)
-            .max(100),
-
-          /*
-           * Existing MLID / Game ID field.
-           */
-          game_id: z
-            .string()
-            .trim()
-            .min(
-              1,
-              "MLID is required",
-            )
-            .max(60),
-
-          school: z
-            .string()
-            .trim()
-            .max(120)
-            .optional(),
-
-          organization: z
-            .string()
-            .trim()
-            .max(120)
-            .optional(),
-
-          facebook_link: z
-            .string()
-            .trim()
-            .url(
-              "Enter a valid Facebook link",
-            )
-            .max(250),
-
-          contact_number: z
-            .string()
-            .trim()
-            .min(
-              7,
-              "Contact number is required",
-            )
-            .max(30),
-
-          role: z
-            .string()
-            .trim()
-            .max(24)
-            .optional(),
-
-          /*
-           * main = Players 1–5
-           * substitute = Players 6–7
-           */
-          roster_type: z.enum([
-            "main",
-            "substitute",
-          ]),
-        }),
+        MlbbPlayerInput,
       )
       .max(7)
       .optional(),
 
-    // -----------------------------------------------------
-    // TEKKEN
-    // -----------------------------------------------------
-
     player_name: z
       .string()
       .trim()
+      .min(2)
       .max(80)
       .optional(),
 
@@ -172,9 +365,14 @@ const RegistrationInput = z
       .max(40)
       .optional(),
 
-    // -----------------------------------------------------
-    // MAIN CONTACT
-    // -----------------------------------------------------
+    player_photo_path: z
+      .string()
+      .trim()
+      .regex(
+        TEKKEN_PHOTO_PATH_RE,
+        "Invalid player photo path",
+      )
+      .optional(),
 
     contact_name: z
       .string()
@@ -202,10 +400,6 @@ const RegistrationInput = z
       .trim()
       .max(40)
       .optional(),
-
-    // -----------------------------------------------------
-    // PAYMENT
-    // -----------------------------------------------------
 
     payment_method: z.enum([
       "gcash",
@@ -216,7 +410,7 @@ const RegistrationInput = z
       .string()
       .trim()
       .regex(
-        /^receipts\/[a-zA-Z0-9._-]+$/,
+        PAYMENT_RECEIPT_PATH_RE,
         "Invalid receipt path",
       ),
 
@@ -226,314 +420,124 @@ const RegistrationInput = z
       .max(100)
       .optional(),
   })
-
   .superRefine(
-    (value, ctx) => {
-      if (value.game === "mlbb") {
-        /*
-         * TEAM NAME
-         */
-        if (!value.team_name) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["team_name"],
-            message:
-              "Team name is required",
-          });
-        }
-
-        /*
-         * TEAM LOGO
-         */
-        if (!value.team_logo_path) {
-          ctx.addIssue({
-            code: "custom",
-            path: [
-              "team_logo_path",
-            ],
-            message:
-              "Team logo is required",
-          });
-        }
-
-        /*
-         * EXACTLY 7 PLAYERS
-         */
-        if (
-          (value.roster ?? [])
-            .length !== 7
-        ) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["roster"],
-            message:
-              "Exactly 7 players are required",
-          });
-
-          return;
-        }
-
-        const roster =
-          value.roster ?? [];
-
-        const mainPlayers =
-          roster.filter(
-            (player) =>
-              player.roster_type ===
-              "main",
-          );
-
-        const substitutes =
-          roster.filter(
-            (player) =>
-              player.roster_type ===
-              "substitute",
-          );
-
-        /*
-         * EXACTLY 5 MAIN PLAYERS
-         */
-        if (
-          mainPlayers.length !== 5
-        ) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["roster"],
-            message:
-              "Exactly 5 main players are required",
-          });
-        }
-
-        /*
-         * EXACTLY 2 SUBSTITUTES
-         */
-        if (
-          substitutes.length !== 2
-        ) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["roster"],
-            message:
-              "Exactly 2 substitutes are required",
-          });
-        }
-
-        /*
-         * VERIFY AGE AGAINST BIRTHDATE
-         */
-        roster.forEach(
-          (player, index) => {
-            const birthdate =
-              new Date(
-                `${player.birthdate}T00:00:00Z`,
-              );
-
-            if (
-              Number.isNaN(
-                birthdate.getTime(),
-              )
-            ) {
-              ctx.addIssue({
-                code: "custom",
-                path: [
-                  "roster",
-                  index,
-                  "birthdate",
-                ],
-                message:
-                  "Enter a valid birthdate",
-              });
-
-              return;
-            }
-
-            const today =
-              new Date();
-
-            let calculatedAge =
-              today.getUTCFullYear() -
-              birthdate.getUTCFullYear();
-
-            const monthDifference =
-              today.getUTCMonth() -
-              birthdate.getUTCMonth();
-
-            if (
-              monthDifference < 0 ||
-              (monthDifference ===
-                0 &&
-                today.getUTCDate() <
-                  birthdate.getUTCDate())
-            ) {
-              calculatedAge -= 1;
-            }
-
-            if (
-              calculatedAge !==
-              player.age
-            ) {
-              ctx.addIssue({
-                code: "custom",
-                path: [
-                  "roster",
-                  index,
-                  "age",
-                ],
-                message:
-                  "Age does not match birthdate",
-              });
-            }
-          },
-        );
-      } else {
-        /*
-         * TEKKEN
-         */
-        if (!value.in_game_id) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["in_game_id"],
-            message:
-              "In-game ID is required",
-          });
-        }
-      }
-    },
+    addRegistrationIssues,
   );
 
 // ---------------------------------------------------------
 // EDITABLE REGISTRATION VALIDATION
 // ---------------------------------------------------------
 
-const EditableRegistrationInput = z
-  .object({
-    game: z.enum(["mlbb", "tekken8"]),
+const EditableRegistrationInput =
+  z
+    .object({
+      game: z.enum([
+        "mlbb",
+        "tekken8",
+      ]),
 
-    team_name: z
-      .string()
-      .trim()
-      .min(2)
-      .max(60)
-      .optional(),
+      team_name: z
+        .string()
+        .trim()
+        .min(2)
+        .max(60)
+        .optional(),
 
-    team_tag: z
-      .string()
-      .trim()
-      .min(2)
-      .max(6)
-      .optional(),
+      team_tag: z
+        .string()
+        .trim()
+        .min(2)
+        .max(6)
+        .optional(),
 
-    region: z
-      .string()
-      .trim()
-      .max(40)
-      .optional(),
+      team_logo_path: z
+        .string()
+        .trim()
+        .regex(
+          TEAM_LOGO_PATH_RE,
+          "Invalid team logo path",
+        )
+        .optional(),
 
-    roster: z
-      .array(
-        z.object({
-          ign: z
-            .string()
-            .trim()
-            .min(1)
-            .max(40),
+      region: z
+        .string()
+        .trim()
+        .max(40)
+        .optional(),
 
-          game_id: z
-            .string()
-            .trim()
-            .min(1)
-            .max(40),
+      roster: z
+        .array(
+          MlbbPlayerInput,
+        )
+        .max(7)
+        .optional(),
 
-          role: z
-            .string()
-            .trim()
-            .max(24)
-            .optional(),
-        }),
-      )
-      .max(6)
-      .optional(),
+      player_name: z
+        .string()
+        .trim()
+        .min(2)
+        .max(80)
+        .optional(),
 
-    player_name: z
-      .string()
-      .trim()
-      .max(80)
-      .optional(),
+      in_game_id: z
+        .string()
+        .trim()
+        .max(40)
+        .optional(),
 
-    in_game_id: z
-      .string()
-      .trim()
-      .max(40)
-      .optional(),
+      player_photo_path: z
+        .string()
+        .trim()
+        .regex(
+          TEKKEN_PHOTO_PATH_RE,
+          "Invalid player photo path",
+        )
+        .optional(),
 
-    contact_name: z
-      .string()
-      .trim()
-      .min(2)
-      .max(80),
+      contact_name: z
+        .string()
+        .trim()
+        .min(2)
+        .max(80),
 
-    contact_email: z
-      .string()
-      .trim()
-      .max(120)
-      .regex(
-        EMAIL_RE,
-        "Enter a valid email address",
-      ),
+      contact_email: z
+        .string()
+        .trim()
+        .max(120)
+        .regex(
+          EMAIL_RE,
+          "Enter a valid email address",
+        ),
 
-    contact_phone: z
-      .string()
-      .trim()
-      .max(30)
-      .optional(),
+      contact_phone: z
+        .string()
+        .trim()
+        .max(30)
+        .optional(),
 
-    discord: z
-      .string()
-      .trim()
-      .max(40)
-      .optional(),
-  })
-  .superRefine((value, ctx) => {
-    if (value.game === "mlbb") {
-      if (!value.team_name) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["team_name"],
-          message:
-            "Team name is required",
-        });
-      }
-
-      if (
-        (value.roster ?? []).length !== 5
-      ) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["roster"],
-          message:
-            "Exactly five starters are required",
-        });
-      }
-    } else if (!value.in_game_id) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["in_game_id"],
-        message:
-          "In-game ID is required",
-      });
-    }
-  });
+      discord: z
+        .string()
+        .trim()
+        .max(40)
+        .optional(),
+    })
+    .superRefine(
+      addRegistrationIssues,
+    );
 
 // ---------------------------------------------------------
 // HELPERS
 // ---------------------------------------------------------
 
-function withoutBlanks(record) {
+function withoutBlanks(
+  record,
+) {
   const cleaned = {};
 
-  for (const [key, value] of Object.entries(
-    record,
-  )) {
+  for (
+    const [key, value] of
+      Object.entries(record)
+  ) {
     if (
       value === undefined ||
       value === null ||
@@ -542,64 +546,118 @@ function withoutBlanks(record) {
       continue;
     }
 
-    if (Array.isArray(value)) {
-      const items = value.filter(Boolean);
+    if (
+      Array.isArray(value)
+    ) {
+      const items =
+        value.filter(Boolean);
 
       if (!items.length) {
         continue;
       }
 
-      cleaned[key] = items;
+      cleaned[key] =
+        items;
+
       continue;
     }
 
-    cleaned[key] = value;
+    cleaned[key] =
+      value;
   }
 
   return cleaned;
 }
 
-const makeReference = () =>
-  `S+${crypto
-    .randomUUID()
-    .replace(/-/g, "")
-    .slice(0, 6)
-    .toUpperCase()}`;
+const makeReference =
+  () =>
+    `S+${crypto
+      .randomUUID()
+      .replace(/-/g, "")
+      .slice(0, 6)
+      .toUpperCase()}`;
 
-/**
- * Create a Supabase client that acts as the currently
- * logged-in user.
- *
- * This is important for RLS. The normal public Supabase
- * client uses the publishable key only, so PostgreSQL sees
- * it as anon.
- */
 function getAuthenticatedSupabase() {
-  const request = getRequest();
+  const request =
+    getRequest();
 
   const authorization =
-    request.headers.get("authorization");
+    request.headers.get(
+      "authorization",
+    );
 
   return createClient(
-    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env
+      .VITE_SUPABASE_URL,
+
     import.meta.env
       .VITE_SUPABASE_PUBLISHABLE_KEY,
+
     {
       global: {
-        headers: authorization
-          ? {
-              Authorization:
-                authorization,
-            }
-          : {},
+        headers:
+          authorization
+            ? {
+                Authorization:
+                  authorization,
+              }
+            : {},
       },
 
       auth: {
-        persistSession: false,
-        autoRefreshToken: false,
+        persistSession:
+          false,
+
+        autoRefreshToken:
+          false,
       },
     },
   );
+}
+
+function cleanMlbbPlayer(
+  player,
+) {
+  return {
+    player_photo_path:
+      player.player_photo_path,
+
+    full_name:
+      player.full_name.trim(),
+
+    ign:
+      player.ign.trim(),
+
+    birthdate:
+      player.birthdate,
+
+    age:
+      player.age,
+
+    game_id:
+      player.game_id.trim(),
+
+    school:
+      player.school?.trim() ||
+      "",
+
+    organization:
+      player.organization?.trim() ||
+      "",
+
+    facebook_link:
+      player.facebook_link.trim(),
+
+    contact_number:
+      player.contact_number.trim(),
+
+    role:
+      player.role?.trim() ||
+      "",
+
+    roster_type:
+      player.roster_type,
+  };
 }
 
 // ---------------------------------------------------------
@@ -610,11 +668,20 @@ export const submitRegistration =
   createServerFn({
     method: "POST",
   })
-    .middleware([requireUser])
-    .validator(RegistrationInput)
+    .middleware([
+      requireUser,
+    ])
+    .validator(
+      RegistrationInput,
+    )
     .handler(
-      async ({ data, context }) => {
-        if (!context.user?.id) {
+      async ({
+        data,
+        context,
+      }) => {
+        if (
+          !context.user?.id
+        ) {
           throw Object.assign(
             new Error(
               "You must be signed in to register",
@@ -631,18 +698,25 @@ export const submitRegistration =
         const reference =
           makeReference();
 
-        const { error } =
+        const {
+          error,
+        } =
           await supabase
-            .from("registrations")
+            .from(
+              "registrations",
+            )
             .insert({
               id,
 
               user_id:
                 context.user.id,
 
-              ...withoutBlanks(data),
+              ...withoutBlanks(
+                data,
+              ),
 
-              status: "pending",
+              status:
+                "pending",
 
               payment_status:
                 "pending",
@@ -665,6 +739,7 @@ export const submitRegistration =
 
         return {
           id,
+
           reference_code:
             reference,
         };
@@ -673,140 +748,186 @@ export const submitRegistration =
 
 // ---------------------------------------------------------
 // PUBLIC ROSTER
+// Only information intentionally safe for public display.
 // ---------------------------------------------------------
 
 export const listPublicEntries =
   createServerFn({
     method: "GET",
-  }).handler(async () => {
-    const {
-      data: rows,
-      error,
-    } = await supabase
-      .from("registrations")
-      .select(
-        `
-          id,
-          game,
-          team_name,
-          team_tag,
-          region,
-          player_name,
-          in_game_id,
-          roster,
-          updated_at
-        `,
-      )
-      .eq("status", "approved")
-      .order("updated_at", {
-        ascending: false,
-      })
-      .limit(200);
-
-    if (error) {
-      console.error(
-        "Public registrations fetch failed:",
+  }).handler(
+    async () => {
+      const {
+        data: rows,
         error,
-      );
-
-      throw new Error(
-        error.message ||
-          "Unable to load registrations",
-      );
-    }
-
-    return (rows ?? []).map(
-      (row) => ({
-        id: row.id,
-        game: row.game,
-
-        team_name:
-          row.team_name ?? "",
-
-        team_tag:
-          row.team_tag ?? "",
-
-        region:
-          row.region ?? "",
-
-        player_name:
-          row.player_name ?? "",
-
-        in_game_id:
-          row.in_game_id ?? "",
-
-        roster:
-          Array.isArray(row.roster)
-            ? row.roster.map(
-                (player) => ({
-                  ign:
-                    player?.ign ??
-                    "",
-
-                  game_id:
-                    player?.game_id ??
-                    "",
-
-                  role:
-                    player?.role ??
-                    "",
-                }),
-              )
-            : [],
-      }),
-    );
-  });
-
-// ---------------------------------------------------------
-// CURRENT USER REGISTRATIONS
-// ---------------------------------------------------------
-
-export const listMyRegistrations =
-  createServerFn({
-    method: "GET",
-  })
-    .middleware([requireUser])
-    .handler(
-      async ({ context }) => {
-        const userSupabase =
-          getAuthenticatedSupabase();
-
-        const {
-          data: items,
-          error,
-        } = await userSupabase
-          .from("registrations")
+      } =
+        await supabase
+          .from(
+            "registrations",
+          )
           .select(
             `
               id,
               game,
               team_name,
               team_tag,
+              team_logo_path,
               region,
-              roster,
               player_name,
               in_game_id,
-              contact_name,
-              contact_email,
-              contact_phone,
-              discord,
-              status,
-              reference_code,
-              payment_method,
-              payment_status,
-              payment_reference,
-              payment_receipt_path,
-              created_at,
+              roster,
               updated_at
             `,
           )
           .eq(
-            "user_id",
-            context.user.id,
+            "status",
+            "approved",
           )
-          .order("created_at", {
-            ascending: false,
-          });
+          .order(
+            "updated_at",
+            {
+              ascending:
+                false,
+            },
+          )
+          .limit(200);
+
+      if (error) {
+        console.error(
+          "Public registrations fetch failed:",
+          error,
+        );
+
+        throw new Error(
+          error.message ||
+            "Unable to load registrations",
+        );
+      }
+
+      return (
+        rows ?? []
+      ).map(
+        (row) => ({
+          id:
+            row.id,
+
+          game:
+            row.game,
+
+          team_name:
+            row.team_name ??
+            "",
+
+          team_tag:
+            row.team_tag ??
+            "",
+
+          team_logo_path:
+            row.team_logo_path ??
+            "",
+
+          region:
+            row.region ??
+            "",
+
+          player_name:
+            row.player_name ??
+            "",
+
+          in_game_id:
+            row.in_game_id ??
+            "",
+
+          roster:
+            Array.isArray(
+              row.roster,
+            )
+              ? row.roster.map(
+                  (
+                    player,
+                  ) => ({
+                    ign:
+                      player?.ign ??
+                      "",
+
+                    role:
+                      player?.role ??
+                      "",
+
+                    roster_type:
+                      player?.roster_type ??
+                      "",
+                  }),
+                )
+              : [],
+        }),
+      );
+    },
+  );
+
+// ---------------------------------------------------------
+// CURRENT USER REGISTRATIONS
+// Private competitor data.
+// ---------------------------------------------------------
+
+export const listMyRegistrations =
+  createServerFn({
+    method: "GET",
+  })
+    .middleware([
+      requireUser,
+    ])
+    .handler(
+      async ({
+        context,
+      }) => {
+        const userSupabase =
+          getAuthenticatedSupabase();
+
+        const {
+          data: items,
+          error,
+        } =
+          await userSupabase
+            .from(
+              "registrations",
+            )
+            .select(
+              `
+                id,
+                game,
+                team_name,
+                team_tag,
+                team_logo_path,
+                region,
+                roster,
+                player_name,
+                in_game_id,
+                player_photo_path,
+                contact_name,
+                contact_email,
+                contact_phone,
+                discord,
+                status,
+                reference_code,
+                payment_method,
+                payment_status,
+                payment_reference,
+                payment_receipt_path,
+                created_at,
+                updated_at
+              `,
+            )
+            .eq(
+              "user_id",
+              context.user.id,
+            )
+            .order(
+              "created_at",
+              {
+                ascending:
+                  false,
+              },
+            );
 
         if (error) {
           console.error(
@@ -820,7 +941,9 @@ export const listMyRegistrations =
           );
         }
 
-        return (items ?? []).map(
+        return (
+          items ?? []
+        ).map(
           (item) => ({
             ...item,
 
@@ -844,38 +967,53 @@ export const updateMyRegistration =
   createServerFn({
     method: "POST",
   })
-    .middleware([requireUser])
+    .middleware([
+      requireUser,
+    ])
     .validator(
       z.object({
-        id: z.string().uuid(),
+        id: z
+          .string()
+          .uuid(),
 
         registration:
           EditableRegistrationInput,
       }),
     )
     .handler(
-      async ({ data, context }) => {
+      async ({
+        data,
+        context,
+      }) => {
         const userSupabase =
           getAuthenticatedSupabase();
 
         const {
-          data: existing,
-          error: lookupError,
-        } = await userSupabase
-          .from("registrations")
-          .select(
-            `
-              id,
-              user_id,
-              status
-            `,
-          )
-          .eq("id", data.id)
-          .eq(
-            "user_id",
-            context.user.id,
-          )
-          .single();
+          data:
+            existing,
+          error:
+            lookupError,
+        } =
+          await userSupabase
+            .from(
+              "registrations",
+            )
+            .select(
+              `
+                id,
+                user_id,
+                status
+              `,
+            )
+            .eq(
+              "id",
+              data.id,
+            )
+            .eq(
+              "user_id",
+              context.user.id,
+            )
+            .single();
 
         if (
           lookupError ||
@@ -909,7 +1047,8 @@ export const updateMyRegistration =
           data.registration;
 
         const common = {
-          game: form.game,
+          game:
+            form.game,
 
           region:
             form.region?.trim() ||
@@ -930,11 +1069,13 @@ export const updateMyRegistration =
             null,
 
           updated_at:
-            new Date().toISOString(),
+            new Date()
+              .toISOString(),
         };
 
         const updateData =
-          form.game === "mlbb"
+          form.game ===
+          "mlbb"
             ? {
                 ...common,
 
@@ -948,23 +1089,25 @@ export const updateMyRegistration =
                     .toUpperCase() ||
                   null,
 
+                team_logo_path:
+                  form.team_logo_path ||
+                  null,
+
                 roster: (
-                  form.roster ?? []
-                ).map((player) => ({
-                  ign:
-                    player.ign.trim(),
+                  form.roster ??
+                  []
+                ).map(
+                  cleanMlbbPlayer,
+                ),
 
-                  game_id:
-                    player.game_id.trim(),
+                player_name:
+                  null,
 
-                  role:
-                    player.role?.trim() ||
-                    "",
-                })),
+                in_game_id:
+                  null,
 
-                // Remove TEKKEN-only fields.
-                player_name: null,
-                in_game_id: null,
+                player_photo_path:
+                  null,
               }
             : {
                 ...common,
@@ -977,31 +1120,54 @@ export const updateMyRegistration =
                   form.in_game_id?.trim() ||
                   null,
 
-                // Remove MLBB-only fields.
-                team_name: null,
-                team_tag: null,
-                roster: null,
+                player_photo_path:
+                  form.player_photo_path ||
+                  null,
+
+                team_name:
+                  null,
+
+                team_tag:
+                  null,
+
+                team_logo_path:
+                  null,
+
+                roster:
+                  null,
               };
 
         const {
-          data: updated,
-          error: updateError,
-        } = await userSupabase
-          .from("registrations")
-          .update(updateData)
-          .eq("id", data.id)
-          .eq(
-            "user_id",
-            context.user.id,
-          )
-          .eq(
-            "status",
-            "pending",
-          )
-          .select("*")
-          .single();
+          data:
+            updated,
+          error:
+            updateError,
+        } =
+          await userSupabase
+            .from(
+              "registrations",
+            )
+            .update(
+              updateData,
+            )
+            .eq(
+              "id",
+              data.id,
+            )
+            .eq(
+              "user_id",
+              context.user.id,
+            )
+            .eq(
+              "status",
+              "pending",
+            )
+            .select("*")
+            .single();
 
-        if (updateError) {
+        if (
+          updateError
+        ) {
           console.error(
             "User registration update failed:",
             updateError,
@@ -1025,57 +1191,75 @@ export const updateMyPayment =
   createServerFn({
     method: "POST",
   })
-    .middleware([requireUser])
+    .middleware([
+      requireUser,
+    ])
     .validator(
       z.object({
-        id: z.string().uuid(),
-
-        payment_method: z.enum([
-          "gcash",
-          "bank",
-        ]),
-
-        payment_reference: z
+        id: z
           .string()
-          .trim()
-          .max(100)
-          .optional(),
+          .uuid(),
 
-        payment_receipt_path: z
-          .string()
-          .trim()
-          .regex(
-            /^receipts\/[a-zA-Z0-9._-]+$/,
-            "Invalid receipt path",
-          )
-          .optional(),
+        payment_method:
+          z.enum([
+            "gcash",
+            "bank",
+          ]),
+
+        payment_reference:
+          z
+            .string()
+            .trim()
+            .max(100)
+            .optional(),
+
+        payment_receipt_path:
+          z
+            .string()
+            .trim()
+            .regex(
+              PAYMENT_RECEIPT_PATH_RE,
+              "Invalid receipt path",
+            )
+            .optional(),
       }),
     )
     .handler(
-      async ({ data, context }) => {
+      async ({
+        data,
+        context,
+      }) => {
         const userSupabase =
           getAuthenticatedSupabase();
 
         const {
-          data: existing,
-          error: lookupError,
-        } = await userSupabase
-          .from("registrations")
-          .select(
-            `
-              id,
-              user_id,
-              status,
-              payment_status,
-              payment_receipt_path
-            `,
-          )
-          .eq("id", data.id)
-          .eq(
-            "user_id",
-            context.user.id,
-          )
-          .single();
+          data:
+            existing,
+          error:
+            lookupError,
+        } =
+          await userSupabase
+            .from(
+              "registrations",
+            )
+            .select(
+              `
+                id,
+                user_id,
+                status,
+                payment_status,
+                payment_receipt_path
+              `,
+            )
+            .eq(
+              "id",
+              data.id,
+            )
+            .eq(
+              "user_id",
+              context.user.id,
+            )
+            .single();
 
         if (
           lookupError ||
@@ -1128,7 +1312,8 @@ export const updateMyPayment =
             null,
 
           updated_at:
-            new Date().toISOString(),
+            new Date()
+              .toISOString(),
         };
 
         if (
@@ -1139,36 +1324,48 @@ export const updateMyPayment =
         }
 
         const {
-          data: updated,
-          error: updateError,
-        } = await userSupabase
-          .from("registrations")
-          .update(updateData)
-          .eq("id", data.id)
-          .eq(
-            "user_id",
-            context.user.id,
-          )
-          .eq(
-            "status",
-            "pending",
-          )
-          .neq(
-            "payment_status",
-            "verified",
-          )
-          .select(
-            `
-              id,
-              payment_method,
-              payment_reference,
-              payment_status,
-              updated_at
-            `,
-          )
-          .single();
+          data:
+            updated,
+          error:
+            updateError,
+        } =
+          await userSupabase
+            .from(
+              "registrations",
+            )
+            .update(
+              updateData,
+            )
+            .eq(
+              "id",
+              data.id,
+            )
+            .eq(
+              "user_id",
+              context.user.id,
+            )
+            .eq(
+              "status",
+              "pending",
+            )
+            .neq(
+              "payment_status",
+              "verified",
+            )
+            .select(
+              `
+                id,
+                payment_method,
+                payment_reference,
+                payment_status,
+                updated_at
+              `,
+            )
+            .single();
 
-        if (updateError) {
+        if (
+          updateError
+        ) {
           console.error(
             "User payment update failed:",
             updateError,
@@ -1183,7 +1380,7 @@ export const updateMyPayment =
         return updated;
       },
     );
-    
+
 // ---------------------------------------------------------
 // ADMIN / STAFF QUEUE
 // ---------------------------------------------------------
@@ -1192,15 +1389,21 @@ export const listRegistrations =
   createServerFn({
     method: "GET",
   })
-    .middleware([requireUser])
+    .middleware([
+      requireUser,
+    ])
     .handler(
-      async ({ context }) => {
+      async ({
+        context,
+      }) => {
         if (
           context.user?.role !==
           "admin"
         ) {
           return {
-            authorized: false,
+            authorized:
+              false,
+
             items: [],
           };
         }
@@ -1211,13 +1414,20 @@ export const listRegistrations =
         const {
           data: items,
           error,
-        } = await adminSupabase
-          .from("registrations")
-          .select("*")
-          .order("created_at", {
-            ascending: false,
-          })
-          .limit(300);
+        } =
+          await adminSupabase
+            .from(
+              "registrations",
+            )
+            .select("*")
+            .order(
+              "created_at",
+              {
+                ascending:
+                  false,
+              },
+            )
+            .limit(300);
 
         if (error) {
           console.error(
@@ -1232,7 +1442,9 @@ export const listRegistrations =
         }
 
         return {
-          authorized: true,
+          authorized:
+            true,
+
           items:
             items ?? [],
         };
@@ -1247,7 +1459,9 @@ export const setRegistrationStatus =
   createServerFn({
     method: "POST",
   })
-    .middleware([requireUser])
+    .middleware([
+      requireUser,
+    ])
     .validator(
       z.object({
         id: z
@@ -1263,7 +1477,10 @@ export const setRegistrationStatus =
       }),
     )
     .handler(
-      async ({ data, context }) => {
+      async ({
+        data,
+        context,
+      }) => {
         if (
           context.user?.role !==
           "admin"
@@ -1282,29 +1499,41 @@ export const setRegistrationStatus =
           getAuthenticatedSupabase();
 
         const now =
-          new Date().toISOString();
+          new Date()
+            .toISOString();
 
         const {
-          data: updated,
+          data:
+            updated,
           error,
-        } = await adminSupabase
-          .from("registrations")
-          .update({
-            status: data.status,
+        } =
+          await adminSupabase
+            .from(
+              "registrations",
+            )
+            .update({
+              status:
+                data.status,
 
-            reviewed_at: now,
+              reviewed_at:
+                now,
 
-            reviewed_by:
-              context.user.email ??
-              "",
+              reviewed_by:
+                context.user
+                  .email ??
+                "",
 
-            updated_at: now,
-          })
-          .eq("id", data.id)
-          .select(
-            "id, status",
-          )
-          .single();
+              updated_at:
+                now,
+            })
+            .eq(
+              "id",
+              data.id,
+            )
+            .select(
+              "id, status",
+            )
+            .single();
 
         if (error) {
           console.error(
@@ -1319,7 +1548,8 @@ export const setRegistrationStatus =
         }
 
         return {
-          id: updated.id,
+          id:
+            updated.id,
 
           status:
             updated.status,
@@ -1335,7 +1565,9 @@ export const setPaymentStatus =
   createServerFn({
     method: "POST",
   })
-    .middleware([requireUser])
+    .middleware([
+      requireUser,
+    ])
     .validator(
       z.object({
         id: z
@@ -1351,7 +1583,10 @@ export const setPaymentStatus =
       }),
     )
     .handler(
-      async ({ data, context }) => {
+      async ({
+        data,
+        context,
+      }) => {
         if (
           context.user?.role !==
           "admin"
@@ -1370,22 +1605,30 @@ export const setPaymentStatus =
           getAuthenticatedSupabase();
 
         const {
-          data: updated,
+          data:
+            updated,
           error,
-        } = await adminSupabase
-          .from("registrations")
-          .update({
-            payment_status:
-              data.status,
+        } =
+          await adminSupabase
+            .from(
+              "registrations",
+            )
+            .update({
+              payment_status:
+                data.status,
 
-            updated_at:
-              new Date().toISOString(),
-          })
-          .eq("id", data.id)
-          .select(
-            "id, payment_status",
-          )
-          .single();
+              updated_at:
+                new Date()
+                  .toISOString(),
+            })
+            .eq(
+              "id",
+              data.id,
+            )
+            .select(
+              "id, payment_status",
+            )
+            .single();
 
         if (error) {
           console.error(
@@ -1400,7 +1643,8 @@ export const setPaymentStatus =
         }
 
         return {
-          id: updated.id,
+          id:
+            updated.id,
 
           payment_status:
             updated.payment_status,
@@ -1416,7 +1660,9 @@ export const getPaymentReceiptUrl =
   createServerFn({
     method: "POST",
   })
-    .middleware([requireUser])
+    .middleware([
+      requireUser,
+    ])
     .validator(
       z.object({
         id: z
@@ -1426,7 +1672,10 @@ export const getPaymentReceiptUrl =
       }),
     )
     .handler(
-      async ({ data, context }) => {
+      async ({
+        data,
+        context,
+      }) => {
         if (
           context.user?.role !==
           "admin"
@@ -1445,16 +1694,23 @@ export const getPaymentReceiptUrl =
           getAuthenticatedSupabase();
 
         const {
-          data: registration,
+          data:
+            registration,
           error:
             registrationError,
-        } = await adminSupabase
-          .from("registrations")
-          .select(
-            "payment_receipt_path",
-          )
-          .eq("id", data.id)
-          .single();
+        } =
+          await adminSupabase
+            .from(
+              "registrations",
+            )
+            .select(
+              "payment_receipt_path",
+            )
+            .eq(
+              "id",
+              data.id,
+            )
+            .single();
 
         if (
           registrationError
@@ -1471,7 +1727,8 @@ export const getPaymentReceiptUrl =
         }
 
         if (
-          !registration?.payment_receipt_path
+          !registration
+            ?.payment_receipt_path
         ) {
           throw new Error(
             "No payment receipt has been uploaded",
@@ -1483,16 +1740,20 @@ export const getPaymentReceiptUrl =
           error:
             signedUrlError,
         } =
-          await adminSupabase.storage
+          await adminSupabase
+            .storage
             .from(
               "payment-receipts",
             )
             .createSignedUrl(
-              registration.payment_receipt_path,
+              registration
+                .payment_receipt_path,
               300,
             );
 
-        if (signedUrlError) {
+        if (
+          signedUrlError
+        ) {
           console.error(
             "Receipt signed URL failed:",
             signedUrlError,

@@ -9,12 +9,18 @@ import {
   ArrowLeft,
   CheckCircle2,
   CreditCard,
+  ImagePlus,
   ImageUp,
   Save,
+  Upload,
+  UserRound,
 } from "lucide-react";
 
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/api/supabaseClient";
@@ -56,6 +62,7 @@ export const Route = createFileRoute(
 });
 
 const MLBB_ROLES = [
+  "",
   "EXP",
   "Gold",
   "Jungle",
@@ -63,14 +70,160 @@ const MLBB_ROLES = [
   "Roam",
 ];
 
-const MAX_RECEIPT_SIZE =
+const MAX_IMAGE_SIZE =
   5 * 1024 * 1024;
 
-const ALLOWED_RECEIPT_TYPES = [
+const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
   "image/png",
   "image/webp",
 ];
+
+const EMAIL_RE =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// ---------------------------------------------------------
+// HELPERS
+// ---------------------------------------------------------
+
+function calculateAge(
+  birthdate,
+) {
+  if (!birthdate) {
+    return null;
+  }
+
+  const date =
+    new Date(
+      `${birthdate}T00:00:00`,
+    );
+
+  if (
+    Number.isNaN(
+      date.getTime(),
+    )
+  ) {
+    return null;
+  }
+
+  const today =
+    new Date();
+
+  let age =
+    today.getFullYear() -
+    date.getFullYear();
+
+  const monthDifference =
+    today.getMonth() -
+    date.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 &&
+      today.getDate() <
+        date.getDate())
+  ) {
+    age -= 1;
+  }
+
+  return age;
+}
+
+function isFacebookUrl(
+  value,
+) {
+  try {
+    const url =
+      new URL(value);
+
+    const hostname =
+      url.hostname
+        .toLowerCase()
+        .replace(
+          /^www\./,
+          "",
+        );
+
+    return (
+      hostname ===
+        "facebook.com" ||
+      hostname.endsWith(
+        ".facebook.com",
+      )
+    );
+  } catch {
+    return false;
+  }
+}
+
+function validateImage(
+  file,
+  label = "Image",
+) {
+  if (!file) {
+    return null;
+  }
+
+  if (
+    !ALLOWED_IMAGE_TYPES.includes(
+      file.type,
+    )
+  ) {
+    return `${label} must be a JPEG, PNG, or WEBP image`;
+  }
+
+  if (
+    file.size >
+    MAX_IMAGE_SIZE
+  ) {
+    return `${label} must be 5MB or smaller`;
+  }
+
+  return null;
+}
+
+function extensionForFile(
+  file,
+) {
+  if (
+    file.type ===
+    "image/png"
+  ) {
+    return "png";
+  }
+
+  if (
+    file.type ===
+    "image/webp"
+  ) {
+    return "webp";
+  }
+
+  return "jpg";
+}
+
+function getPublicUrl(
+  bucket,
+  path,
+) {
+  if (!path) {
+    return "";
+  }
+
+  const { data } =
+    supabase.storage
+      .from(bucket)
+      .getPublicUrl(path);
+
+  return (
+    data?.publicUrl ??
+    ""
+  );
+}
+
+// ---------------------------------------------------------
+// ROUTE
+// ---------------------------------------------------------
 
 function EditRegistrationPage() {
   const registrations =
@@ -97,7 +250,8 @@ function EditRegistrationPage() {
 
   const registration =
     registrations.find(
-      (item) => item.id === id,
+      (item) =>
+        item.id === id,
     );
 
   if (!registration) {
@@ -109,9 +263,9 @@ function EditRegistrationPage() {
           </h1>
 
           <p className="mt-4 text-sm text-muted-foreground">
-            This registration does not
-            exist or does not belong to
-            your account.
+            This registration does
+            not exist or does not
+            belong to your account.
           </p>
 
           <Button
@@ -139,11 +293,14 @@ function EditRegistrationPage() {
           </h1>
 
           <p className="mt-4 text-sm leading-6 text-muted-foreground">
-            Only pending registrations
-            can be edited. This entry is
+            Only pending
+            registrations can be
+            edited. This entry is
             currently{" "}
             <span className="uppercase text-primary">
-              {registration.status}
+              {
+                registration.status
+              }
             </span>
             .
           </p>
@@ -177,6 +334,10 @@ function EditRegistrationPage() {
     />
   );
 }
+
+// ---------------------------------------------------------
+// EDIT FORM
+// ---------------------------------------------------------
 
 function EditRegistrationForm({
   registration,
@@ -257,37 +418,103 @@ function EditRegistrationForm({
           : [];
 
       return Array.from(
-        { length: 5 },
-        (_, index) => ({
-          ign:
-            existing[index]?.ign ??
-            "",
+        {
+          length: 7,
+        },
+        (_, index) => {
+          const player =
+            existing[index] ??
+            {};
 
-          game_id:
-            existing[index]
-              ?.game_id ?? "",
+          return {
+            player_photo_path:
+              player.player_photo_path ??
+              "",
 
-          role:
-            existing[index]?.role ??
-            MLBB_ROLES[index] ??
-            "",
-        }),
+            replacement_photo:
+              null,
+
+            full_name:
+              player.full_name ??
+              "",
+
+            ign:
+              player.ign ??
+              "",
+
+            birthdate:
+              player.birthdate ??
+              "",
+
+            age:
+              player.age ??
+              calculateAge(
+                player.birthdate,
+              ),
+
+            game_id:
+              player.game_id ??
+              "",
+
+            school:
+              player.school ??
+              "",
+
+            organization:
+              player.organization ??
+              "",
+
+            facebook_link:
+              player.facebook_link ??
+              "",
+
+            contact_number:
+              player.contact_number ??
+              "",
+
+            role:
+              player.role ??
+              "",
+
+            roster_type:
+              player.roster_type ??
+              (index < 5
+                ? "main"
+                : "substitute"),
+          };
+        },
       );
     });
+
+  const [
+    replacementTeamLogo,
+    setReplacementTeamLogo,
+  ] = useState(null);
+
+  const [
+    replacementTekkenPhoto,
+    setReplacementTekkenPhoto,
+  ] = useState(null);
 
   const [
     replacementReceipt,
     setReplacementReceipt,
   ] = useState(null);
 
+  // -------------------------------------------------------
+  // CHANGES
+  // -------------------------------------------------------
+
   function changeValue(
     key,
     value,
   ) {
-    setValues((current) => ({
-      ...current,
-      [key]: value,
-    }));
+    setValues(
+      (current) => ({
+        ...current,
+        [key]: value,
+      }),
+    );
   }
 
   function changePlayer(
@@ -295,16 +522,151 @@ function EditRegistrationForm({
     key,
     value,
   ) {
-    setRoster((current) =>
-      current.map(
-        (player, playerIndex) =>
-          playerIndex === index
-            ? {
+    setRoster(
+      (current) =>
+        current.map(
+          (
+            player,
+            playerIndex,
+          ) => {
+            if (
+              playerIndex !==
+              index
+            ) {
+              return player;
+            }
+
+            if (
+              key ===
+              "birthdate"
+            ) {
+              return {
                 ...player,
-                [key]: value,
-              }
-            : player,
-      ),
+
+                birthdate:
+                  value,
+
+                age:
+                  calculateAge(
+                    value,
+                  ),
+              };
+            }
+
+            return {
+              ...player,
+              [key]: value,
+            };
+          },
+        ),
+    );
+  }
+
+  function handleTeamLogoChange(
+    event,
+  ) {
+    const file =
+      event.target.files?.[0] ??
+      null;
+
+    if (!file) {
+      setReplacementTeamLogo(
+        null,
+      );
+
+      return;
+    }
+
+    const error =
+      validateImage(
+        file,
+        "Team logo",
+      );
+
+    if (error) {
+      toast.error(error);
+      event.target.value =
+        "";
+      return;
+    }
+
+    setReplacementTeamLogo(
+      file,
+    );
+  }
+
+  function handleTekkenPhotoChange(
+    event,
+  ) {
+    const file =
+      event.target.files?.[0] ??
+      null;
+
+    if (!file) {
+      setReplacementTekkenPhoto(
+        null,
+      );
+
+      return;
+    }
+
+    const error =
+      validateImage(
+        file,
+        "Player photo",
+      );
+
+    if (error) {
+      toast.error(error);
+      event.target.value =
+        "";
+      return;
+    }
+
+    setReplacementTekkenPhoto(
+      file,
+    );
+  }
+
+  function handlePlayerPhotoChange(
+    index,
+    event,
+  ) {
+    const file =
+      event.target.files?.[0] ??
+      null;
+
+    if (!file) {
+      changePlayer(
+        index,
+        "replacement_photo",
+        null,
+      );
+
+      return;
+    }
+
+    const error =
+      validateImage(
+        file,
+        `Player ${
+          index + 1
+        } photo`,
+      );
+
+    if (error) {
+      toast.error(error);
+
+      event.target.value =
+        "";
+
+      return;
+    }
+
+    changePlayer(
+      index,
+      "replacement_photo",
+      file,
     );
   }
 
@@ -312,7 +674,8 @@ function EditRegistrationForm({
     event,
   ) {
     const file =
-      event.target.files?.[0];
+      event.target.files?.[0] ??
+      null;
 
     if (!file) {
       setReplacementReceipt(
@@ -322,29 +685,17 @@ function EditRegistrationForm({
       return;
     }
 
-    if (
-      !ALLOWED_RECEIPT_TYPES.includes(
-        file.type,
-      )
-    ) {
-      toast.error(
-        "Receipt must be a JPEG, PNG, or WEBP image",
+    const error =
+      validateImage(
+        file,
+        "Receipt",
       );
 
-      event.target.value = "";
+    if (error) {
+      toast.error(error);
 
-      return;
-    }
-
-    if (
-      file.size >
-      MAX_RECEIPT_SIZE
-    ) {
-      toast.error(
-        "Receipt image must be 5MB or smaller",
-      );
-
-      event.target.value = "";
+      event.target.value =
+        "";
 
       return;
     }
@@ -354,6 +705,10 @@ function EditRegistrationForm({
     );
   }
 
+  // -------------------------------------------------------
+  // VALIDATION
+  // -------------------------------------------------------
+
   function validate() {
     if (
       !values.contact_name.trim()
@@ -362,9 +717,11 @@ function EditRegistrationForm({
     }
 
     if (
-      !values.contact_email.trim()
+      !EMAIL_RE.test(
+        values.contact_email.trim(),
+      )
     ) {
-      return "Contact email is required";
+      return "Enter a valid contact email";
     }
 
     if (isSquad) {
@@ -374,77 +731,270 @@ function EditRegistrationForm({
         return "Team name is required";
       }
 
+      if (
+        !registration.team_logo_path &&
+        !replacementTeamLogo
+      ) {
+        return "Team logo is required";
+      }
+
+      if (
+        roster.length !== 7
+      ) {
+        return "Exactly 7 MLBB players are required";
+      }
+
       for (
         let index = 0;
-        index < roster.length;
+        index <
+        roster.length;
         index += 1
       ) {
+        const player =
+          roster[index];
+
+        const number =
+          index + 1;
+
         if (
-          !roster[
-            index
-          ].ign.trim()
+          !player.player_photo_path &&
+          !player.replacement_photo
         ) {
-          return `Player ${
-            index + 1
-          } IGN is required`;
+          return `Player ${number} photo is required`;
         }
 
         if (
-          !roster[
-            index
-          ].game_id.trim()
+          !player.full_name.trim()
         ) {
-          return `Player ${
-            index + 1
-          } Game ID is required`;
+          return `Player ${number} full name is required`;
+        }
+
+        if (
+          !player.ign.trim()
+        ) {
+          return `Player ${number} IGN is required`;
+        }
+
+        if (
+          !player.birthdate
+        ) {
+          return `Player ${number} birthdate is required`;
+        }
+
+        if (
+          player.age === null ||
+          player.age ===
+            undefined ||
+          player.age < 10 ||
+          player.age > 100
+        ) {
+          return `Player ${number} has an invalid birthdate`;
+        }
+
+        if (
+          !player.game_id.trim()
+        ) {
+          return `Player ${number} MLID is required`;
+        }
+
+        if (
+          !player.facebook_link.trim()
+        ) {
+          return `Player ${number} Facebook link is required`;
+        }
+
+        if (
+          !isFacebookUrl(
+            player.facebook_link.trim(),
+          )
+        ) {
+          return `Player ${number} must have a valid Facebook link`;
+        }
+
+        if (
+          player.contact_number
+            .trim()
+            .length < 7
+        ) {
+          return `Player ${number} contact number is required`;
         }
       }
-    } else if (
+
+      return null;
+    }
+
+    if (
+      !values.player_name.trim()
+    ) {
+      return "Player full name is required";
+    }
+
+    if (
       !values.in_game_id.trim()
     ) {
       return "In-game ID is required";
     }
 
+    if (
+      !registration.player_photo_path &&
+      !replacementTekkenPhoto
+    ) {
+      return "Player photo is required";
+    }
+
     return null;
+  }
+
+  // -------------------------------------------------------
+  // STORAGE
+  // -------------------------------------------------------
+
+  async function getUserId() {
+    const {
+      data,
+      error,
+    } =
+      await supabase.auth.getUser();
+
+    if (
+      error ||
+      !data?.user?.id
+    ) {
+      throw new Error(
+        "You must be signed in to edit your registration",
+      );
+    }
+
+    return data.user.id;
+  }
+
+  async function uploadTeamLogo(
+    file,
+    userId,
+  ) {
+    const extension =
+      extensionForFile(
+        file,
+      );
+
+    const path =
+      `${userId}/${crypto.randomUUID()}.${extension}`;
+
+    const {
+      error,
+    } =
+      await supabase.storage
+        .from(
+          "team-logos",
+        )
+        .upload(
+          path,
+          file,
+          {
+            contentType:
+              file.type,
+
+            upsert: false,
+          },
+        );
+
+    if (error) {
+      throw new Error(
+        error.message ||
+          "Unable to upload replacement team logo",
+      );
+    }
+
+    return path;
+  }
+
+  async function uploadPlayerPhoto(
+    file,
+    userId,
+    game,
+  ) {
+    const extension =
+      extensionForFile(
+        file,
+      );
+
+    const path =
+      `${userId}/${game}/${crypto.randomUUID()}.${extension}`;
+
+    const {
+      error,
+    } =
+      await supabase.storage
+        .from(
+          "player-photos",
+        )
+        .upload(
+          path,
+          file,
+          {
+            contentType:
+              file.type,
+
+            upsert: false,
+          },
+        );
+
+    if (error) {
+      throw new Error(
+        error.message ||
+          "Unable to upload replacement player photo",
+      );
+    }
+
+    return path;
   }
 
   async function uploadReceipt(
     file,
   ) {
     const extension =
-      file.name
-        .split(".")
-        .pop()
-        ?.toLowerCase() ||
-      "jpg";
+      extensionForFile(
+        file,
+      );
 
     const path =
       `receipts/${crypto.randomUUID()}.${extension}`;
 
     const {
-      error: uploadError,
-    } = await supabase.storage
-      .from("payment-receipts")
-      .upload(path, file, {
-        cacheControl: "3600",
-        upsert: false,
-        contentType: file.type,
-      });
+      error,
+    } =
+      await supabase.storage
+        .from(
+          "payment-receipts",
+        )
+        .upload(
+          path,
+          file,
+          {
+            cacheControl:
+              "3600",
 
-    if (uploadError) {
-      console.error(
-        "Replacement receipt upload failed:",
-        uploadError,
-      );
+            upsert:
+              false,
 
+            contentType:
+              file.type,
+          },
+        );
+
+    if (error) {
       throw new Error(
-        uploadError.message ||
+        error.message ||
           "Unable to upload replacement receipt",
       );
     }
 
     return path;
   }
+
+  // -------------------------------------------------------
+  // SUBMIT
+  // -------------------------------------------------------
 
   async function handleSubmit(
     event,
@@ -464,9 +1014,149 @@ function EditRegistrationForm({
 
     setBusy(true);
 
+    let registrationUpdated =
+      false;
+
+    let uploadedReceiptPath =
+      null;
+
     try {
+      const needsUserId =
+        Boolean(
+          replacementTeamLogo,
+        ) ||
+        Boolean(
+          replacementTekkenPhoto,
+        ) ||
+        roster.some(
+          (player) =>
+            Boolean(
+              player.replacement_photo,
+            ),
+        );
+
+      const userId =
+        needsUserId
+          ? await getUserId()
+          : null;
+
       // -------------------------------------
-      // UPDATE REGISTRATION DETAILS
+      // TEAM LOGO
+      // -------------------------------------
+
+      let finalTeamLogoPath =
+        registration.team_logo_path ??
+        "";
+
+      if (
+        isSquad &&
+        replacementTeamLogo
+      ) {
+        finalTeamLogoPath =
+          await uploadTeamLogo(
+            replacementTeamLogo,
+            userId,
+          );
+      }
+
+      // -------------------------------------
+      // MLBB PLAYER PHOTOS
+      // -------------------------------------
+
+      let finalRoster =
+        roster;
+
+      if (isSquad) {
+        finalRoster =
+          [];
+
+        for (
+          let index = 0;
+          index <
+          roster.length;
+          index += 1
+        ) {
+          const player =
+            roster[index];
+
+          let photoPath =
+            player.player_photo_path;
+
+          if (
+            player.replacement_photo
+          ) {
+            photoPath =
+              await uploadPlayerPhoto(
+                player.replacement_photo,
+                userId,
+                "mlbb",
+              );
+          }
+
+          finalRoster.push({
+            player_photo_path:
+              photoPath,
+
+            full_name:
+              player.full_name.trim(),
+
+            ign:
+              player.ign.trim(),
+
+            birthdate:
+              player.birthdate,
+
+            age:
+              player.age,
+
+            game_id:
+              player.game_id.trim(),
+
+            school:
+              player.school.trim(),
+
+            organization:
+              player.organization.trim(),
+
+            facebook_link:
+              player.facebook_link.trim(),
+
+            contact_number:
+              player.contact_number.trim(),
+
+            role:
+              player.role.trim(),
+
+            roster_type:
+              index < 5
+                ? "main"
+                : "substitute",
+          });
+        }
+      }
+
+      // -------------------------------------
+      // TEKKEN PLAYER PHOTO
+      // -------------------------------------
+
+      let finalTekkenPhotoPath =
+        registration.player_photo_path ??
+        "";
+
+      if (
+        !isSquad &&
+        replacementTekkenPhoto
+      ) {
+        finalTekkenPhotoPath =
+          await uploadPlayerPhoto(
+            replacementTekkenPhoto,
+            userId,
+            "tekken8",
+          );
+      }
+
+      // -------------------------------------
+      // REGISTRATION PAYLOAD
       // -------------------------------------
 
       const registrationPayload =
@@ -499,25 +1189,20 @@ function EditRegistrationForm({
             .trim()
             .toUpperCase();
 
+        registrationPayload.team_logo_path =
+          finalTeamLogoPath;
+
         registrationPayload.roster =
-          roster.map(
-            (player) => ({
-              ign:
-                player.ign.trim(),
-
-              game_id:
-                player.game_id.trim(),
-
-              role:
-                player.role.trim(),
-            }),
-          );
+          finalRoster;
       } else {
         registrationPayload.player_name =
           values.player_name.trim();
 
         registrationPayload.in_game_id =
           values.in_game_id.trim();
+
+        registrationPayload.player_photo_path =
+          finalTekkenPhotoPath;
       }
 
       await updateRegistration({
@@ -530,8 +1215,11 @@ function EditRegistrationForm({
         },
       });
 
+      registrationUpdated =
+        true;
+
       // -------------------------------------
-      // CHECK WHETHER PAYMENT CHANGED
+      // PAYMENT CHANGES
       // -------------------------------------
 
       const paymentMethodChanged =
@@ -554,20 +1242,14 @@ function EditRegistrationForm({
           replacementReceipt,
         );
 
-      // -------------------------------------
-      // UPLOAD NEW RECEIPT IF SELECTED
-      // -------------------------------------
-
       if (
         paymentChanged &&
         !paymentLocked
       ) {
-        let receiptPath;
-
         if (
           replacementReceipt
         ) {
-          receiptPath =
+          uploadedReceiptPath =
             await uploadReceipt(
               replacementReceipt,
             );
@@ -584,13 +1266,16 @@ function EditRegistrationForm({
             values.payment_reference.trim(),
         };
 
-        if (receiptPath) {
+        if (
+          uploadedReceiptPath
+        ) {
           paymentData.payment_receipt_path =
-            receiptPath;
+            uploadedReceiptPath;
         }
 
         await updatePayment({
-          data: paymentData,
+          data:
+            paymentData,
         });
       }
 
@@ -603,7 +1288,8 @@ function EditRegistrationForm({
       );
 
       await navigate({
-        to: "/my-registration",
+        to:
+          "/my-registration",
       });
     } catch (error) {
       console.error(
@@ -611,19 +1297,49 @@ function EditRegistrationForm({
         error,
       );
 
+      /*
+       * Only remove a newly uploaded
+       * payment receipt when payment
+       * update failed.
+       *
+       * Registration media is not
+       * deleted here because the
+       * registration may already have
+       * been successfully updated to
+       * those new paths.
+       */
+      if (
+        uploadedReceiptPath
+      ) {
+        await supabase.storage
+          .from(
+            "payment-receipts",
+          )
+          .remove([
+            uploadedReceiptPath,
+          ])
+          .catch(() => {});
+      }
+
       toast.error(
-        error?.message ||
-          "Unable to update registration",
+        registrationUpdated
+          ? "Registration details were saved, but another update failed. Please reopen your registration and check the payment section."
+          : error?.message ||
+              "Unable to update registration",
       );
     } finally {
       setBusy(false);
     }
   }
 
+  // -------------------------------------------------------
+  // UI
+  // -------------------------------------------------------
+
   return (
     <main className="min-h-screen pb-24">
       <header className="border-b border-border/70 bg-secondary/20">
-        <div className="mx-auto max-w-4xl px-4 py-12 sm:px-8 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4 py-12 sm:px-8 sm:py-16">
           <Link
             to="/my-registration"
             className="inline-flex items-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
@@ -667,31 +1383,51 @@ function EditRegistrationForm({
       </header>
 
       <form
-        onSubmit={handleSubmit}
-        className="mx-auto max-w-4xl px-4 py-10 sm:px-8"
+        onSubmit={
+          handleSubmit
+        }
+        className="mx-auto max-w-5xl px-4 py-10 sm:px-8"
       >
-        {/* ENTRY DETAILS */}
+        {/* ============================================= */}
+        {/* MLBB TEAM */}
+        {/* ============================================= */}
 
-        <section className="border border-border/80 bg-card/50 p-5 sm:p-7">
-          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
-            Entry Details
-          </p>
+        {isSquad ? (
+          <section className="border border-border/80 bg-card/50 p-5 sm:p-7">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+              Team Details
+            </p>
 
-          <div className="mt-6 grid gap-5 sm:grid-cols-2">
-            {isSquad ? (
-              <>
+            <div className="mt-6 grid gap-6 sm:grid-cols-[160px_1fr]">
+              <TeamLogoEditor
+                currentPath={
+                  registration.team_logo_path
+                }
+                replacement={
+                  replacementTeamLogo
+                }
+                onChange={
+                  handleTeamLogoChange
+                }
+              />
+
+              <div className="grid gap-5 sm:grid-cols-2">
                 <Field
                   label="Team Name"
                   value={
                     values.team_name
                   }
-                  onChange={(value) =>
+                  onChange={(
+                    value,
+                  ) =>
                     changeValue(
                       "team_name",
                       value,
                     )
                   }
-                  maxLength={60}
+                  maxLength={
+                    60
+                  }
                 />
 
                 <Field
@@ -699,191 +1435,453 @@ function EditRegistrationForm({
                   value={
                     values.team_tag
                   }
-                  onChange={(value) =>
+                  onChange={(
+                    value,
+                  ) =>
                     changeValue(
                       "team_tag",
                       value,
                     )
                   }
-                  maxLength={6}
-                />
-              </>
-            ) : (
-              <>
-                <Field
-                  label="Player Name"
-                  value={
-                    values.player_name
+                  maxLength={
+                    6
                   }
-                  onChange={(value) =>
-                    changeValue(
-                      "player_name",
-                      value,
-                    )
-                  }
-                  maxLength={80}
                 />
 
                 <Field
-                  label="In-Game ID"
+                  label="Region / City"
                   value={
-                    values.in_game_id
+                    values.region
                   }
-                  onChange={(value) =>
+                  onChange={(
+                    value,
+                  ) =>
                     changeValue(
-                      "in_game_id",
+                      "region",
                       value,
                     )
                   }
-                  maxLength={40}
+                  maxLength={
+                    40
+                  }
+                  className="sm:col-span-2"
                 />
-              </>
-            )}
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section className="border border-border/80 bg-card/50 p-5 sm:p-7">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+              Fighter Details
+            </p>
 
-            <Field
-              label="Region"
-              value={values.region}
-              onChange={(value) =>
-                changeValue(
-                  "region",
+            <div className="mt-6">
+              <TekkenPhotoEditor
+                currentPath={
+                  registration.player_photo_path
+                }
+                replacement={
+                  replacementTekkenPhoto
+                }
+                onChange={
+                  handleTekkenPhotoChange
+                }
+              />
+            </div>
+
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              <Field
+                label="Player Full Name"
+                value={
+                  values.player_name
+                }
+                onChange={(
                   value,
-                )
-              }
-              maxLength={40}
-            />
-          </div>
-        </section>
+                ) =>
+                  changeValue(
+                    "player_name",
+                    value,
+                  )
+                }
+                maxLength={
+                  80
+                }
+              />
 
+              <Field
+                label="In-Game ID"
+                value={
+                  values.in_game_id
+                }
+                onChange={(
+                  value,
+                ) =>
+                  changeValue(
+                    "in_game_id",
+                    value,
+                  )
+                }
+                maxLength={
+                  40
+                }
+              />
+
+              <Field
+                label="Region / City"
+                value={
+                  values.region
+                }
+                onChange={(
+                  value,
+                ) =>
+                  changeValue(
+                    "region",
+                    value,
+                  )
+                }
+                maxLength={
+                  40
+                }
+                className="sm:col-span-2"
+              />
+            </div>
+          </section>
+        )}
+
+        {/* ============================================= */}
         {/* MLBB ROSTER */}
+        {/* ============================================= */}
 
         {isSquad ? (
           <section className="mt-6 border border-border/80 bg-card/50 p-5 sm:p-7">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
-              Squad Roster
-            </p>
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+                  Squad Roster
+                </p>
 
-            <div className="mt-6 space-y-5">
+                <h2 className="mt-2 font-display text-2xl font-bold uppercase text-foreground">
+                  7 Players
+                </h2>
+              </div>
+
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
+                5 Main · 2
+                Substitute
+              </span>
+            </div>
+
+            <div className="mt-6 space-y-6">
               {roster.map(
                 (
                   player,
                   index,
-                ) => (
-                  <div
-                    key={index}
-                    className="border border-border/70 bg-background/50 p-4"
-                  >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                      Player{" "}
-                      {index + 1}
-                    </p>
+                ) => {
+                  const isMain =
+                    index < 5;
 
-                    <div className="mt-4 grid gap-4 md:grid-cols-3">
-                      <Field
-                        label="IGN"
-                        value={
-                          player.ign
-                        }
-                        onChange={(
-                          value,
-                        ) =>
-                          changePlayer(
-                            index,
-                            "ign",
-                            value,
-                          )
-                        }
-                        maxLength={
-                          40
-                        }
-                      />
+                  return (
+                    <article
+                      key={
+                        index
+                      }
+                      className="overflow-hidden border border-border/70 bg-background/50"
+                    >
+                      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 bg-secondary/20 px-4 py-3">
+                        <div>
+                          <p className="font-display text-lg font-bold uppercase text-foreground">
+                            Player{" "}
+                            {index +
+                              1}
+                          </p>
 
-                      <Field
-                        label="Game ID"
-                        value={
-                          player.game_id
-                        }
-                        onChange={(
-                          value,
-                        ) =>
-                          changePlayer(
-                            index,
-                            "game_id",
-                            value,
-                          )
-                        }
-                        maxLength={
-                          40
-                        }
-                      />
+                          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                            {isMain
+                              ? "Main Roster"
+                              : "Substitute"}
+                          </p>
+                        </div>
 
-                      <div className="space-y-2">
-                        <Label>
-                          Role
-                        </Label>
-
-                        <select
-                          value={
-                            player.role
-                          }
-                          onChange={(
-                            event,
-                          ) =>
-                            changePlayer(
-                              index,
-                              "role",
-                              event
-                                .target
-                                .value,
-                            )
-                          }
-                          className="h-10 w-full rounded-none border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                        <span
+                          className={`border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] ${
+                            isMain
+                              ? "border-primary/40 text-primary"
+                              : "border-border text-muted-foreground"
+                          }`}
                         >
-                          {MLBB_ROLES.map(
-                            (
-                              role,
-                            ) => (
-                              <option
-                                key={
-                                  role
-                                }
-                                value={
-                                  role
-                                }
-                              >
-                                {role}
-                              </option>
-                            ),
-                          )}
-                        </select>
+                          {isMain
+                            ? "Main"
+                            : "Sub"}
+                        </span>
+                      </header>
+
+                      <div className="p-4 sm:p-5">
+                        <PlayerPhotoEditor
+                          player={
+                            player
+                          }
+                          index={
+                            index
+                          }
+                          onChange={
+                            handlePlayerPhotoChange
+                          }
+                        />
+
+                        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                          <Field
+                            label="Player Full Name"
+                            value={
+                              player.full_name
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "full_name",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              100
+                            }
+                          />
+
+                          <Field
+                            label="IGN"
+                            value={
+                              player.ign
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "ign",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              40
+                            }
+                          />
+
+                          <Field
+                            label="Birthdate"
+                            type="date"
+                            value={
+                              player.birthdate
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "birthdate",
+                                value,
+                              )
+                            }
+                          />
+
+                          <div className="space-y-2">
+                            <Label>
+                              Age
+                            </Label>
+
+                            <Input
+                              value={
+                                player.age ??
+                                ""
+                              }
+                              readOnly
+                              placeholder="Calculated automatically"
+                              className="h-10 rounded-none bg-muted/30"
+                            />
+                          </div>
+
+                          <Field
+                            label="MLID"
+                            value={
+                              player.game_id
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "game_id",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              60
+                            }
+                          />
+
+                          <Field
+                            label="Contact Number"
+                            type="tel"
+                            value={
+                              player.contact_number
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "contact_number",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              30
+                            }
+                          />
+
+                          <Field
+                            label="School"
+                            value={
+                              player.school
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "school",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              120
+                            }
+                            hint="Optional"
+                          />
+
+                          <Field
+                            label="Organization"
+                            value={
+                              player.organization
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "organization",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              120
+                            }
+                            hint="Optional"
+                          />
+
+                          <Field
+                            label="Facebook Link"
+                            type="url"
+                            value={
+                              player.facebook_link
+                            }
+                            onChange={(
+                              value,
+                            ) =>
+                              changePlayer(
+                                index,
+                                "facebook_link",
+                                value,
+                              )
+                            }
+                            maxLength={
+                              250
+                            }
+                            className="sm:col-span-2"
+                          />
+
+                          <div className="space-y-2 sm:col-span-2">
+                            <Label>
+                              Role
+                            </Label>
+
+                            <select
+                              value={
+                                player.role
+                              }
+                              onChange={(
+                                event,
+                              ) =>
+                                changePlayer(
+                                  index,
+                                  "role",
+                                  event
+                                    .target
+                                    .value,
+                                )
+                              }
+                              className="h-10 w-full rounded-none border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                            >
+                              {MLBB_ROLES.map(
+                                (
+                                  role,
+                                ) => (
+                                  <option
+                                    key={
+                                      role ||
+                                      "none"
+                                    }
+                                    value={
+                                      role
+                                    }
+                                  >
+                                    {role ||
+                                      "Select role (optional)"}
+                                  </option>
+                                ),
+                              )}
+                            </select>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ),
+                    </article>
+                  );
+                },
               )}
             </div>
           </section>
         ) : null}
 
+        {/* ============================================= */}
         {/* CONTACT */}
+        {/* ============================================= */}
 
         <section className="mt-6 border border-border/80 bg-card/50 p-5 sm:p-7">
           <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
-            Contact Information
+            Main Contact
           </p>
 
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             <Field
-              label="Contact Name"
+              label={
+                isSquad
+                  ? "Captain / Contact Name"
+                  : "Contact Name"
+              }
               value={
                 values.contact_name
               }
-              onChange={(value) =>
+              onChange={(
+                value,
+              ) =>
                 changeValue(
                   "contact_name",
                   value,
                 )
               }
-              maxLength={80}
+              maxLength={
+                80
+              }
             />
 
             <Field
@@ -892,27 +1890,37 @@ function EditRegistrationForm({
               value={
                 values.contact_email
               }
-              onChange={(value) =>
+              onChange={(
+                value,
+              ) =>
                 changeValue(
                   "contact_email",
                   value,
                 )
               }
-              maxLength={120}
+              maxLength={
+                120
+              }
             />
 
             <Field
               label="Contact Phone"
+              type="tel"
               value={
                 values.contact_phone
               }
-              onChange={(value) =>
+              onChange={(
+                value,
+              ) =>
                 changeValue(
                   "contact_phone",
                   value,
                 )
               }
-              maxLength={30}
+              maxLength={
+                30
+              }
+              hint="Optional"
             />
 
             <Field
@@ -920,18 +1928,25 @@ function EditRegistrationForm({
               value={
                 values.discord
               }
-              onChange={(value) =>
+              onChange={(
+                value,
+              ) =>
                 changeValue(
                   "discord",
                   value,
                 )
               }
-              maxLength={40}
+              maxLength={
+                40
+              }
+              hint="Optional"
             />
           </div>
         </section>
 
+        {/* ============================================= */}
         {/* PAYMENT */}
+        {/* ============================================= */}
 
         <section className="mt-6 border border-border/80 bg-card/50 p-5 sm:p-7">
           <div className="flex flex-wrap items-start justify-between gap-4">
@@ -961,9 +1976,8 @@ function EditRegistrationForm({
               </div>
             ) : (
               <span className="border border-primary/30 bg-primary/10 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">
-                {
-                  registration.payment_status
-                }
+                {registration.payment_status ||
+                  "pending"}
               </span>
             )}
           </div>
@@ -981,10 +1995,14 @@ function EditRegistrationForm({
                 disabled={
                   paymentLocked
                 }
-                onChange={(event) =>
+                onChange={(
+                  event,
+                ) =>
                   changeValue(
                     "payment_method",
-                    event.target.value,
+                    event
+                      .target
+                      .value,
                   )
                 }
                 className="h-10 w-full rounded-none border border-input bg-background px-3 text-sm text-foreground outline-none focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
@@ -1007,13 +2025,18 @@ function EditRegistrationForm({
               disabled={
                 paymentLocked
               }
-              onChange={(value) =>
+              onChange={(
+                value,
+              ) =>
                 changeValue(
                   "payment_reference",
                   value,
                 )
               }
-              maxLength={100}
+              maxLength={
+                100
+              }
+              hint="Optional"
             />
           </div>
 
@@ -1054,8 +2077,9 @@ function EditRegistrationForm({
                 </div>
 
                 <p className="mt-3 text-xs leading-5 text-muted-foreground">
-                  JPEG, PNG, or WEBP
-                  only. Maximum file
+                  JPEG, PNG, or
+                  WEBP only.
+                  Maximum file
                   size: 5MB.
                 </p>
 
@@ -1076,9 +2100,10 @@ function EditRegistrationForm({
               </>
             ) : (
               <p className="mt-4 text-xs leading-5 text-muted-foreground">
-                Receipt replacement is
-                disabled because this
-                payment has already been
+                Receipt replacement
+                is disabled because
+                this payment has
+                already been
                 verified.
               </p>
             )}
@@ -1087,19 +2112,24 @@ function EditRegistrationForm({
             "rejected" ? (
               <div className="mt-5 border border-destructive/30 bg-destructive/5 p-4">
                 <p className="text-sm leading-6 text-destructive">
-                  Your previous payment
-                  was rejected. Update
-                  the payment details or
-                  upload a new receipt
-                  and it will be sent
-                  back for verification.
+                  Your previous
+                  payment was
+                  rejected. Update
+                  the payment
+                  details or upload
+                  a new receipt and
+                  it will be sent
+                  back for
+                  verification.
                 </p>
               </div>
             ) : null}
           </div>
         </section>
 
+        {/* ============================================= */}
         {/* ACTIONS */}
+        {/* ============================================= */}
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border/70 pt-6">
           <Button
@@ -1115,13 +2145,15 @@ function EditRegistrationForm({
 
           <Button
             type="submit"
-            disabled={busy}
+            disabled={
+              busy
+            }
             className="h-11 rounded-none px-6 font-mono text-[10px] uppercase tracking-[0.2em]"
           >
             <Save className="mr-2 h-4 w-4" />
 
             {busy
-              ? "Saving..."
+              ? "Saving…"
               : "Save Changes"}
           </Button>
         </div>
@@ -1130,6 +2162,305 @@ function EditRegistrationForm({
   );
 }
 
+// ---------------------------------------------------------
+// TEAM LOGO EDITOR
+// ---------------------------------------------------------
+
+function TeamLogoEditor({
+  currentPath,
+  replacement,
+  onChange,
+}) {
+  const [
+    localPreview,
+    setLocalPreview,
+  ] = useState("");
+
+  useEffect(() => {
+    if (!replacement) {
+      setLocalPreview(
+        "",
+      );
+
+      return;
+    }
+
+    const url =
+      URL.createObjectURL(
+        replacement,
+      );
+
+    setLocalPreview(url);
+
+    return () =>
+      URL.revokeObjectURL(
+        url,
+      );
+  }, [replacement]);
+
+  const currentUrl =
+    getPublicUrl(
+      "team-logos",
+      currentPath,
+    );
+
+  const preview =
+    localPreview ||
+    currentUrl;
+
+  return (
+    <div>
+      <Label>
+        Team Logo
+      </Label>
+
+      <div className="mt-2 grid aspect-square w-full max-w-[160px] place-items-center overflow-hidden border border-border/80 bg-background/60">
+        {preview ? (
+          <img
+            src={preview}
+            alt="Team logo"
+            className="h-full w-full object-contain p-3"
+          />
+        ) : (
+          <ImagePlus className="h-10 w-10 text-primary/40" />
+        )}
+      </div>
+
+      <label className="mt-3 flex cursor-pointer items-center gap-2 border border-dashed border-border px-3 py-3 text-xs text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground">
+        <Upload className="h-4 w-4 text-primary" />
+
+        {replacement
+          ? replacement.name
+          : "Replace logo"}
+
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={
+            onChange
+          }
+          className="hidden"
+        />
+      </label>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------
+// PLAYER PHOTO EDITOR
+// ---------------------------------------------------------
+
+function PlayerPhotoEditor({
+  player,
+  index,
+  onChange,
+}) {
+  const [
+    localPreview,
+    setLocalPreview,
+  ] = useState("");
+
+  useEffect(() => {
+    if (
+      !player.replacement_photo
+    ) {
+      setLocalPreview(
+        "",
+      );
+
+      return;
+    }
+
+    const url =
+      URL.createObjectURL(
+        player.replacement_photo,
+      );
+
+    setLocalPreview(
+      url,
+    );
+
+    return () =>
+      URL.revokeObjectURL(
+        url,
+      );
+  }, [
+    player.replacement_photo,
+  ]);
+
+  const currentUrl =
+    getPublicUrl(
+      "player-photos",
+      player.player_photo_path,
+    );
+
+  const preview =
+    localPreview ||
+    currentUrl;
+
+  return (
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="h-28 w-28 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+        {preview ? (
+          <img
+            src={preview}
+            alt={`Player ${
+              index + 1
+            }`}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="grid h-full w-full place-items-center">
+            <UserRound className="h-9 w-9 text-primary/40" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex-1">
+        <Label>
+          Player Photo
+        </Label>
+
+        <label className="mt-2 flex cursor-pointer items-center gap-3 border border-dashed border-border px-4 py-4 transition-colors hover:border-primary/60">
+          <Upload className="h-5 w-5 shrink-0 text-primary" />
+
+          <div>
+            <p className="text-sm text-foreground">
+              {player.replacement_photo
+                ? player
+                    .replacement_photo
+                    .name
+                : "Replace player photo"}
+            </p>
+
+            <p className="mt-1 text-xs text-muted-foreground">
+              JPG, PNG or
+              WEBP · max 5MB
+            </p>
+          </div>
+
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(
+              event,
+            ) =>
+              onChange(
+                index,
+                event,
+              )
+            }
+            className="hidden"
+          />
+        </label>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------
+// TEKKEN PHOTO EDITOR
+// ---------------------------------------------------------
+
+function TekkenPhotoEditor({
+  currentPath,
+  replacement,
+  onChange,
+}) {
+  const [
+    localPreview,
+    setLocalPreview,
+  ] = useState("");
+
+  useEffect(() => {
+    if (!replacement) {
+      setLocalPreview(
+        "",
+      );
+
+      return;
+    }
+
+    const url =
+      URL.createObjectURL(
+        replacement,
+      );
+
+    setLocalPreview(
+      url,
+    );
+
+    return () =>
+      URL.revokeObjectURL(
+        url,
+      );
+  }, [replacement]);
+
+  const currentUrl =
+    getPublicUrl(
+      "player-photos",
+      currentPath,
+    );
+
+  const preview =
+    localPreview ||
+    currentUrl;
+
+  return (
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="h-36 w-36 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+        {preview ? (
+          <img
+            src={preview}
+            alt="TEKKEN fighter"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="grid h-full w-full place-items-center">
+            <UserRound className="h-11 w-11 text-primary/40" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex-1">
+        <Label>
+          Player Photo
+        </Label>
+
+        <label className="mt-2 flex cursor-pointer items-center gap-3 border border-dashed border-border px-4 py-4 transition-colors hover:border-primary/60">
+          <Upload className="h-5 w-5 text-primary" />
+
+          <div>
+            <p className="text-sm text-foreground">
+              {replacement
+                ? replacement.name
+                : "Replace player photo"}
+            </p>
+
+            <p className="mt-1 text-xs text-muted-foreground">
+              JPG, PNG or
+              WEBP · max 5MB
+            </p>
+          </div>
+
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={
+              onChange
+            }
+            className="hidden"
+          />
+        </label>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------
+// GENERIC FIELD
+// ---------------------------------------------------------
+
 function Field({
   label,
   value,
@@ -1137,22 +2468,44 @@ function Field({
   type = "text",
   maxLength,
   disabled = false,
+  hint,
+  className = "",
 }) {
   return (
-    <div className="space-y-2">
-      <Label>{label}</Label>
+    <div
+      className={`space-y-2 ${className}`}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <Label>
+          {label}
+        </Label>
+
+        {hint ? (
+          <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+            {hint}
+          </span>
+        ) : null}
+      </div>
 
       <Input
         type={type}
-        value={value}
-        maxLength={maxLength}
-        disabled={disabled}
-        onChange={(event) =>
+        value={
+          value ?? ""
+        }
+        disabled={
+          disabled
+        }
+        maxLength={
+          maxLength
+        }
+        onChange={(
+          event,
+        ) =>
           onChange(
             event.target.value,
           )
         }
-        className="rounded-none"
+        className="h-10 rounded-none disabled:cursor-not-allowed disabled:opacity-50"
       />
     </div>
   );

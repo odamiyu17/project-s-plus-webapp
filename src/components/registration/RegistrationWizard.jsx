@@ -41,6 +41,7 @@ const EMPTY_ROSTER = Array.from(
     length: 7,
   },
   (_, index) => ({
+    photo: null,
     full_name: "",
     ign: "",
     birthdate: "",
@@ -192,6 +193,11 @@ export default function RegistrationWizard() {
   const [
     teamLogo,
     setTeamLogo,
+  ] = useState(null);
+
+  const [
+    tekkenPhoto,
+    setTekkenPhoto,
   ] = useState(null);
 
   const [
@@ -398,6 +404,19 @@ export default function RegistrationWizard() {
         player,
         index,
       ) => {
+        if (!player.photo) {
+          next[`photo_${index}`] =
+            "Player photo is required";
+        } else {
+          const photoError =
+            validateImage(player.photo);
+
+          if (photoError) {
+            next[`photo_${index}`] =
+              photoError;
+          }
+        }
+
         if (
           player.full_name
             .trim()
@@ -503,6 +522,19 @@ export default function RegistrationWizard() {
     ) {
       next.in_game_id =
         "Enter your in-game ID";
+    }
+
+    if (!tekkenPhoto) {
+      next.player_photo =
+        "Player photo is required";
+    } else {
+      const photoError =
+        validateImage(tekkenPhoto);
+
+      if (photoError) {
+        next.player_photo =
+          photoError;
+      }
     }
 
     return next;
@@ -661,6 +693,12 @@ export default function RegistrationWizard() {
     let uploadedReceiptPath =
       null;
 
+    let uploadedTekkenPhotoPath =
+      null;
+
+    let uploadedPlayerPhotoPaths =
+      [];
+
     try {
       const extensionMap = {
         "image/jpeg": "jpg",
@@ -668,40 +706,37 @@ export default function RegistrationWizard() {
         "image/webp": "webp",
       };
 
+      const {
+        data: userResult,
+        error: userError,
+      } =
+        await supabase.auth.getUser();
+
+      if (
+        userError ||
+        !userResult?.user
+      ) {
+        throw new Error(
+          "You must be signed in to register",
+        );
+      }
+
+      const userId =
+        userResult.user.id;
+
       /*
        * MLBB TEAM LOGO
        */
       if (
         game === "mlbb"
       ) {
-        const {
-          data:
-            userResult,
-          error:
-            userError,
-        } =
-          await supabase.auth.getUser();
-
-        if (
-          userError ||
-          !userResult?.user
-        ) {
-          throw new Error(
-            "You must be signed in to register",
-          );
-        }
-
         const logoExtension =
           extensionMap[
             teamLogo.type
           ] ?? "png";
 
         uploadedLogoPath =
-          `${
-            userResult.user.id
-          }/${
-            crypto.randomUUID()
-          }.${logoExtension}`;
+          `${userId}/${crypto.randomUUID()}.${logoExtension}`;
 
         const {
           error:
@@ -728,6 +763,101 @@ export default function RegistrationWizard() {
           throw new Error(
             logoUploadError.message ||
               "Unable to upload team logo",
+          );
+        }
+
+        /*
+         * MLBB PLAYER PHOTOS
+         */
+        for (
+          let index = 0;
+          index < roster.length;
+          index += 1
+        ) {
+          const player =
+            roster[index];
+
+          const extension =
+            extensionMap[
+              player.photo.type
+            ] ?? "jpg";
+
+          const path =
+            `${userId}/mlbb/${crypto.randomUUID()}.${extension}`;
+
+          const {
+            error:
+              playerUploadError,
+          } =
+            await supabase.storage
+              .from(
+                "player-photos",
+              )
+              .upload(
+                path,
+                player.photo,
+                {
+                  contentType:
+                    player.photo.type,
+
+                  upsert: false,
+                },
+              );
+
+          if (
+            playerUploadError
+          ) {
+            throw new Error(
+              playerUploadError.message ||
+                `Unable to upload Player ${index + 1} photo`,
+            );
+          }
+
+          uploadedPlayerPhotoPaths.push(
+            path,
+          );
+        }
+      }
+
+      /*
+       * TEKKEN PLAYER PHOTO
+       */
+      if (
+        game === "tekken8"
+      ) {
+        const extension =
+          extensionMap[
+            tekkenPhoto.type
+          ] ?? "jpg";
+
+        uploadedTekkenPhotoPath =
+          `${userId}/tekken8/${crypto.randomUUID()}.${extension}`;
+
+        const {
+          error:
+            playerUploadError,
+        } =
+          await supabase.storage
+            .from(
+              "player-photos",
+            )
+            .upload(
+              uploadedTekkenPhotoPath,
+              tekkenPhoto,
+              {
+                contentType:
+                  tekkenPhoto.type,
+
+                upsert: false,
+              },
+            );
+
+        if (
+          playerUploadError
+        ) {
+          throw new Error(
+            playerUploadError.message ||
+              "Unable to upload player photo",
           );
         }
       }
@@ -827,6 +957,11 @@ export default function RegistrationWizard() {
                     index,
                   ) =>
                     compact({
+                      player_photo_path:
+                        uploadedPlayerPhotoPaths[
+                          index
+                        ],
+
                       full_name:
                         player.full_name.trim(),
 
@@ -875,6 +1010,9 @@ export default function RegistrationWizard() {
 
                 in_game_id:
                   values.in_game_id.trim(),
+
+                player_photo_path:
+                  uploadedTekkenPhotoPath,
               }),
             };
 
@@ -911,6 +1049,33 @@ export default function RegistrationWizard() {
           )
           .remove([
             uploadedLogoPath,
+          ])
+          .catch(() => {});
+      }
+
+      if (
+        uploadedPlayerPhotoPaths
+          .length
+      ) {
+        await supabase.storage
+          .from(
+            "player-photos",
+          )
+          .remove(
+            uploadedPlayerPhotoPaths,
+          )
+          .catch(() => {});
+      }
+
+      if (
+        uploadedTekkenPhotoPath
+      ) {
+        await supabase.storage
+          .from(
+            "player-photos",
+          )
+          .remove([
+            uploadedTekkenPhotoPath,
           ])
           .catch(() => {});
       }
@@ -1099,6 +1264,27 @@ export default function RegistrationWizard() {
             values={values}
             errors={errors}
             onChange={change}
+            playerPhoto={
+              tekkenPhoto
+            }
+            onPlayerPhotoChange={(
+              file,
+            ) => {
+              setTekkenPhoto(
+                file,
+              );
+
+              setErrors(
+                (
+                  previous,
+                ) => ({
+                  ...previous,
+
+                  player_photo:
+                    undefined,
+                }),
+              );
+            }}
           />
         ) : null}
 

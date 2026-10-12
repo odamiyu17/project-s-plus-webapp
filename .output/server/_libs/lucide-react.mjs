@@ -101,13 +101,52 @@ var ArrowRight = createLucideIcon("ArrowRight", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var BadgeCheck = createLucideIcon("BadgeCheck", [["path", {
-	d: "M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z",
-	key: "3c2336"
-}], ["path", {
-	d: "m9 12 2 2 4-4",
-	key: "dzmm74"
-}]]);
+var CalendarDays = createLucideIcon("CalendarDays", [
+	["path", {
+		d: "M8 2v4",
+		key: "1cmpym"
+	}],
+	["path", {
+		d: "M16 2v4",
+		key: "4m81vk"
+	}],
+	["rect", {
+		width: "18",
+		height: "18",
+		x: "3",
+		y: "4",
+		rx: "2",
+		key: "1hopcy"
+	}],
+	["path", {
+		d: "M3 10h18",
+		key: "8toen8"
+	}],
+	["path", {
+		d: "M8 14h.01",
+		key: "6423bh"
+	}],
+	["path", {
+		d: "M12 14h.01",
+		key: "1etili"
+	}],
+	["path", {
+		d: "M16 14h.01",
+		key: "1gbofw"
+	}],
+	["path", {
+		d: "M8 18h.01",
+		key: "lrp35t"
+	}],
+	["path", {
+		d: "M12 18h.01",
+		key: "mhygvu"
+	}],
+	["path", {
+		d: "M16 18h.01",
+		key: "kzsmim"
+	}]
+]);
 /**
 * @license lucide-react v0.475.0 - ISC
 *
@@ -261,6 +300,26 @@ var CreditCard = createLucideIcon("CreditCard", [["rect", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var ExternalLink = createLucideIcon("ExternalLink", [
+	["path", {
+		d: "M15 3h6v6",
+		key: "1q9fwt"
+	}],
+	["path", {
+		d: "M10 14 21 3",
+		key: "gplh6r"
+	}],
+	["path", {
+		d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6",
+		key: "a6xqqp"
+	}]
+]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Eye = createLucideIcon("Eye", [["path", {
 	d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
 	key: "1nclc0"
@@ -270,6 +329,66 @@ var Eye = createLucideIcon("Eye", [["path", {
 	r: "3",
 	key: "1v7zrd"
 }]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var Gamepad2 = createLucideIcon("Gamepad2", [
+	["line", {
+		x1: "6",
+		x2: "10",
+		y1: "11",
+		y2: "11",
+		key: "1gktln"
+	}],
+	["line", {
+		x1: "8",
+		x2: "8",
+		y1: "9",
+		y2: "13",
+		key: "qnk9ow"
+	}],
+	["line", {
+		x1: "15",
+		x2: "15.01",
+		y1: "12",
+		y2: "12",
+		key: "krot7o"
+	}],
+	["line", {
+		x1: "18",
+		x2: "18.01",
+		y1: "10",
+		y2: "10",
+		key: "1lcuu1"
+	}],
+	["path", {
+		d: "M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z",
+		key: "mfqc10"
+	}]
+]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var GraduationCap = createLucideIcon("GraduationCap", [
+	["path", {
+		d: "M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z",
+		key: "j76jl0"
+	}],
+	["path", {
+		d: "M22 10v6",
+		key: "1lu8f3"
+	}],
+	["path", {
+		d: "M6 12.5V16a6 3 0 0 0 12 0v-3.5",
+		key: "1r8lef"
+	}]
+]);
 /**
 * @license lucide-react v0.475.0 - ISC
 *
@@ -324,6 +443,33 @@ var ImageUp = createLucideIcon("ImageUp", [
 		cy: "9",
 		r: "2",
 		key: "af1f0g"
+	}]
+]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var Image = createLucideIcon("Image", [
+	["rect", {
+		width: "18",
+		height: "18",
+		x: "3",
+		y: "3",
+		rx: "2",
+		ry: "2",
+		key: "1m3agn"
+	}],
+	["circle", {
+		cx: "9",
+		cy: "9",
+		r: "2",
+		key: "af1f0g"
+	}],
+	["path", {
+		d: "m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21",
+		key: "1xmnt7"
 	}]
 ]);
 /**
@@ -483,6 +629,16 @@ var Pencil = createLucideIcon("Pencil", [["path", {
 }], ["path", {
 	d: "m15 5 4 4",
 	key: "1mk7zo"
+}]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var Phone = createLucideIcon("Phone", [["path", {
+	d: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
+	key: "foiqr5"
 }]]);
 /**
 * @license lucide-react v0.475.0 - ISC
@@ -723,6 +879,21 @@ var UserPlus = createLucideIcon("UserPlus", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var UserRound = createLucideIcon("UserRound", [["circle", {
+	cx: "12",
+	cy: "8",
+	r: "5",
+	key: "1hypcn"
+}], ["path", {
+	d: "M20 21a8 8 0 0 0-16 0",
+	key: "rfgkzh"
+}]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var UserX = createLucideIcon("UserX", [
 	["path", {
 		d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",
@@ -789,4 +960,4 @@ var X = createLucideIcon("X", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { ArrowLeft, ArrowRight, BadgeCheck, Calendar, Check, CircleCheck, CircleX, ClipboardList, Clock3, CreditCard, Eye, ImagePlus, ImageUp, LoaderCircle, Lock, LogIn, LogOut, Mail, MapPin, Menu, Minus, Pencil, Plus, RotateCcw, Save, Send, Shield, ShieldAlert, ShieldCheck, Ticket, TriangleAlert, Trophy, Upload, UserPlus, UserX, Users, X };
+export { ArrowLeft, ArrowRight, Calendar, CalendarDays, Check, CircleCheck, CircleX, ClipboardList, Clock3, CreditCard, ExternalLink, Eye, Gamepad2, GraduationCap, Image, ImagePlus, ImageUp, LoaderCircle, Lock, LogIn, LogOut, Mail, MapPin, Menu, Minus, Pencil, Phone, Plus, RotateCcw, Save, Send, Shield, ShieldAlert, ShieldCheck, Ticket, TriangleAlert, Trophy, Upload, UserPlus, UserRound, UserX, Users, X };
