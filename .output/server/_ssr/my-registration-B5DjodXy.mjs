@@ -3,8 +3,8 @@ import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { Button } from "./server-fns-D7ymjI7_.mjs";
 import { ArrowLeft, CalendarDays, CircleCheck, CircleX, Clock3, CreditCard, ExternalLink, Gamepad2, GraduationCap, MapPin, Pencil, Phone, ShieldCheck, UserRound, Users } from "../_libs/lucide-react.mjs";
-import { Route$3 } from "./router-BTOSRoEZ.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/my-registration-CrIvuwHw.js
+import { Route$3 } from "./router-DFTBh8PV.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/my-registration-B5DjodXy.js
 var import_jsx_runtime = require_jsx_runtime();
 var STATUS_STYLES = {
 	pending: "border-primary/40 bg-primary/10 text-primary",

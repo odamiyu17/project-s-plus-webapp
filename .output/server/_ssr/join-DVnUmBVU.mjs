@@ -10,7 +10,7 @@ import { Image } from "./image-BPY2V0qk.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
 import { Input, Label } from "./label-0leyqT9h.mjs";
 import { motion } from "../_libs/framer-motion.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/join-N14YvRcO.js
+//#region node_modules/.nitro/vite/services/ssr/assets/join-DVnUmBVU.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var inputClass = "h-12 rounded-none border-border/80 bg-background/70 px-4 text-base tracking-wide text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary";
@@ -936,10 +936,64 @@ function validateImage(file) {
 	if (file.size > 5242880) return "Image must be 5 MB or smaller";
 	return null;
 }
+function prefersReducedMotion() {
+	if (typeof window === "undefined" || !window.matchMedia) return false;
+	return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function StepTransition({ transitionKey, direction, children }) {
+	const containerRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		const element = containerRef.current;
+		if (!element || typeof element.animate !== "function" || prefersReducedMotion()) return;
+		const offset = direction === "back" ? -26 : 26;
+		const animation = element.animate([{
+			opacity: 0,
+			transform: `translate3d(${offset}px, 8px, 0) scale(0.995)`
+		}, {
+			opacity: 1,
+			transform: "translate3d(0, 0, 0) scale(1)"
+		}], {
+			duration: 380,
+			easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+			fill: "both"
+		});
+		return () => animation.cancel();
+	}, [transitionKey, direction]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: containerRef,
+		className: "will-change-transform",
+		children
+	});
+}
+function SuccessTransition({ children }) {
+	const containerRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		const element = containerRef.current;
+		if (!element || typeof element.animate !== "function" || prefersReducedMotion()) return;
+		const animation = element.animate([{
+			opacity: 0,
+			transform: "translate3d(0, 18px, 0) scale(0.985)"
+		}, {
+			opacity: 1,
+			transform: "translate3d(0, 0, 0) scale(1)"
+		}], {
+			duration: 520,
+			easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+			fill: "both"
+		});
+		return () => animation.cancel();
+	}, []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref: containerRef,
+		className: "will-change-transform",
+		children
+	});
+}
 function RegistrationWizard() {
 	const submit = useServerFn(submitRegistration);
 	const [game, setGame] = (0, import_react.useState)(null);
 	const [step, setStep] = (0, import_react.useState)(0);
+	const [transitionDirection, setTransitionDirection] = (0, import_react.useState)("forward");
 	const [values, setValues] = (0, import_react.useState)(EMPTY_VALUES);
 	const [roster, setRoster] = (0, import_react.useState)(EMPTY_ROSTER);
 	const [teamLogo, setTeamLogo] = (0, import_react.useState)(null);
@@ -951,7 +1005,7 @@ function RegistrationWizard() {
 	const [busy, setBusy] = (0, import_react.useState)(false);
 	const [result, setResult] = (0, import_react.useState)(null);
 	(0, import_react.useEffect)(() => {
-		if (!result) return;
+		if (!result || prefersReducedMotion()) return;
 		import("../_libs/canvas-confetti.mjs").then((n) => n.confetti_module_exports).then(({ default: confetti }) => {
 			confetti({
 				particleCount: 140,
@@ -1085,6 +1139,7 @@ function RegistrationWizard() {
 			return;
 		}
 		setErrors({});
+		setTransitionDirection("forward");
 		setStep((current) => current + 1);
 		window.scrollTo({
 			top: 0,
@@ -1207,10 +1262,10 @@ function RegistrationWizard() {
 	}
 	if (result) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: "mx-auto max-w-4xl px-4 sm:px-8",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SuccessPanel, {
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SuccessTransition, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SuccessPanel, {
 			game,
 			reference: result.reference_code
-		})
+		}) })
 	});
 	const contactStep = game === "mlbb" ? 3 : 2;
 	const paymentStep = game === "mlbb" ? 4 : 3;
@@ -1222,126 +1277,131 @@ function RegistrationWizard() {
 				children: labels.map((label, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 					className: "flex items-center gap-3",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-						className: index <= step ? "text-primary" : "text-muted-foreground",
+						className: `transition-all duration-300 motion-reduce:transition-none ${index === step ? "text-primary drop-shadow-[0_0_10px_rgba(201,169,108,0.28)]" : index < step ? "text-primary/80" : "text-muted-foreground"}`,
 						children: [
 							String(index + 1).padStart(2, "0"),
 							" ",
 							label
 						]
-					}), index < labels.length - 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: index < step ? "h-px w-6 bg-primary sm:w-10" : "h-px w-6 bg-border sm:w-10" }) : null]
+					}), index < labels.length - 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `h-px w-6 transition-all duration-500 motion-reduce:transition-none sm:w-10 ${index < step ? "bg-primary shadow-[0_0_8px_rgba(201,169,108,0.25)]" : "bg-border"}` }) : null]
 				}, label))
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "mt-6 h-px w-full bg-border",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "h-px bg-primary transition-all duration-500",
+					className: "h-px bg-primary shadow-[0_0_10px_rgba(201,169,108,0.28)] transition-[width] duration-500 ease-out motion-reduce:transition-none",
 					style: { width: `${(step + 1) / labels.length * 100}%` }
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
 				onSubmit: handleSubmit,
-				className: "mt-10 border border-border/80 bg-card/60 p-5 sm:p-8",
-				children: [
-					step === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RealmStep, {
-						value: game,
-						onSelect: (realm) => {
-							setGame(realm);
-							setErrors({});
-							setStep(1);
-						}
-					}) : null,
-					game === "mlbb" && step === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MlbbFields, {
-						section: "team",
-						values,
-						roster,
-						errors,
-						onChange: change,
-						onRosterChange: changeRoster,
-						teamLogo,
-						onTeamLogoChange: (file) => {
-							setTeamLogo(file);
-							setErrors((previous) => ({
-								...previous,
-								team_logo: void 0
-							}));
-						}
-					}) : null,
-					game === "mlbb" && step === 2 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MlbbFields, {
-						section: "players",
-						values,
-						roster,
-						errors,
-						onChange: change,
-						onRosterChange: changeRoster,
-						teamLogo,
-						onTeamLogoChange: setTeamLogo
-					}) : null,
-					game === "tekken8" && step === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TekkenFields, {
-						values,
-						errors,
-						onChange: change,
-						playerPhoto: tekkenPhoto,
-						onPlayerPhotoChange: (file) => {
-							setTekkenPhoto(file);
-							setErrors((previous) => ({
-								...previous,
-								player_photo: void 0
-							}));
-						}
-					}) : null,
-					step === contactStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContactFields, {
-						values,
-						errors,
-						onChange: change,
-						game,
-						stepNumber: contactStep + 1
-					}) : null,
-					step === paymentStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PaymentFields, {
-						stepNumber: paymentStep + 1,
-						method: paymentMethod,
-						onMethodChange: (value) => {
-							setPaymentMethod(value);
-							setErrors((previous) => ({
-								...previous,
-								payment_method: void 0
-							}));
-						},
-						receipt: paymentReceipt,
-						onReceiptChange: (file) => {
-							setPaymentReceipt(file);
-							setErrors((previous) => ({
-								...previous,
-								payment_receipt: void 0
-							}));
-						},
-						reference: paymentReference,
-						onReferenceChange: setPaymentReference,
-						errors
-					}) : null,
-					step > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "mt-8 flex flex-col gap-3 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-							type: "button",
-							variant: "ghost",
-							onClick: () => {
+				className: "mt-10 border border-border/80 bg-card/60 p-5 transition-shadow duration-500 motion-reduce:transition-none sm:p-8",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(StepTransition, {
+					transitionKey: `${game ?? "none"}-${step}`,
+					direction: transitionDirection,
+					children: [
+						step === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RealmStep, {
+							value: game,
+							onSelect: (realm) => {
+								setGame(realm);
 								setErrors({});
-								setStep((current) => current - 1);
+								setTransitionDirection("forward");
+								setStep(1);
+							}
+						}) : null,
+						game === "mlbb" && step === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MlbbFields, {
+							section: "team",
+							values,
+							roster,
+							errors,
+							onChange: change,
+							onRosterChange: changeRoster,
+							teamLogo,
+							onTeamLogoChange: (file) => {
+								setTeamLogo(file);
+								setErrors((previous) => ({
+									...previous,
+									team_logo: void 0
+								}));
+							}
+						}) : null,
+						game === "mlbb" && step === 2 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MlbbFields, {
+							section: "players",
+							values,
+							roster,
+							errors,
+							onChange: change,
+							onRosterChange: changeRoster,
+							teamLogo,
+							onTeamLogoChange: setTeamLogo
+						}) : null,
+						game === "tekken8" && step === 1 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TekkenFields, {
+							values,
+							errors,
+							onChange: change,
+							playerPhoto: tekkenPhoto,
+							onPlayerPhotoChange: (file) => {
+								setTekkenPhoto(file);
+								setErrors((previous) => ({
+									...previous,
+									player_photo: void 0
+								}));
+							}
+						}) : null,
+						step === contactStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContactFields, {
+							values,
+							errors,
+							onChange: change,
+							game,
+							stepNumber: contactStep + 1
+						}) : null,
+						step === paymentStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PaymentFields, {
+							stepNumber: paymentStep + 1,
+							method: paymentMethod,
+							onMethodChange: (value) => {
+								setPaymentMethod(value);
+								setErrors((previous) => ({
+									...previous,
+									payment_method: void 0
+								}));
 							},
-							className: "h-12 justify-start rounded-none px-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground hover:bg-secondary/40 hover:text-foreground",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "mr-2 h-4 w-4" }), "Back"]
-						}), step < finalStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-							type: "button",
-							onClick: goNext,
-							className: "h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]",
-							children: ["Continue", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "ml-2 h-4 w-4" })]
-						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-							type: "submit",
-							disabled: busy,
-							className: "h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]",
-							children: [busy ? "Transmitting…" : "Submit entry", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, { className: "ml-2 h-4 w-4" })]
-						})]
-					}) : null
-				]
+							receipt: paymentReceipt,
+							onReceiptChange: (file) => {
+								setPaymentReceipt(file);
+								setErrors((previous) => ({
+									...previous,
+									payment_receipt: void 0
+								}));
+							},
+							reference: paymentReference,
+							onReferenceChange: setPaymentReference,
+							errors
+						}) : null
+					]
+				}), step > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "mt-8 flex flex-col gap-3 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+						type: "button",
+						variant: "ghost",
+						onClick: () => {
+							setErrors({});
+							setTransitionDirection("back");
+							setStep((current) => current - 1);
+						},
+						className: "group h-12 justify-start rounded-none px-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary/40 hover:text-foreground active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" }), "Back"]
+					}), step < finalStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+						type: "button",
+						onClick: goNext,
+						className: "group h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
+						children: ["Continue", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" })]
+					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+						type: "submit",
+						disabled: busy,
+						className: "group h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
+						children: [busy ? "Transmitting…" : "Submit entry", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, { className: "ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" })]
+					})]
+				}) : null]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 				className: "mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground",

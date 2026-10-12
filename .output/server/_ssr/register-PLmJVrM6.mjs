@@ -5,11 +5,11 @@ import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { cn } from "./server-fns-D7ymjI7_.mjs";
 import { toast } from "../_libs/sonner.mjs";
 import { Lock, Mail, Minus, UserPlus } from "../_libs/lucide-react.mjs";
-import { AuthLayout, safeReturnTo } from "./router-BTOSRoEZ.mjs";
+import { AuthLayout, safeReturnTo } from "./router-DFTBh8PV.mjs";
 import { Input, Label } from "./label-0leyqT9h.mjs";
 import { AuthError, AuthLink, GoogleButton, OrDivider, SubmitButton } from "./parts-CKf_TMKz.mjs";
 import { $t, Nt } from "../_libs/input-otp.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/register-BVUyGqnI.js
+//#region node_modules/.nitro/vite/services/ssr/assets/register-PLmJVrM6.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var InputOTP = import_react.forwardRef(({ className, containerClassName, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)($t, {

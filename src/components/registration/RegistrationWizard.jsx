@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowLeft,
@@ -168,6 +168,136 @@ function validateImage(file) {
   return null;
 }
 
+function prefersReducedMotion() {
+  if (
+    typeof window === "undefined" ||
+    !window.matchMedia
+  ) {
+    return false;
+  }
+
+  return window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+}
+
+function StepTransition({
+  transitionKey,
+  direction,
+  children,
+}) {
+  const containerRef =
+    useRef(null);
+
+  useEffect(() => {
+    const element =
+      containerRef.current;
+
+    if (
+      !element ||
+      typeof element.animate !== "function" ||
+      prefersReducedMotion()
+    ) {
+      return;
+    }
+
+    const offset =
+      direction === "back"
+        ? -26
+        : 26;
+
+    const animation =
+      element.animate(
+        [
+          {
+            opacity: 0,
+            transform: `translate3d(${offset}px, 8px, 0) scale(0.995)`,
+          },
+          {
+            opacity: 1,
+            transform:
+              "translate3d(0, 0, 0) scale(1)",
+          },
+        ],
+        {
+          duration: 380,
+          easing:
+            "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "both",
+        },
+      );
+
+    return () =>
+      animation.cancel();
+  }, [
+    transitionKey,
+    direction,
+  ]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="will-change-transform"
+    >
+      {children}
+    </div>
+  );
+}
+
+function SuccessTransition({
+  children,
+}) {
+  const containerRef =
+    useRef(null);
+
+  useEffect(() => {
+    const element =
+      containerRef.current;
+
+    if (
+      !element ||
+      typeof element.animate !== "function" ||
+      prefersReducedMotion()
+    ) {
+      return;
+    }
+
+    const animation =
+      element.animate(
+        [
+          {
+            opacity: 0,
+            transform:
+              "translate3d(0, 18px, 0) scale(0.985)",
+          },
+          {
+            opacity: 1,
+            transform:
+              "translate3d(0, 0, 0) scale(1)",
+          },
+        ],
+        {
+          duration: 520,
+          easing:
+            "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "both",
+        },
+      );
+
+    return () =>
+      animation.cancel();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="will-change-transform"
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function RegistrationWizard() {
   const submit =
     useServerFn(
@@ -179,6 +309,11 @@ export default function RegistrationWizard() {
 
   const [step, setStep] =
     useState(0);
+
+  const [
+    transitionDirection,
+    setTransitionDirection,
+  ] = useState("forward");
 
   const [values, setValues] =
     useState(
@@ -225,7 +360,10 @@ export default function RegistrationWizard() {
     useState(null);
 
   useEffect(() => {
-    if (!result) {
+    if (
+      !result ||
+      prefersReducedMotion()
+    ) {
       return;
     }
 
@@ -646,6 +784,10 @@ export default function RegistrationWizard() {
     }
 
     setErrors({});
+
+    setTransitionDirection(
+      "forward",
+    );
 
     setStep(
       (current) =>
@@ -1092,12 +1234,14 @@ export default function RegistrationWizard() {
   if (result) {
     return (
       <div className="mx-auto max-w-4xl px-4 sm:px-8">
-        <SuccessPanel
-          game={game}
-          reference={
-            result.reference_code
-          }
-        />
+        <SuccessTransition>
+          <SuccessPanel
+            game={game}
+            reference={
+              result.reference_code
+            }
+          />
+        </SuccessTransition>
       </div>
     );
   }
@@ -1126,11 +1270,13 @@ export default function RegistrationWizard() {
               className="flex items-center gap-3"
             >
               <span
-                className={
-                  index <= step
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                }
+                className={`transition-all duration-300 motion-reduce:transition-none ${
+                  index === step
+                    ? "text-primary drop-shadow-[0_0_10px_rgba(201,169,108,0.28)]"
+                    : index < step
+                      ? "text-primary/80"
+                      : "text-muted-foreground"
+                }`}
               >
                 {String(
                   index + 1,
@@ -1145,12 +1291,11 @@ export default function RegistrationWizard() {
               labels.length -
                 1 ? (
                 <span
-                  className={
-                    index <
-                    step
-                      ? "h-px w-6 bg-primary sm:w-10"
-                      : "h-px w-6 bg-border sm:w-10"
-                  }
+                  className={`h-px w-6 transition-all duration-500 motion-reduce:transition-none sm:w-10 ${
+                    index < step
+                      ? "bg-primary shadow-[0_0_8px_rgba(201,169,108,0.25)]"
+                      : "bg-border"
+                  }`}
                 />
               ) : null}
             </li>
@@ -1160,7 +1305,7 @@ export default function RegistrationWizard() {
 
       <div className="mt-6 h-px w-full bg-border">
         <div
-          className="h-px bg-primary transition-all duration-500"
+          className="h-px bg-primary shadow-[0_0_10px_rgba(201,169,108,0.28)] transition-[width] duration-500 ease-out motion-reduce:transition-none"
           style={{
             width: `${
               ((step + 1) /
@@ -1175,8 +1320,12 @@ export default function RegistrationWizard() {
         onSubmit={
           handleSubmit
         }
-        className="mt-10 border border-border/80 bg-card/60 p-5 sm:p-8"
+        className="mt-10 border border-border/80 bg-card/60 p-5 transition-shadow duration-500 motion-reduce:transition-none sm:p-8"
       >
+        <StepTransition
+          transitionKey={`${game ?? "none"}-${step}`}
+          direction={transitionDirection}
+        >
         {/* STEP 01 — GAME */}
         {step === 0 ? (
           <RealmStep
@@ -1190,6 +1339,10 @@ export default function RegistrationWizard() {
 
               setErrors(
                 {},
+              );
+
+              setTransitionDirection(
+                "forward",
               );
 
               setStep(1);
@@ -1365,6 +1518,8 @@ export default function RegistrationWizard() {
           />
         ) : null}
 
+        </StepTransition>
+
         {/* NAVIGATION */}
         {step > 0 ? (
           <div className="mt-8 flex flex-col gap-3 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -1376,6 +1531,10 @@ export default function RegistrationWizard() {
                   {},
                 );
 
+                setTransitionDirection(
+                  "back",
+                );
+
                 setStep(
                   (
                     current,
@@ -1384,9 +1543,9 @@ export default function RegistrationWizard() {
                     1,
                 );
               }}
-              className="h-12 justify-start rounded-none px-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground hover:bg-secondary/40 hover:text-foreground"
+              className="group h-12 justify-start rounded-none px-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary/40 hover:text-foreground active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
             >
-              <ArrowLeft className="mr-2 h-4 w-4" />
+              <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
 
               Back
             </Button>
@@ -1398,11 +1557,11 @@ export default function RegistrationWizard() {
                 onClick={
                   goNext
                 }
-                className="h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]"
+                className="group h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               >
                 Continue
 
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
               </Button>
             ) : (
               <Button
@@ -1410,13 +1569,13 @@ export default function RegistrationWizard() {
                 disabled={
                   busy
                 }
-                className="h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em]"
+                className="group h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               >
                 {busy
                   ? "Transmitting…"
                   : "Submit entry"}
 
-                <Send className="ml-2 h-4 w-4" />
+                <Send className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
               </Button>
             )}
           </div>
