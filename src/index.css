@@ -1,45 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Teko:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Project S+ — "Tectonic Volt": obsidian forest, moss, gilded bronze. */
+    /*
+     * Project S+
+     * Typography:
+     * Display / Heading — Teko
+     * Body — Inter
+     * Utility / Labels — JetBrains Mono
+     *
+     * Palette:
+     * Obsidian forest + Project S+ gold
+     */
+
     --background: 172 29% 5%;
     --foreground: 160 13% 95%;
+
     --card: 169 26% 8%;
     --card-foreground: 160 13% 95%;
+
     --popover: 169 28% 7%;
     --popover-foreground: 160 13% 95%;
+
     --primary: 39 46% 61%;
     --primary-foreground: 172 29% 5%;
+
     --secondary: 169 22% 15%;
     --secondary-foreground: 160 13% 95%;
+
     --muted: 170 20% 12%;
     --muted-foreground: 162 9% 68%;
+
     --accent: 39 46% 61%;
     --accent-foreground: 160 13% 96%;
+
     --destructive: 356 78% 56%;
     --destructive-foreground: 0 0% 100%;
+
     --border: 169 19% 18%;
     --input: 169 19% 18%;
     --ring: 39 46% 61%;
+
     --chart-1: 39 46% 61%;
     --chart-2: 169 30% 40%;
     --chart-3: 199 60% 45%;
     --chart-4: 39 46% 61%;
     --chart-5: 160 18% 72%;
+
     --radius: 0.125rem;
-    --font-heading: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
-    --font-display: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
-    --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
-    --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* -----------------------------------------------------
+       PROJECT S+ FONT BRANDING
+       ----------------------------------------------------- */
+
+    --font-heading:
+      "Teko",
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
+
+    --font-display:
+      "Teko",
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
+
+    --font-body:
+      "Inter",
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
+
+    --font-mono:
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Monaco,
+      Consolas,
+      monospace;
+
+    /* -----------------------------------------------------
+       SIDEBAR
+       ----------------------------------------------------- */
+
     --sidebar-background: 169 26% 7%;
     --sidebar-foreground: 160 13% 95%;
+
     --sidebar-primary: 39 46% 61%;
     --sidebar-primary-foreground: 172 29% 5%;
+
     --sidebar-accent: 169 22% 15%;
     --sidebar-accent-foreground: 160 13% 95%;
+
     --sidebar-border: 169 19% 18%;
     --sidebar-ring: 39 46% 61%;
   }
@@ -60,6 +117,24 @@
     @apply bg-background text-foreground font-body antialiased;
   }
 
+  /*
+   * Makes the display font feel more intentional
+   * throughout Project S+ without having to edit
+   * every individual heading.
+   */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  /*
+   * Used for compact labels, navigation,
+   * tournament states, codes and metadata.
+   */
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
   ::selection {
     background-color: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
@@ -67,25 +142,43 @@
 }
 
 @layer utilities {
-  /* The "charging battery" pulse on primary actions. */
+  /*
+   * Primary CTA pulse.
+   */
   .glow-pulse {
-    animation: volt-pulse 3.4s ease-in-out infinite;
+    animation:
+      volt-pulse
+      3.4s
+      ease-in-out
+      infinite;
   }
 
-  /* A 15-degree lightning shear on a section's lower edge. */
+  /*
+   * Lightning-style section edge.
+   */
   .shear-b {
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.5rem), 0 100%);
+    clip-path:
+      polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - 2.5rem),
+        0 100%
+      );
   }
 
+  /*
+   * Project S+ gold divider.
+   */
   .gilded-rule {
-    background-image: linear-gradient(
-      90deg,
-      transparent,
-      hsl(var(--primary) / 0.55) 20%,
-      hsl(var(--primary) / 0.9) 50%,
-      hsl(var(--primary) / 0.55) 80%,
-      transparent
-    );
+    background-image:
+      linear-gradient(
+        90deg,
+        transparent,
+        hsl(var(--primary) / 0.55) 20%,
+        hsl(var(--primary) / 0.9) 50%,
+        hsl(var(--primary) / 0.55) 80%,
+        transparent
+      );
   }
 }
 
@@ -93,12 +186,17 @@
   0%,
   100% {
     box-shadow:
-      0 0 0 0 hsl(var(--primary) / 0.35),
-      0 0 18px -8px hsl(var(--primary) / 0.6);
+      0 0 0 0
+        hsl(var(--primary) / 0.35),
+      0 0 18px -8px
+        hsl(var(--primary) / 0.6);
   }
+
   50% {
     box-shadow:
-      0 0 0 6px hsl(var(--primary) / 0),
-      0 0 32px -4px hsl(var(--primary) / 0.85);
+      0 0 0 6px
+        hsl(var(--primary) / 0),
+      0 0 32px -4px
+        hsl(var(--primary) / 0.85);
   }
 }
