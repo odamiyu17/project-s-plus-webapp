@@ -1257,337 +1257,478 @@ export default function RegistrationWizard() {
       : 3;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pt-12 sm:px-8 sm:pt-16">
-      {/* PROGRESS */}
-      <ol className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[10px] uppercase tracking-[0.26em] sm:text-[11px]">
-        {labels.map(
-          (
-            label,
-            index,
-          ) => (
-            <li
-              key={label}
-              className="flex items-center gap-3"
-            >
-              <span
-                className={`transition-all duration-300 motion-reduce:transition-none ${
-                  index === step
-                    ? "text-primary drop-shadow-[0_0_10px_rgba(201,169,108,0.28)]"
-                    : index < step
-                      ? "text-primary/80"
-                      : "text-muted-foreground"
-                }`}
-              >
+    <div className="mx-auto max-w-5xl px-4 pt-12 sm:px-8 sm:pt-16">
+      {/* =====================================================
+          REGISTRATION PROGRESS
+          ===================================================== */}
+      <div className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-5 backdrop-blur-md sm:p-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
+        />
+
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-primary/[0.045] blur-3xl"
+        />
+
+        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-primary/70">
+              Registration Flow
+            </p>
+
+            <div className="mt-2 flex items-end gap-3">
+              <span className="font-display text-4xl font-bold uppercase leading-none text-primary sm:text-5xl">
                 {String(
-                  index + 1,
+                  step + 1,
                 ).padStart(
                   2,
                   "0",
-                )}{" "}
-                {label}
+                )}
               </span>
 
-              {index <
-              labels.length -
-                1 ? (
-                <span
-                  className={`h-px w-6 transition-all duration-500 motion-reduce:transition-none sm:w-10 ${
-                    index < step
-                      ? "bg-primary shadow-[0_0_8px_rgba(201,169,108,0.25)]"
-                      : "bg-border"
-                  }`}
-                />
-              ) : null}
-            </li>
-          ),
-        )}
-      </ol>
+              <div className="pb-0.5">
+                <p className="font-display text-xl font-bold uppercase tracking-[0.05em] text-foreground sm:text-2xl">
+                  {labels[step]}
+                </p>
 
-      <div className="mt-6 h-px w-full bg-border">
-        <div
-          className="h-px bg-primary shadow-[0_0_10px_rgba(201,169,108,0.28)] transition-[width] duration-500 ease-out motion-reduce:transition-none"
-          style={{
-            width: `${
-              ((step + 1) /
-                labels.length) *
-              100
-            }%`,
-          }}
-        />
+                <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Step {step + 1} of{" "}
+                  {labels.length}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p className="max-w-sm text-sm leading-relaxed text-muted-foreground sm:text-right">
+            Complete each section carefully.
+            Your progress moves forward only
+            after the required details are
+            valid.
+          </p>
+        </div>
+
+        <ol className="relative mt-6 grid grid-cols-2 gap-2 sm:grid-cols-5">
+          {labels.map(
+            (
+              label,
+              index,
+            ) => {
+              const isActive =
+                index === step;
+
+              const isComplete =
+                index < step;
+
+              return (
+                <li
+                  key={label}
+                  className={`
+                    relative
+                    overflow-hidden
+                    border
+                    px-3
+                    py-3
+                    transition-all
+                    duration-300
+                    motion-reduce:transition-none
+                    ${
+                      isActive
+                        ? "border-primary/45 bg-primary/[0.07]"
+                        : isComplete
+                          ? "border-primary/20 bg-primary/[0.025]"
+                          : "border-border/45 bg-background/15"
+                    }
+                  `}
+                >
+                  <div
+                    aria-hidden
+                    className={`
+                      absolute
+                      inset-x-0
+                      top-0
+                      h-px
+                      transition-opacity
+                      duration-300
+                      ${
+                        isActive ||
+                        isComplete
+                          ? "bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-100"
+                          : "opacity-0"
+                      }
+                    `}
+                  />
+
+                  <p
+                    className={`
+                      font-mono
+                      text-[8px]
+                      uppercase
+                      tracking-[0.2em]
+                      ${
+                        isActive
+                          ? "text-primary"
+                          : isComplete
+                            ? "text-primary/70"
+                            : "text-muted-foreground/70"
+                      }
+                    `}
+                  >
+                    Step{" "}
+                    {String(
+                      index + 1,
+                    ).padStart(
+                      2,
+                      "0",
+                    )}
+                  </p>
+
+                  <p
+                    className={`
+                      mt-1
+                      font-display
+                      text-sm
+                      font-bold
+                      uppercase
+                      tracking-[0.05em]
+                      ${
+                        isActive
+                          ? "text-foreground"
+                          : isComplete
+                            ? "text-foreground/80"
+                            : "text-muted-foreground"
+                      }
+                    `}
+                  >
+                    {label}
+                  </p>
+
+                  {isComplete ? (
+                    <span
+                      aria-hidden
+                      className="absolute bottom-2 right-2 h-1.5 w-1.5 rotate-45 bg-primary/60"
+                    />
+                  ) : null}
+                </li>
+              );
+            },
+          )}
+        </ol>
+
+        <div className="mt-4 h-px w-full overflow-hidden bg-border/50">
+          <div
+            className="h-px bg-primary shadow-[0_0_10px_rgba(201,169,108,0.28)] transition-[width] duration-500 ease-out motion-reduce:transition-none"
+            style={{
+              width: `${
+                ((step + 1) /
+                  labels.length) *
+                100
+              }%`,
+            }}
+          />
+        </div>
       </div>
 
+      {/* =====================================================
+          REGISTRATION FORM
+          ===================================================== */}
       <form
         onSubmit={
           handleSubmit
         }
-        className="mt-10 border border-border/80 bg-card/60 p-5 transition-shadow duration-500 motion-reduce:transition-none sm:p-8"
+        className="card-interactive card-interactive-glow relative mt-6 overflow-hidden border border-border/55 bg-card/45 p-5 backdrop-blur-md sm:p-8"
       >
-        <StepTransition
-          transitionKey={`${game ?? "none"}-${step}`}
-          direction={transitionDirection}
-        >
-        {/* STEP 01 — GAME */}
-        {step === 0 ? (
-          <RealmStep
-            value={game}
-            onSelect={(
-              realm,
-            ) => {
-              setGame(
-                realm,
-              );
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
+        />
 
-              setErrors(
-                {},
-              );
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-20 top-20 h-52 w-52 rounded-full bg-primary/[0.025] blur-[90px]"
+        />
 
-              setTransitionDirection(
-                "forward",
-              );
+        <div className="relative">
+          <StepTransition
+            transitionKey={`${game ?? "none"}-${step}`}
+            direction={transitionDirection}
+          >
+            {/* STEP 01 — GAME */}
+            {step === 0 ? (
+              <RealmStep
+                value={game}
+                onSelect={(
+                  realm,
+                ) => {
+                  setGame(
+                    realm,
+                  );
 
-              setStep(1);
-            }}
-          />
-        ) : null}
+                  setErrors(
+                    {},
+                  );
 
-        {/* MLBB STEP 02 — TEAM */}
-        {game ===
-          "mlbb" &&
-        step === 1 ? (
-          <MlbbFields
-            section="team"
-            values={values}
-            roster={roster}
-            errors={errors}
-            onChange={change}
-            onRosterChange={
-              changeRoster
-            }
-            teamLogo={
-              teamLogo
-            }
-            onTeamLogoChange={(
-              file,
-            ) => {
-              setTeamLogo(
-                file,
-              );
+                  setTransitionDirection(
+                    "forward",
+                  );
 
-              setErrors(
-                (
-                  previous,
-                ) => ({
-                  ...previous,
+                  setStep(1);
+                }}
+              />
+            ) : null}
 
-                  team_logo:
-                    undefined,
-                }),
-              );
-            }}
-          />
-        ) : null}
+            {/* MLBB STEP 02 — TEAM */}
+            {game ===
+              "mlbb" &&
+            step === 1 ? (
+              <MlbbFields
+                section="team"
+                values={values}
+                roster={roster}
+                errors={errors}
+                onChange={change}
+                onRosterChange={
+                  changeRoster
+                }
+                teamLogo={
+                  teamLogo
+                }
+                onTeamLogoChange={(
+                  file,
+                ) => {
+                  setTeamLogo(
+                    file,
+                  );
 
-        {/* MLBB STEP 03 — PLAYERS */}
-        {game ===
-          "mlbb" &&
-        step === 2 ? (
-          <MlbbFields
-            section="players"
-            values={values}
-            roster={roster}
-            errors={errors}
-            onChange={change}
-            onRosterChange={
-              changeRoster
-            }
-            teamLogo={
-              teamLogo
-            }
-            onTeamLogoChange={
-              setTeamLogo
-            }
-          />
-        ) : null}
+                  setErrors(
+                    (
+                      previous,
+                    ) => ({
+                      ...previous,
 
-        {/* TEKKEN STEP 02 */}
-        {game ===
-          "tekken8" &&
-        step === 1 ? (
-          <TekkenFields
-            values={values}
-            errors={errors}
-            onChange={change}
-            playerPhoto={
-              tekkenPhoto
-            }
-            onPlayerPhotoChange={(
-              file,
-            ) => {
-              setTekkenPhoto(
-                file,
-              );
+                      team_logo:
+                        undefined,
+                    }),
+                  );
+                }}
+              />
+            ) : null}
 
-              setErrors(
-                (
-                  previous,
-                ) => ({
-                  ...previous,
+            {/* MLBB STEP 03 — PLAYERS */}
+            {game ===
+              "mlbb" &&
+            step === 2 ? (
+              <MlbbFields
+                section="players"
+                values={values}
+                roster={roster}
+                errors={errors}
+                onChange={change}
+                onRosterChange={
+                  changeRoster
+                }
+                teamLogo={
+                  teamLogo
+                }
+                onTeamLogoChange={
+                  setTeamLogo
+                }
+              />
+            ) : null}
 
-                  player_photo:
-                    undefined,
-                }),
-              );
-            }}
-          />
-        ) : null}
+            {/* TEKKEN STEP 02 */}
+            {game ===
+              "tekken8" &&
+            step === 1 ? (
+              <TekkenFields
+                values={values}
+                errors={errors}
+                onChange={change}
+                playerPhoto={
+                  tekkenPhoto
+                }
+                onPlayerPhotoChange={(
+                  file,
+                ) => {
+                  setTekkenPhoto(
+                    file,
+                  );
 
-        {/* CONTACT */}
-        {step ===
-        contactStep ? (
-          <ContactFields
-            values={values}
-            errors={errors}
-            onChange={change}
-            game={game}
-            stepNumber={
-              contactStep +
-              1
-            }
-          />
-        ) : null}
+                  setErrors(
+                    (
+                      previous,
+                    ) => ({
+                      ...previous,
 
-        {/* PAYMENT */}
-        {step ===
-        paymentStep ? (
-          <PaymentFields
-            stepNumber={
-              paymentStep +
-              1
-            }
-            method={
-              paymentMethod
-            }
-            onMethodChange={(
-              value,
-            ) => {
-              setPaymentMethod(
-                value,
-              );
+                      player_photo:
+                        undefined,
+                    }),
+                  );
+                }}
+              />
+            ) : null}
 
-              setErrors(
-                (
-                  previous,
-                ) => ({
-                  ...previous,
+            {/* CONTACT */}
+            {step ===
+            contactStep ? (
+              <ContactFields
+                values={values}
+                errors={errors}
+                onChange={change}
+                game={game}
+                stepNumber={
+                  contactStep +
+                  1
+                }
+              />
+            ) : null}
 
-                  payment_method:
-                    undefined,
-                }),
-              );
-            }}
-            receipt={
-              paymentReceipt
-            }
-            onReceiptChange={(
-              file,
-            ) => {
-              setPaymentReceipt(
-                file,
-              );
+            {/* PAYMENT */}
+            {step ===
+            paymentStep ? (
+              <PaymentFields
+                stepNumber={
+                  paymentStep +
+                  1
+                }
+                method={
+                  paymentMethod
+                }
+                onMethodChange={(
+                  value,
+                ) => {
+                  setPaymentMethod(
+                    value,
+                  );
 
-              setErrors(
-                (
-                  previous,
-                ) => ({
-                  ...previous,
+                  setErrors(
+                    (
+                      previous,
+                    ) => ({
+                      ...previous,
 
-                  payment_receipt:
-                    undefined,
-                }),
-              );
-            }}
-            reference={
-              paymentReference
-            }
-            onReferenceChange={
-              setPaymentReference
-            }
-            errors={
-              errors
-            }
-          />
-        ) : null}
+                      payment_method:
+                        undefined,
+                    }),
+                  );
+                }}
+                receipt={
+                  paymentReceipt
+                }
+                onReceiptChange={(
+                  file,
+                ) => {
+                  setPaymentReceipt(
+                    file,
+                  );
 
-        </StepTransition>
+                  setErrors(
+                    (
+                      previous,
+                    ) => ({
+                      ...previous,
 
-        {/* NAVIGATION */}
-        {step > 0 ? (
-          <div className="mt-8 flex flex-col gap-3 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => {
-                setErrors(
-                  {},
-                );
+                      payment_receipt:
+                        undefined,
+                    }),
+                  );
+                }}
+                reference={
+                  paymentReference
+                }
+                onReferenceChange={
+                  setPaymentReference
+                }
+                errors={
+                  errors
+                }
+              />
+            ) : null}
+          </StepTransition>
 
-                setTransitionDirection(
-                  "back",
-                );
-
-                setStep(
-                  (
-                    current,
-                  ) =>
-                    current -
-                    1,
-                );
-              }}
-              className="group h-12 justify-start rounded-none px-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary/40 hover:text-foreground active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
-
-              Back
-            </Button>
-
-            {step <
-            finalStep ? (
+          {/* NAVIGATION */}
+          {step > 0 ? (
+            <div className="mt-8 flex flex-col gap-3 border-t border-border/50 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <Button
                 type="button"
-                onClick={
-                  goNext
-                }
-                className="group h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
-              >
-                Continue
+                variant="ghost"
+                size="lg"
+                onClick={() => {
+                  setErrors(
+                    {},
+                  );
 
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                disabled={
-                  busy
-                }
-                className="group h-12 rounded-none px-7 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
-              >
-                {busy
-                  ? "Transmitting…"
-                  : "Submit entry"}
+                  setTransitionDirection(
+                    "back",
+                  );
 
-                <Send className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
+                  setStep(
+                    (
+                      current,
+                    ) =>
+                      current -
+                      1,
+                  );
+                }}
+                className="group justify-start text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none"
+              >
+                <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
+
+                Back
               </Button>
-            )}
-          </div>
-        ) : null}
+
+              {step <
+              finalStep ? (
+                <Button
+                  type="button"
+                  size="lg"
+                  onClick={
+                    goNext
+                  }
+                  className="group"
+                >
+                  Continue
+
+                  <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={
+                    busy
+                  }
+                  className="group"
+                >
+                  {busy
+                    ? "Transmitting…"
+                    : "Submit entry"}
+
+                  <Send className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
+                </Button>
+              )}
+            </div>
+          ) : null}
+        </div>
       </form>
 
-      <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-        Your registration is tied
-        to your signed-in account
-        and reviewed by tournament
-        staff before approval.
-      </p>
+      {/* =====================================================
+          ACCOUNT / REVIEW NOTE
+          ===================================================== */}
+      <div className="mt-5 flex items-start gap-3 border border-border/40 bg-card/20 px-4 py-3 backdrop-blur-sm">
+        <span
+          aria-hidden
+          className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"
+        />
+
+        <p className="font-mono text-[9px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground sm:text-[10px]">
+          Your registration is tied to
+          your signed-in account and
+          reviewed by tournament staff
+          before approval.
+        </p>
+      </div>
     </div>
   );
 }

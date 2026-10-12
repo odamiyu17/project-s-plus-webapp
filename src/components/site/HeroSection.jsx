@@ -46,166 +46,211 @@ export default function HeroSection({
   ];
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-border/70">
+    <section className="relative isolate overflow-hidden border-b border-border/50">
       {/* Background image */}
       <Image
         src={HERO_IMAGE}
         alt="Esports competitor gripping a mobile device mid-match"
         fittingType="fill"
-        className="absolute inset-0 h-full w-full scale-[1.03] opacity-50 transition-transform duration-[8000ms] ease-out hover:scale-[1.07]"
+        className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-35 mix-blend-luminosity transition-transform duration-[8000ms] ease-out hover:scale-[1.06]"
       />
 
-      {/* Background overlays */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/85 to-background/40" />
+      {/* Main depth overlays */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/95 via-background/72 to-background/30" />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/70" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/15 to-background/45" />
 
-      {/* Animated ambient gold glow */}
+      {/* Project S+ tint */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/[0.025] via-transparent to-primary/[0.012]" />
+
+      {/* Animated glows */}
       <div
         aria-hidden
-        className="hero-glow pointer-events-none absolute -right-32 top-10 h-[28rem] w-[28rem] rounded-full bg-primary/10 blur-[120px]"
+        className="hero-glow pointer-events-none absolute -right-40 top-0 h-[32rem] w-[32rem] rounded-full bg-primary/[0.075] blur-[130px]"
       />
 
       <div
         aria-hidden
-        className="hero-glow-delayed pointer-events-none absolute -left-40 bottom-0 h-[24rem] w-[24rem] rounded-full bg-primary/5 blur-[120px]"
+        className="hero-glow-delayed pointer-events-none absolute -left-44 bottom-[-8rem] h-[26rem] w-[26rem] rounded-full bg-primary/[0.035] blur-[120px]"
       />
 
-      {/* Diagonal energy line */}
+      {/* Energy accent */}
       <div
         aria-hidden
-        className="hero-energy-line pointer-events-none absolute inset-y-0 left-1/2 hidden w-px rotate-[14deg] bg-gradient-to-b from-transparent via-primary/50 to-transparent lg:block"
+        className="hero-energy-line pointer-events-none absolute inset-y-0 left-[58%] hidden w-px rotate-[14deg] bg-gradient-to-b from-transparent via-primary/40 to-transparent lg:block"
       />
 
-      {/* Very subtle grid */}
+      {/* Grid */}
       <div
         aria-hidden
-        className="hero-grid pointer-events-none absolute inset-0 opacity-[0.05]"
+        className="hero-grid pointer-events-none absolute inset-0 opacity-[0.025]"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-8 sm:pb-28 sm:pt-24">
-        {/* Eyebrow */}
-        <Reveal
-          delay={80}
-          distance={16}
-          duration={500}
-        >
-          <div className="flex items-center gap-3">
-            <span className="hero-rule h-px w-10 bg-primary" />
+      {/* Faint oversized branding */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-[-2rem] top-20 hidden select-none font-display text-[16rem] font-bold uppercase leading-none tracking-[-0.05em] text-primary/[0.018] xl:block"
+      >
+        S+
+      </div>
 
-            <p className="font-mono text-[10px] uppercase tracking-[0.38em] text-primary sm:text-[11px]">
-              Hagit Esports Tournament ·
-              Season 01
+      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28 lg:pb-32 lg:pt-32">
+        <div className="max-w-4xl">
+          {/* Eyebrow */}
+          <Reveal
+            delay={80}
+            distance={16}
+            duration={500}
+          >
+            <div className="flex items-center gap-3">
+              <span className="hero-rule h-px w-10 bg-primary" />
+
+              <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-primary sm:text-[11px]">
+                Hagit Esports Tournament ·
+                Season 01
+              </p>
+
+              <span
+                aria-hidden
+                className="h-1.5 w-1.5 rotate-45 border border-primary/50 bg-primary/10"
+              />
+            </div>
+          </Reveal>
+
+          {/* Main title */}
+          <Reveal
+            delay={150}
+            distance={22}
+            duration={600}
+          >
+            <h1 className="mt-6 max-w-5xl font-display text-[clamp(4rem,13vw,10rem)] font-bold uppercase leading-[0.78] tracking-[-0.015em] text-foreground">
+              Project{" "}
+              <span className="hero-title-accent relative inline-block text-primary">
+                S+
+              </span>
+            </h1>
+          </Reveal>
+
+          {/* Accent rule */}
+          <Reveal
+            delay={200}
+            distance={14}
+            duration={500}
+          >
+            <div className="mt-6 flex items-center gap-3">
+              <span className="h-px w-20 bg-gradient-to-r from-primary via-primary/60 to-transparent" />
+
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-primary/60">
+                Passion · Purpose · Competition
+              </span>
+            </div>
+          </Reveal>
+
+          {/* Description */}
+          <Reveal
+            delay={250}
+            distance={20}
+            duration={600}
+          >
+            <p className="mt-7 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl">
+              Mobile Legends: Bang Bang
+              squads. TEKKEN 8 solo
+              fighters. One arena where the
+              next HAGIT champion is forged.
             </p>
-          </div>
-        </Reveal>
+          </Reveal>
 
-        {/* Main title */}
-        <Reveal
-          delay={150}
-          distance={22}
-          duration={600}
-        >
-          <h1 className="mt-6 font-display text-[clamp(3.2rem,13vw,9.5rem)] font-bold uppercase leading-[0.82] tracking-[0.01em] text-foreground">
-            Project{" "}
-            <span className="hero-title-accent relative inline-block text-primary">
-              S+
-            </span>
-          </h1>
-        </Reveal>
-
-        {/* Description */}
-        <Reveal
-          delay={230}
-          distance={20}
-          duration={600}
-        >
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-xl">
-            Mobile Legends: Bang Bang
-            squads. TEKKEN 8 solo
-            fighters. One arena where the
-            next HAGIT champion is forged.
-          </p>
-        </Reveal>
-
-        {/* CTA buttons */}
-        <Reveal
-          delay={310}
-          distance={18}
-          duration={600}
-        >
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button
-              asChild
-              size="lg"
-              className="group glow-pulse h-14 rounded-none px-8 font-mono text-xs uppercase tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_35px_hsl(var(--primary)/0.24)] active:translate-y-0 active:scale-[0.98]"
-            >
-              <Link to="/join">
-                Register Now
-
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </Button>
-
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-14 rounded-none border-border bg-background/40 px-8 font-mono text-xs uppercase tracking-[0.22em] text-foreground transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-secondary/50 hover:text-foreground active:translate-y-0 active:scale-[0.98]"
-            >
-              <Link
-                to="/"
-                hash="roster"
+          {/* CTA buttons */}
+          <Reveal
+            delay={320}
+            distance={18}
+            duration={600}
+          >
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button
+                asChild
+                size="lg"
+                className="group glow-pulse h-14 rounded-none px-8 font-mono text-[11px] uppercase tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_35px_hsl(var(--primary)/0.24)] active:translate-y-0 active:scale-[0.98]"
               >
-                See the roster
-              </Link>
-            </Button>
-          </div>
-        </Reveal>
+                <Link to="/join">
+                  Register Now
 
-        {/* Registration note */}
-        <Reveal
-          delay={370}
-          distance={15}
-          duration={550}
-        >
-          <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-            Registration closes Nov 8,
-            2026 · Online qualifiers,
-            grand finals on-site
-          </p>
-        </Reveal>
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-14 rounded-none border-border/60 bg-card/30 px-8 font-mono text-[11px] uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/[0.05] hover:text-foreground active:translate-y-0 active:scale-[0.98]"
+              >
+                <Link
+                  to="/"
+                  hash="roster"
+                >
+                  See the roster
+                </Link>
+              </Button>
+            </div>
+          </Reveal>
+
+          {/* Registration note */}
+          <Reveal
+            delay={380}
+            distance={15}
+            duration={550}
+          >
+            <div className="mt-6 flex items-start gap-3">
+              <span
+                aria-hidden
+                className="mt-[0.35rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/60"
+              />
+
+              <p className="font-mono text-[9px] uppercase leading-relaxed tracking-[0.22em] text-muted-foreground sm:text-[10px]">
+                Registration closes Nov 8,
+                2026 · Online qualifiers,
+                grand finals on-site
+              </p>
+            </div>
+          </Reveal>
+        </div>
 
         {/* Stats */}
-        <dl className="mt-14 grid grid-cols-2 gap-px border border-border/70 bg-border/60 sm:mt-16 sm:grid-cols-4">
+        <dl className="mt-16 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-4">
           {stats.map(
             (stat, index) => (
               <Reveal
                 key={stat.label}
                 delay={
-                  420 + index * 80
+                  430 + index * 80
                 }
                 distance={20}
                 duration={550}
               >
-                <div className="group relative h-full overflow-hidden bg-background/80 p-5 backdrop-blur-sm transition-all duration-300 hover:bg-secondary/40 sm:p-6">
-                  {/* Hover glow */}
+                <div className="card-interactive group relative h-full overflow-hidden border border-border/55 bg-card/40 p-5 backdrop-blur-md sm:p-6">
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  >
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/80 to-transparent" />
+                    className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent opacity-70"
+                  />
 
-                    <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
-                  </div>
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/[0.045] blur-2xl transition-all duration-500 group-hover:bg-primary/[0.08]"
+                  />
 
-                  <dt className="relative font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                  <dt className="relative font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-[10px]">
                     {stat.label}
                   </dt>
 
-                  <dd className="relative mt-2 font-display text-xl font-bold uppercase tracking-wide text-primary transition-transform duration-300 group-hover:translate-x-1 sm:text-2xl">
+                  <dd className="card-interactive-shift relative mt-3 font-display text-2xl font-bold uppercase tracking-[0.04em] text-primary sm:text-3xl">
                     {stat.value}
                   </dd>
+
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-primary/15 transition-all duration-300 group-hover:h-7 group-hover:w-7 group-hover:border-primary/35"
+                  />
                 </div>
               </Reveal>
             ),

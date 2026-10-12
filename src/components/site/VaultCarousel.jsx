@@ -33,8 +33,14 @@ export default function VaultCarousel({
       opts={{
         align: "start",
       }}
-      className="mt-10"
+      className="relative mt-10"
     >
+      {/* Subtle board line */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-4 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+      />
+
       <CarouselContent>
         {squads.map(
           (squad, index) => (
@@ -93,8 +99,8 @@ export default function VaultCarousel({
         distance={12}
         duration={500}
       >
-        <div className="mt-6 flex items-center justify-between gap-4">
-          <div className="flex gap-2">
+        <div className="mt-7 flex flex-col gap-4 border-t border-border/35 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2">
             <CarouselPrevious
               className="
                 static
@@ -104,13 +110,16 @@ export default function VaultCarousel({
                 w-10
                 translate-y-0
                 rounded-none
-                border-border/80
+                border-border/60
+                bg-card/35
+                backdrop-blur-md
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
-                hover:border-primary/60
-                hover:bg-secondary/60
+                hover:border-primary/50
+                hover:bg-primary/[0.06]
                 hover:text-primary
+                hover:shadow-[0_0_18px_hsl(var(--primary)/0.12)]
                 active:translate-y-0
                 active:scale-95
               "
@@ -125,23 +134,32 @@ export default function VaultCarousel({
                 w-10
                 translate-y-0
                 rounded-none
-                border-border/80
+                border-border/60
+                bg-card/35
+                backdrop-blur-md
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
-                hover:border-primary/60
-                hover:bg-secondary/60
+                hover:border-primary/50
+                hover:bg-primary/[0.06]
                 hover:text-primary
+                hover:shadow-[0_0_18px_hsl(var(--primary)/0.12)]
                 active:translate-y-0
                 active:scale-95
               "
             />
           </div>
 
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-            Drag or swipe to scroll the
-            board
-          </span>
+          <div className="flex items-center gap-3">
+            <span
+              aria-hidden
+              className="h-1.5 w-1.5 rotate-45 bg-primary/60"
+            />
+
+            <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[10px]">
+              Drag or swipe to scroll the board
+            </span>
+          </div>
         </div>
       </Reveal>
     </Carousel>

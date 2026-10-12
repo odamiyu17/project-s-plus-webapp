@@ -51,16 +51,46 @@ export default function TekkenFields({
   }, [playerPhoto]);
 
   return (
-    <fieldset className="space-y-6">
-      <legend
-        className={
-          labelClass
-        }
-      >
-        Step 02 — Identify your fighter
-      </legend>
+    <fieldset className="space-y-8">
+      {/* =====================================================
+          STEP HEADING
+          ===================================================== */}
+      <div className="flex flex-col gap-3 border-b border-border/45 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <legend className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+            Step 02 — Identify your fighter
+          </legend>
 
-      <div>
+          <h2 className="mt-2 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[0.03em] text-foreground sm:text-4xl">
+            Enter the arena
+          </h2>
+        </div>
+
+        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+          TEKKEN 8 Solo Entry
+        </span>
+      </div>
+
+      <p className="-mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        Add the details staff will use
+        to identify and seed your fighter
+        in the TEKKEN 8 bracket.
+      </p>
+
+      {/* =====================================================
+          PLAYER PHOTO
+          ===================================================== */}
+      <div className="card-interactive card-interactive-glow group relative overflow-hidden border border-border/55 bg-background/20 p-5 backdrop-blur-sm sm:p-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+        />
+
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/[0.035] blur-3xl transition-opacity duration-500 group-hover:bg-primary/[0.06]"
+        />
+
         <p
           className={
             labelClass
@@ -69,30 +99,38 @@ export default function TekkenFields({
           Player photo
         </p>
 
-        <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="h-28 w-28 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+        <div className="mt-4 flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div className="relative h-32 w-32 shrink-0 overflow-hidden border border-primary/20 bg-card/40">
             {preview ? (
               <img
                 src={preview}
                 alt="TEKKEN player preview"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />
             ) : (
               <div className="grid h-full w-full place-items-center">
-                <ImagePlus className="h-8 w-8 text-primary/60" />
+                <ImagePlus
+                  className="h-9 w-9 text-primary/60"
+                  strokeWidth={1.4}
+                />
               </div>
             )}
+
+            <span
+              aria-hidden
+              className="pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-primary/20"
+            />
           </div>
 
           <div className="flex-1">
             <label
               htmlFor="tekken-player-photo"
-              className="flex cursor-pointer items-center gap-3 border border-dashed border-border/80 px-4 py-4 transition-colors hover:border-primary/60 hover:bg-secondary/20"
+              className="group/upload flex cursor-pointer items-center gap-3 border border-dashed border-border/60 bg-card/25 px-5 py-5 transition-all duration-300 hover:border-primary/50 hover:bg-primary/[0.04]"
             >
-              <Upload className="h-5 w-5 shrink-0 text-primary" />
+              <Upload className="h-5 w-5 shrink-0 text-primary transition-transform duration-300 group-hover/upload:-translate-y-0.5" />
 
               <span>
-                <span className="block text-sm text-foreground">
+                <span className="block text-sm font-medium text-foreground">
                   {playerPhoto
                     ? playerPhoto.name
                     : "Choose player photo"}
@@ -130,78 +168,97 @@ export default function TekkenFields({
         </div>
       </div>
 
-      <Field
-        label="Full name"
-        htmlFor="player_name"
-        error={
-          errors.player_name
-        }
-      >
-        <Input
-          id="player_name"
-          value={
-            values.player_name
+      {/* =====================================================
+          FIGHTER DETAILS
+          ===================================================== */}
+      <div className="grid gap-5 border-t border-border/35 pt-8 sm:grid-cols-2">
+        <Field
+          label="Full name"
+          htmlFor="player_name"
+          error={
+            errors.player_name
           }
-          onChange={
-            onChange(
-              "player_name",
-            )
-          }
-          placeholder="e.g. Miguel Santos"
-          autoComplete="name"
-          className={
-            inputClass
-          }
-        />
-      </Field>
+        >
+          <Input
+            id="player_name"
+            value={
+              values.player_name
+            }
+            onChange={
+              onChange(
+                "player_name",
+              )
+            }
+            placeholder="e.g. Miguel Santos"
+            autoComplete="name"
+            className={
+              inputClass
+            }
+          />
+        </Field>
 
-      <Field
-        label="In-game ID"
-        htmlFor="in_game_id"
-        error={
-          errors.in_game_id
-        }
-        hint="Exactly as it appears in-game — this is how staff seed the bracket"
-      >
-        <Input
-          id="in_game_id"
-          value={
-            values.in_game_id
+        <Field
+          label="In-game ID"
+          htmlFor="in_game_id"
+          error={
+            errors.in_game_id
           }
-          onChange={
-            onChange(
-              "in_game_id",
-            )
-          }
-          placeholder="e.g. IronFist_88"
-          enterKeyHint="next"
-          className={
-            inputClass
-          }
-        />
-      </Field>
+          hint="Exactly as it appears in-game"
+        >
+          <Input
+            id="in_game_id"
+            value={
+              values.in_game_id
+            }
+            onChange={
+              onChange(
+                "in_game_id",
+              )
+            }
+            placeholder="e.g. IronFist_88"
+            enterKeyHint="next"
+            className={
+              inputClass
+            }
+          />
+        </Field>
 
-      <Field
-        label="Region / city"
-        htmlFor="region"
-        hint="Optional — where you play from"
-      >
-        <Input
-          id="region"
-          value={
-            values.region
-          }
-          onChange={
-            onChange(
-              "region",
-            )
-          }
-          placeholder="e.g. Cebu"
-          className={
-            inputClass
-          }
+        <Field
+          label="Region / city"
+          htmlFor="region"
+          hint="Optional — where you play from"
+          className="sm:col-span-2"
+        >
+          <Input
+            id="region"
+            value={
+              values.region
+            }
+            onChange={
+              onChange(
+                "region",
+              )
+            }
+            placeholder="e.g. Cebu"
+            className={
+              inputClass
+            }
+          />
+        </Field>
+      </div>
+
+      <div className="flex items-start gap-3 border border-border/40 bg-card/20 px-4 py-3 backdrop-blur-sm">
+        <span
+          aria-hidden
+          className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"
         />
-      </Field>
+
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          Your in-game ID is used by
+          tournament staff when preparing
+          and seeding the TEKKEN 8 bracket.
+        </p>
+      </div>
     </fieldset>
   );
 }

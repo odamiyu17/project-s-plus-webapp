@@ -666,3 +666,534 @@
     transform: none;
   }
 }
+
+/* =========================================================
+   PROJECT S+ — HOMEPAGE AMBIENT BACKGROUND
+   Inspired by floating geometric atmosphere,
+   adapted to Project S+ branding.
+   ========================================================= */
+
+.project-home {
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 16% 12%,
+      rgba(201, 169, 108, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 84% 72%,
+      rgba(40, 94, 78, 0.15),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #050d0c 0%,
+      #071310 24%,
+      #0b1714 48%,
+      #0c1210 72%,
+      #050908 100%
+    );
+
+  background-size:
+    150% 150%,
+    160% 160%,
+    200% 200%;
+
+  animation:
+    project-home-gradient-shift
+    26s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+/* ---------------------------------------------------------
+   Fixed atmosphere across the entire homepage
+   --------------------------------------------------------- */
+
+.project-home-atmosphere {
+  position: fixed;
+  inset: 0;
+
+  z-index: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   VERY SOFT BACKGROUND LIGHT
+   --------------------------------------------------------- */
+
+.project-home-gradient-glow {
+  position: absolute;
+
+  border-radius: 9999px;
+
+  pointer-events: none;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+.project-home-gradient-glow-gold {
+  top: -22rem;
+  left: -20rem;
+
+  width: 55rem;
+  height: 55rem;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(201, 169, 108, 0.11)
+        0%,
+      rgba(201, 169, 108, 0.04)
+        35%,
+      transparent
+        70%
+    );
+
+  filter: blur(65px);
+
+  animation:
+    project-home-gold-drift
+    20s
+    ease-in-out
+    infinite;
+}
+
+.project-home-gradient-glow-green {
+  right: -24rem;
+  bottom: -18rem;
+
+  width: 62rem;
+  height: 62rem;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(51, 116, 94, 0.15)
+        0%,
+      rgba(32, 80, 66, 0.05)
+        40%,
+      transparent
+        72%
+    );
+
+  filter: blur(75px);
+
+  animation:
+    project-home-green-drift
+    24s
+    ease-in-out
+    infinite;
+}
+
+/* =========================================================
+   FLOATING GEOMETRIC SHAPES
+   ========================================================= */
+
+.project-home-shapes {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  list-style: none;
+}
+
+.project-home-shape {
+  position: absolute;
+
+  bottom: -180px;
+
+  display: block;
+
+  width: 28px;
+  height: 28px;
+
+  border:
+    1px solid
+    rgba(201, 169, 108, 0.16);
+
+  background:
+    rgba(201, 169, 108, 0.035);
+
+  opacity: 0;
+
+  will-change:
+    transform,
+    opacity,
+    border-radius;
+
+  animation-name:
+    project-home-shape-rise;
+
+  animation-timing-function:
+    linear;
+
+  animation-iteration-count:
+    infinite;
+}
+
+/* ---------------------------------------------------------
+   INDIVIDUAL SHAPES
+
+   Negative delays mean some are already moving when
+   the visitor opens the homepage instead of waiting
+   for every shape to begin from the bottom.
+   --------------------------------------------------------- */
+
+.project-home-shape:nth-child(1) {
+  left: 8%;
+
+  width: 72px;
+  height: 72px;
+
+  animation-duration: 27s;
+  animation-delay: -8s;
+}
+
+.project-home-shape:nth-child(2) {
+  left: 17%;
+
+  width: 22px;
+  height: 22px;
+
+  border-color:
+    rgba(51, 116, 94, 0.22);
+
+  background:
+    rgba(51, 116, 94, 0.04);
+
+  animation-duration: 21s;
+  animation-delay: -15s;
+}
+
+.project-home-shape:nth-child(3) {
+  left: 28%;
+
+  width: 42px;
+  height: 42px;
+
+  animation-duration: 30s;
+  animation-delay: -3s;
+}
+
+.project-home-shape:nth-child(4) {
+  left: 38%;
+
+  width: 95px;
+  height: 95px;
+
+  border-color:
+    rgba(51, 116, 94, 0.16);
+
+  background:
+    rgba(51, 116, 94, 0.025);
+
+  animation-duration: 35s;
+  animation-delay: -20s;
+}
+
+.project-home-shape:nth-child(5) {
+  left: 48%;
+
+  width: 18px;
+  height: 18px;
+
+  animation-duration: 19s;
+  animation-delay: -7s;
+}
+
+.project-home-shape:nth-child(6) {
+  left: 57%;
+
+  width: 55px;
+  height: 55px;
+
+  animation-duration: 29s;
+  animation-delay: -13s;
+}
+
+.project-home-shape:nth-child(7) {
+  left: 67%;
+
+  width: 32px;
+  height: 32px;
+
+  border-color:
+    rgba(51, 116, 94, 0.2);
+
+  background:
+    rgba(51, 116, 94, 0.035);
+
+  animation-duration: 23s;
+  animation-delay: -4s;
+}
+
+.project-home-shape:nth-child(8) {
+  left: 76%;
+
+  width: 86px;
+  height: 86px;
+
+  animation-duration: 33s;
+  animation-delay: -17s;
+}
+
+.project-home-shape:nth-child(9) {
+  left: 87%;
+
+  width: 24px;
+  height: 24px;
+
+  animation-duration: 22s;
+  animation-delay: -10s;
+}
+
+.project-home-shape:nth-child(10) {
+  left: 93%;
+
+  width: 48px;
+  height: 48px;
+
+  border-color:
+    rgba(51, 116, 94, 0.19);
+
+  background:
+    rgba(51, 116, 94, 0.03);
+
+  animation-duration: 31s;
+  animation-delay: -24s;
+}
+
+.project-home-shape:nth-child(11) {
+  left: 3%;
+
+  width: 30px;
+  height: 30px;
+
+  animation-duration: 25s;
+  animation-delay: -19s;
+}
+
+.project-home-shape:nth-child(12) {
+  left: 34%;
+
+  width: 16px;
+  height: 16px;
+
+  animation-duration: 20s;
+  animation-delay: -11s;
+}
+
+.project-home-shape:nth-child(13) {
+  left: 62%;
+
+  width: 68px;
+  height: 68px;
+
+  border-color:
+    rgba(51, 116, 94, 0.16);
+
+  background:
+    rgba(51, 116, 94, 0.025);
+
+  animation-duration: 36s;
+  animation-delay: -29s;
+}
+
+.project-home-shape:nth-child(14) {
+  left: 82%;
+
+  width: 34px;
+  height: 34px;
+
+  animation-duration: 26s;
+  animation-delay: -22s;
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes project-home-shape-rise {
+  0% {
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      )
+      rotate(0deg);
+
+    opacity: 0;
+
+    border-radius:
+      2px;
+  }
+
+  8% {
+    opacity: 0.3;
+  }
+
+  40% {
+    opacity: 0.18;
+  }
+
+  72% {
+    opacity: 0.1;
+
+    border-radius:
+      18%;
+  }
+
+  100% {
+    transform:
+      translate3d(
+        0,
+        -125vh,
+        0
+      )
+      rotate(540deg);
+
+    opacity: 0;
+
+    border-radius:
+      50%;
+  }
+}
+
+@keyframes project-home-gradient-shift {
+  0% {
+    background-position:
+      0% 0%,
+      100% 100%,
+      0% 50%;
+  }
+
+  50% {
+    background-position:
+      10% 8%,
+      90% 82%,
+      50% 50%;
+  }
+
+  100% {
+    background-position:
+      18% 16%,
+      80% 68%,
+      100% 50%;
+  }
+}
+
+@keyframes project-home-gold-drift {
+  0%,
+  100% {
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      )
+      scale(1);
+
+    opacity: 0.7;
+  }
+
+  50% {
+    transform:
+      translate3d(
+        8vw,
+        6vh,
+        0
+      )
+      scale(1.08);
+
+    opacity: 1;
+  }
+}
+
+@keyframes project-home-green-drift {
+  0%,
+  100% {
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      )
+      scale(1);
+
+    opacity: 0.7;
+  }
+
+  50% {
+    transform:
+      translate3d(
+        -7vw,
+        -5vh,
+        0
+      )
+      scale(1.12);
+
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .project-home {
+    animation: none;
+  }
+
+  .project-home-gradient-glow {
+    animation: none;
+  }
+
+  .project-home-shapes {
+    display: none;
+  }
+}
+
+/* =========================================================
+   MOBILE — fewer shapes for a cleaner screen
+   ========================================================= */
+
+@media (
+  max-width: 640px
+) {
+  .project-home-shape:nth-child(4),
+  .project-home-shape:nth-child(6),
+  .project-home-shape:nth-child(8),
+  .project-home-shape:nth-child(10),
+  .project-home-shape:nth-child(13) {
+    display: none;
+  }
+
+  .project-home-gradient-glow-gold {
+    opacity: 0.65;
+  }
+
+  .project-home-gradient-glow-green {
+    opacity: 0.7;
+  }
+}

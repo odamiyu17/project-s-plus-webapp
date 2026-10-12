@@ -116,7 +116,7 @@ export default function SiteHeader() {
         }
       `}
     >
-      {/* subtle header glow */}
+      {/* top glow */}
       <div
         aria-hidden
         className={`
@@ -151,56 +151,18 @@ export default function SiteHeader() {
           <div className="relative">
             <div
               aria-hidden
-              className="
-                absolute
-                inset-0
-                scale-75
-                rounded-full
-                bg-primary/20
-                opacity-0
-                blur-xl
-                transition-all
-                duration-500
-                group-hover:scale-125
-                group-hover:opacity-100
-              "
+              className="absolute inset-0 scale-75 rounded-full bg-primary/20 opacity-0 blur-xl transition-all duration-500 group-hover:scale-125 group-hover:opacity-100"
             />
 
             <img
               src="/images/branding/project-s-logo.png"
               alt="Project S+"
-              className="
-                relative
-                h-10
-                w-10
-                object-contain
-                transition-all
-                duration-300
-                group-hover:scale-105
-                group-hover:drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)]
-                sm:h-12
-                sm:w-12
-              "
+              className="relative h-10 w-10 object-contain transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)] sm:h-12 sm:w-12"
             />
           </div>
 
-          <span
-            className="
-              font-display
-              text-sm
-              font-bold
-              uppercase
-              leading-none
-              tracking-[0.22em]
-              text-foreground
-              transition-all
-              duration-300
-              group-hover:tracking-[0.25em]
-              sm:text-base
-            "
-          >
+          <span className="font-display text-sm font-bold uppercase leading-none tracking-[0.22em] text-foreground transition-all duration-300 group-hover:tracking-[0.25em] sm:text-base">
             Project
-
             <span className="text-primary">
               {" "}
               S+
@@ -215,70 +177,29 @@ export default function SiteHeader() {
               key={item.hash}
               to="/"
               hash={item.hash}
-              className="
-                group/nav
-                relative
-                py-2
-                font-mono
-                text-[11px]
-                uppercase
-                tracking-[0.22em]
-                text-muted-foreground
-                transition-colors
-                duration-300
-                hover:text-primary
-              "
+              className="group/nav relative py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-300 hover:text-primary"
             >
               {item.label}
 
               <span
                 aria-hidden
-                className="
-                  absolute
-                  bottom-0
-                  left-0
-                  h-px
-                  w-full
-                  origin-left
-                  scale-x-0
-                  bg-primary
-                  transition-transform
-                  duration-300
-                  ease-out
-                  group-hover/nav:scale-x-100
-                "
+                className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-primary transition-transform duration-300 ease-out group-hover/nav:scale-x-100"
               />
             </Link>
           ))}
         </nav>
 
-        {/* ACTIONS */}
+        {/* DESKTOP / PRIMARY ACTIONS */}
         <div className="flex items-center gap-2">
           {!user ? (
             <Button
               asChild
               variant="ghost"
               size="sm"
-              className="
-                hidden
-                h-11
-                rounded-none
-                px-3
-                font-mono
-                text-[10px]
-                uppercase
-                tracking-[0.2em]
-                text-muted-foreground
-                transition-all
-                duration-300
-                hover:-translate-y-0.5
-                hover:bg-secondary/40
-                hover:text-primary
-                sm:inline-flex
-              "
+              className="hidden sm:inline-flex"
             >
               <Link to="/login">
-                <LogIn className="mr-2 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                <LogIn className="h-3.5 w-3.5" />
 
                 Login
               </Link>
@@ -290,26 +211,10 @@ export default function SiteHeader() {
               asChild
               variant="ghost"
               size="sm"
-              className="
-                hidden
-                h-11
-                rounded-none
-                px-3
-                font-mono
-                text-[10px]
-                uppercase
-                tracking-[0.2em]
-                text-muted-foreground
-                transition-all
-                duration-300
-                hover:-translate-y-0.5
-                hover:bg-secondary/40
-                hover:text-primary
-                sm:inline-flex
-              "
+              className="hidden sm:inline-flex"
             >
               <Link to="/my-registration">
-                <ClipboardList className="mr-2 h-3.5 w-3.5" />
+                <ClipboardList className="h-3.5 w-3.5" />
 
                 My Registration
               </Link>
@@ -321,26 +226,10 @@ export default function SiteHeader() {
               asChild
               variant="ghost"
               size="sm"
-              className="
-                hidden
-                h-11
-                rounded-none
-                px-3
-                font-mono
-                text-[10px]
-                uppercase
-                tracking-[0.2em]
-                text-primary
-                transition-all
-                duration-300
-                hover:-translate-y-0.5
-                hover:bg-secondary/40
-                hover:text-primary
-                sm:inline-flex
-              "
+              className="hidden text-primary sm:inline-flex"
             >
               <Link to="/admin">
-                <Shield className="mr-2 h-3.5 w-3.5" />
+                <Shield className="h-3.5 w-3.5" />
 
                 Command Center
               </Link>
@@ -354,26 +243,9 @@ export default function SiteHeader() {
               size="sm"
               disabled={loggingOut}
               onClick={handleLogout}
-              className="
-                hidden
-                h-11
-                rounded-none
-                px-3
-                font-mono
-                text-[10px]
-                uppercase
-                tracking-[0.2em]
-                text-muted-foreground
-                transition-all
-                duration-300
-                hover:-translate-y-0.5
-                hover:bg-destructive/10
-                hover:text-destructive
-                disabled:opacity-50
-                sm:inline-flex
-              "
+              className="hidden hover:bg-destructive/10 hover:text-destructive sm:inline-flex"
             >
-              <LogOut className="mr-2 h-3.5 w-3.5" />
+              <LogOut className="h-3.5 w-3.5" />
 
               {loggingOut
                 ? "Logging Out..."
@@ -383,24 +255,8 @@ export default function SiteHeader() {
 
           <Button
             asChild
-            className="
-              group
-              glow-pulse
-              h-11
-              rounded-none
-              px-4
-              font-mono
-              text-[11px]
-              uppercase
-              tracking-[0.2em]
-              transition-all
-              duration-300
-              hover:-translate-y-1
-              hover:shadow-[0_0_32px_hsl(var(--primary)/0.2)]
-              active:translate-y-0
-              active:scale-[0.98]
-              sm:px-6
-            "
+            size="sm"
+            className="group glow-pulse h-11 px-4 sm:px-6"
           >
             <Link to="/join">
               Register Now
@@ -421,25 +277,7 @@ export default function SiteHeader() {
                 (value) => !value,
               )
             }
-            className="
-              group
-              relative
-              grid
-              h-11
-              w-11
-              place-items-center
-              overflow-hidden
-              border
-              border-border
-              text-foreground
-              transition-all
-              duration-300
-              hover:border-primary/60
-              hover:bg-secondary/40
-              hover:text-primary
-              active:scale-95
-              lg:hidden
-            "
+            className="group relative grid h-11 w-11 place-items-center overflow-hidden border border-border/70 bg-background/20 text-foreground backdrop-blur-sm transition-all duration-300 hover:border-primary/55 hover:bg-primary/[0.05] hover:text-primary active:scale-95 lg:hidden"
           >
             <span
               className={`
@@ -480,7 +318,6 @@ export default function SiteHeader() {
           grid
           overflow-hidden
           border-t
-          border-border
           bg-background/95
           backdrop-blur-2xl
           transition-all
@@ -489,7 +326,7 @@ export default function SiteHeader() {
           lg:hidden
           ${
             open
-              ? "grid-rows-[1fr] opacity-100"
+              ? "grid-rows-[1fr] border-border/70 opacity-100"
               : "grid-rows-[0fr] border-transparent opacity-0"
           }
         `}
@@ -523,38 +360,13 @@ export default function SiteHeader() {
                       onClick={() =>
                         setOpen(false)
                       }
-                      className="
-                        group/mobile
-                        flex
-                        items-center
-                        justify-between
-                        border-b
-                        border-border/60
-                        py-4
-                        font-mono
-                        text-xs
-                        uppercase
-                        tracking-[0.22em]
-                        text-muted-foreground
-                        transition-colors
-                        duration-300
-                        hover:text-primary
-                      "
+                      className="group/mobile flex items-center justify-between border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-all duration-300 hover:pl-1 hover:text-primary"
                     >
                       {item.label}
 
                       <span
                         aria-hidden
-                        className="
-                          h-1.5
-                          w-1.5
-                          rotate-45
-                          bg-primary/30
-                          transition-all
-                          duration-300
-                          group-hover/mobile:scale-125
-                          group-hover/mobile:bg-primary
-                        "
+                        className="h-1.5 w-1.5 rotate-45 bg-primary/30 transition-all duration-300 group-hover/mobile:scale-125 group-hover/mobile:bg-primary"
                       />
                     </Link>
                   </li>
@@ -579,21 +391,7 @@ export default function SiteHeader() {
                     onClick={() =>
                       setOpen(false)
                     }
-                    className="
-                      flex
-                      items-center
-                      border-b
-                      border-border/60
-                      py-4
-                      font-mono
-                      text-xs
-                      uppercase
-                      tracking-[0.22em]
-                      text-primary
-                      transition-all
-                      duration-300
-                      hover:translate-x-1
-                    "
+                    className="flex items-center border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-primary transition-all duration-300 hover:pl-1"
                   >
                     <LogIn className="mr-2 h-4 w-4" />
 
@@ -620,22 +418,7 @@ export default function SiteHeader() {
                     onClick={() =>
                       setOpen(false)
                     }
-                    className="
-                      flex
-                      items-center
-                      border-b
-                      border-border/60
-                      py-4
-                      font-mono
-                      text-xs
-                      uppercase
-                      tracking-[0.22em]
-                      text-muted-foreground
-                      transition-all
-                      duration-300
-                      hover:translate-x-1
-                      hover:text-primary
-                    "
+                    className="flex items-center border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-all duration-300 hover:pl-1 hover:text-primary"
                   >
                     <ClipboardList className="mr-2 h-4 w-4" />
 
@@ -662,21 +445,7 @@ export default function SiteHeader() {
                     onClick={() =>
                       setOpen(false)
                     }
-                    className="
-                      flex
-                      items-center
-                      border-b
-                      border-border/60
-                      py-4
-                      font-mono
-                      text-xs
-                      uppercase
-                      tracking-[0.22em]
-                      text-primary
-                      transition-all
-                      duration-300
-                      hover:translate-x-1
-                    "
+                    className="flex items-center border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-primary transition-all duration-300 hover:pl-1"
                   >
                     <Shield className="mr-2 h-4 w-4" />
 
@@ -702,23 +471,7 @@ export default function SiteHeader() {
                     type="button"
                     disabled={loggingOut}
                     onClick={handleLogout}
-                    className="
-                      flex
-                      w-full
-                      items-center
-                      py-4
-                      text-left
-                      font-mono
-                      text-xs
-                      uppercase
-                      tracking-[0.22em]
-                      text-destructive
-                      transition-all
-                      duration-300
-                      hover:translate-x-1
-                      hover:text-destructive/80
-                      disabled:opacity-50
-                    "
+                    className="flex w-full items-center py-4 text-left font-mono text-[11px] uppercase tracking-[0.22em] text-destructive transition-all duration-300 hover:pl-1 hover:text-destructive/80 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     <LogOut className="mr-2 h-4 w-4" />
 

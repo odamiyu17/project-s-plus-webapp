@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import Reveal from "@/components/motion/Reveal";
-
 import FormatSection from "@/components/site/FormatSection";
 import HeroSection from "@/components/site/HeroSection";
 import PrizesSection from "@/components/site/PrizesSection";
@@ -11,11 +9,15 @@ import TournamentFacts from "@/components/site/TournamentFacts";
 
 import { listPublicEntries } from "@/lib/server-fns";
 
+const BACKGROUND_SHAPES = Array.from(
+  { length: 14 },
+  (_, index) => index,
+);
+
 export const Route = createFileRoute("/_site/")({
   loader: () => listPublicEntries(),
 
-  // Fresh vault on every visit —
-  // newly approved squads must appear immediately.
+  // Fresh vault on every visit.
   shouldReload: true,
 
   head: () => ({
@@ -54,65 +56,56 @@ function LandingPage() {
     Route.useLoaderData();
 
   return (
-    <main>
-      {/* HERO */}
-      <Reveal
-        distance={18}
-        duration={550}
+    <main className="project-home relative isolate min-h-screen overflow-hidden">
+      {/* =====================================================
+          GLOBAL HOMEPAGE ATMOSPHERE
+
+          Fixed behind every homepage section so the gradient
+          and floating shapes feel continuous while scrolling.
+          ===================================================== */}
+      <div
+        aria-hidden="true"
+        className="project-home-atmosphere"
       >
+        {/* Gold ambient glow */}
+        <div className="project-home-gradient-glow project-home-gradient-glow-gold" />
+
+        {/* Emerald ambient glow */}
+        <div className="project-home-gradient-glow project-home-gradient-glow-green" />
+
+        {/* Floating geometric shapes */}
+        <ul className="project-home-shapes">
+          {BACKGROUND_SHAPES.map(
+            (shape) => (
+              <li
+                key={shape}
+                className="project-home-shape"
+              />
+            ),
+          )}
+        </ul>
+      </div>
+
+      {/* =====================================================
+          HOMEPAGE CONTENT
+          ===================================================== */}
+      <div className="relative z-10">
         <HeroSection
           entries={entries}
         />
-      </Reveal>
 
-      {/* TOURNAMENT OVERVIEW */}
-      <Reveal
-        delay={60}
-        distance={24}
-        duration={650}
-      >
         <TournamentFacts />
-      </Reveal>
 
-      {/* FORMAT */}
-      <Reveal
-        delay={80}
-        direction="right"
-        distance={28}
-        duration={650}
-      >
         <FormatSection />
-      </Reveal>
 
-      {/* PRIZES */}
-      <Reveal
-        delay={100}
-        direction="left"
-        distance={28}
-        duration={650}
-      >
         <PrizesSection />
-      </Reveal>
 
-      {/* ROSTER VAULT */}
-      <Reveal
-        delay={80}
-        distance={24}
-        duration={650}
-      >
         <TeamsVault
           entries={entries}
         />
-      </Reveal>
 
-      {/* FINAL CTA */}
-      <Reveal
-        delay={80}
-        distance={20}
-        duration={600}
-      >
         <RegisterBand />
-      </Reveal>
+      </div>
     </main>
   );
 }

@@ -62,23 +62,37 @@ export default function MlbbFields({
   ) {
     return (
       <fieldset className="space-y-8">
-        <legend
-          className={
-            labelClass
-          }
-        >
-          Step 02 — Team
-          identity
-        </legend>
+        <div className="flex flex-col gap-3 border-b border-border/45 pb-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <legend className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+              Step 02 — Team identity
+            </legend>
 
-        <p className="-mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            <h2 className="mt-2 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[0.03em] text-foreground sm:text-4xl">
+              Build your squad profile
+            </h2>
+          </div>
+
+          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+            MLBB Team Entry
+          </span>
+        </div>
+
+        <p className="-mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           Upload your official
-          team logo and enter your
-          team information.
+          team logo and enter the
+          details that will identify
+          your squad throughout the
+          tournament.
         </p>
 
         {/* TEAM LOGO */}
-        <div>
+        <div className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-background/20 p-5 backdrop-blur-sm sm:p-6">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+          />
+
           <p
             className={
               labelClass
@@ -87,8 +101,8 @@ export default function MlbbFields({
             Team logo
           </p>
 
-          <div className="mt-3 grid gap-5 sm:grid-cols-[150px_1fr] sm:items-center">
-            <div className="grid aspect-square w-full max-w-[150px] place-items-center overflow-hidden border border-border/80 bg-background/50">
+          <div className="mt-4 grid gap-5 sm:grid-cols-[170px_1fr] sm:items-center">
+            <div className="grid aspect-square w-full max-w-[170px] place-items-center overflow-hidden border border-primary/20 bg-card/40">
               {logoPreview ? (
                 <img
                   src={
@@ -110,9 +124,9 @@ export default function MlbbFields({
             <div>
               <label
                 htmlFor="team-logo"
-                className="flex cursor-pointer items-center justify-center gap-3 border border-dashed border-border/80 px-5 py-5 text-center transition-colors hover:border-primary/60 hover:bg-secondary/20 sm:justify-start"
+                className="group flex cursor-pointer items-center justify-center gap-3 border border-dashed border-border/60 bg-card/25 px-5 py-5 text-center transition-all duration-300 hover:border-primary/50 hover:bg-primary/[0.04] sm:justify-start"
               >
-                <Upload className="h-5 w-5 shrink-0 text-primary" />
+                <Upload className="h-5 w-5 shrink-0 text-primary transition-transform duration-300 group-hover:-translate-y-0.5" />
 
                 <span>
                   <span className="block text-sm font-medium text-foreground">
@@ -160,7 +174,7 @@ export default function MlbbFields({
         </div>
 
         {/* TEAM INFO */}
-        <div className="grid gap-5 sm:grid-cols-3">
+        <div className="grid gap-5 border-t border-border/35 pt-8 sm:grid-cols-3">
           <Field
             label="Team name"
             htmlFor="team_name"
@@ -239,15 +253,23 @@ export default function MlbbFields({
 
   return (
     <fieldset className="space-y-8">
-      <legend
-        className={
-          labelClass
-        }
-      >
-        Step 03 — Players
-      </legend>
+      <div className="flex flex-col gap-3 border-b border-border/45 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <legend className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+            Step 03 — Players
+          </legend>
 
-      <p className="-mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          <h2 className="mt-2 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[0.03em] text-foreground sm:text-4xl">
+            Lock in your seven
+          </h2>
+        </div>
+
+        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+          5 Main · 2 Substitute
+        </span>
+      </div>
+
+      <p className="-mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
         Complete all seven player
         profiles. Players 1–5 are
         the main roster and Players
@@ -268,12 +290,16 @@ export default function MlbbFields({
                 key={
                   index
                 }
-                className="border border-border/80 bg-background/40"
+                className="card-interactive card-interactive-glow group relative overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm"
               >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent opacity-70"
+                />
                 {/* PLAYER HEADER */}
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 bg-secondary/20 px-4 py-3 sm:px-5">
+                <div className="relative flex flex-wrap items-center justify-between gap-3 border-b border-border/50 bg-card/35 px-4 py-4 sm:px-5">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-9 w-9 place-items-center border border-primary/30 bg-secondary/40 font-display text-sm font-bold text-primary">
+                    <span className="grid h-10 w-10 place-items-center border border-primary/30 bg-primary/[0.05] font-mono text-[10px] font-bold tracking-[0.08em] text-primary transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/[0.08]">
                       P
                       {index +
                         1}
@@ -295,10 +321,10 @@ export default function MlbbFields({
                   </div>
 
                   <span
-                    className={`border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] ${
+                    className={`border px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.18em] ${
                       isMain
-                        ? "border-primary/40 text-primary"
-                        : "border-border text-muted-foreground"
+                        ? "border-primary/35 bg-primary/[0.05] text-primary"
+                        : "border-border/60 bg-background/20 text-muted-foreground"
                     }`}
                   >
                     {isMain
@@ -308,7 +334,7 @@ export default function MlbbFields({
                 </div>
 
                 {/* PLAYER FIELDS */}
-                <div className="grid gap-5 p-4 sm:grid-cols-2 sm:p-5">
+                <div className="relative grid gap-5 p-4 sm:grid-cols-2 sm:p-6">
                   <PlayerPhotoField
                     player={player}
                     index={index}
@@ -615,18 +641,30 @@ export default function MlbbFields({
                     className="sm:col-span-2"
                   />
                 </div>
+
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute bottom-0 right-0 h-6 w-6 border-b border-r border-primary/15 transition-all duration-300 group-hover:h-9 group-hover:w-9 group-hover:border-primary/35"
+                />
               </section>
             );
           },
         )}
       </div>
 
-      <p className="text-xs leading-relaxed text-muted-foreground">
-        Players 1–5 are registered
-        as the main lineup. Players
-        6–7 are registered as
-        substitutes.
-      </p>
+      <div className="flex items-start gap-3 border border-border/40 bg-card/20 px-4 py-3 backdrop-blur-sm">
+        <span
+          aria-hidden
+          className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"
+        />
+
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          Players 1–5 are registered
+          as the main lineup. Players
+          6–7 are registered as
+          substitutes.
+        </p>
+      </div>
     </fieldset>
   );
 }
@@ -668,8 +706,8 @@ function PlayerPhotoField({
         Player photo
       </p>
 
-      <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div className="h-24 w-24 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+      <div className="mt-3 flex flex-col gap-4 border border-border/40 bg-card/20 p-4 sm:flex-row sm:items-center">
+        <div className="h-24 w-24 shrink-0 overflow-hidden border border-primary/20 bg-background/30">
           {preview ? (
             <img
               src={preview}
@@ -686,7 +724,7 @@ function PlayerPhotoField({
         <div className="flex-1">
           <label
             htmlFor={`player_photo_${index}`}
-            className="flex cursor-pointer items-center gap-3 border border-dashed border-border/80 px-4 py-4 transition-colors hover:border-primary/60 hover:bg-secondary/20"
+            className="group flex cursor-pointer items-center gap-3 border border-dashed border-border/60 bg-background/15 px-4 py-4 transition-all duration-300 hover:border-primary/50 hover:bg-primary/[0.04]"
           >
             <Upload className="h-5 w-5 shrink-0 text-primary" />
 
