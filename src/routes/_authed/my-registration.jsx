@@ -165,8 +165,8 @@ function TeamIdentity({
     );
 
   return (
-    <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-      <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden border border-border/80 bg-background/70">
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+      <div className="group relative grid h-24 w-24 shrink-0 place-items-center overflow-hidden border border-primary/20 bg-card/35 backdrop-blur-sm sm:h-28 sm:w-28">
         {logoUrl ? (
           <img
             src={logoUrl}
@@ -174,7 +174,7 @@ function TeamIdentity({
               registration.team_name ||
               "Team"
             } logo`}
-            className="h-full w-full object-contain p-2"
+            className="h-full w-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <Users className="h-8 w-8 text-primary/50" />
@@ -186,7 +186,7 @@ function TeamIdentity({
           Team Identity
         </p>
 
-        <h3 className="mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground">
+        <h3 className="mt-2 break-words font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl">
           {registration.team_name ||
             "Unnamed Squad"}
         </h3>
@@ -226,7 +226,7 @@ function DetailItem({
 }) {
   return (
     <div
-      className={`min-w-0 ${className}`}
+      className={`min-w-0 rounded-none border border-border/35 bg-background/15 p-3 ${className}`}
     >
       <p className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
         {Icon ? (
@@ -265,8 +265,12 @@ function PlayerCard({
     "main";
 
   return (
-    <article className="overflow-hidden border border-border/80 bg-background/70">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 bg-secondary/20 px-4 py-3">
+    <article className="card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+      />
+      <header className="relative flex flex-col items-start gap-3 border-b border-border/50 bg-card/35 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-4">
         <div>
           <p className="font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground">
             Player{" "}
@@ -281,10 +285,10 @@ function PlayerCard({
         </div>
 
         <span
-          className={`border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] ${
+          className={`border px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.18em] ${
             isMain
-              ? "border-primary/40 bg-primary/5 text-primary"
-              : "border-border text-muted-foreground"
+              ? "border-primary/35 bg-primary/[0.06] text-primary"
+              : "border-border/50 bg-background/15 text-muted-foreground"
           }`}
         >
           {isMain
@@ -293,9 +297,9 @@ function PlayerCard({
         </span>
       </header>
 
-      <div className="p-4 sm:p-5">
-        <div className="flex flex-col gap-5 sm:flex-row">
-          <div className="h-28 w-28 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+      <div className="p-3 sm:p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
+          <div className="h-24 w-24 shrink-0 overflow-hidden border border-primary/20 bg-card/30 sm:h-28 sm:w-28">
             {photoUrl ? (
               <img
                 src={
@@ -305,7 +309,7 @@ function PlayerCard({
                   player.ign ||
                   `Player ${index + 1}`
                 }
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />
             ) : (
               <div className="grid h-full w-full place-items-center">
@@ -315,7 +319,7 @@ function PlayerCard({
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="font-display text-xl font-bold uppercase tracking-[0.04em] text-foreground">
+            <p className="break-words font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground sm:text-xl">
               {player.ign ||
                 "No IGN"}
             </p>
@@ -426,9 +430,9 @@ function PlayerCard({
                 }
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex max-w-full items-center gap-1.5 break-all text-primary hover:underline"
+                className="inline-flex max-w-full items-start gap-1.5 break-all text-primary hover:underline"
               >
-                <span className="truncate">
+                <span className="min-w-0 break-all">
                   {
                     player.facebook_link
                   }
@@ -442,6 +446,11 @@ function PlayerCard({
           </DetailItem>
         </div>
       </div>
+
+      <span
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 right-0 h-6 w-6 border-b border-r border-primary/15 transition-all duration-300 group-hover:h-9 group-hover:w-9 group-hover:border-primary/35"
+      />
     </article>
   );
 }
@@ -456,8 +465,8 @@ function TekkenDetails({
     );
 
   return (
-    <div className="flex flex-col gap-6 sm:flex-row">
-      <div className="h-40 w-40 shrink-0 overflow-hidden border border-border/80 bg-secondary/20">
+    <div className="flex flex-col gap-5 sm:flex-row sm:gap-6">
+      <div className="group relative h-32 w-32 shrink-0 overflow-hidden border border-primary/20 bg-card/30 sm:h-40 sm:w-40">
         {photoUrl ? (
           <img
             src={photoUrl}
@@ -465,7 +474,7 @@ function TekkenDetails({
               registration.player_name ||
               "TEKKEN 8 fighter"
             }
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         ) : (
           <div className="grid h-full w-full place-items-center">
@@ -479,7 +488,7 @@ function TekkenDetails({
           Fighter
         </p>
 
-        <h3 className="mt-2 font-display text-2xl font-bold uppercase tracking-[0.04em] text-foreground">
+        <h3 className="mt-2 break-words font-display text-xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-2xl">
           {registration.in_game_id ||
             "Unnamed Fighter"}
         </h3>
@@ -524,7 +533,7 @@ function ContactDetails({
   registration,
 }) {
   return (
-    <section className="border-t border-border/70 px-5 py-5 sm:px-6">
+    <section className="border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6 sm:py-6">
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
         Main Contact
       </p>
@@ -586,25 +595,41 @@ function MyRegistrationPage() {
     Route.useLoaderData();
 
   return (
-    <main className="min-h-screen pb-24">
-      <header className="border-b border-border/70 bg-secondary/20">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-8 sm:py-20">
+    <main className="relative min-h-screen overflow-x-hidden pb-20 sm:pb-24">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[34rem] bg-gradient-to-b from-primary/[0.025] via-transparent to-transparent"
+      />
+
+      <header className="relative border-b border-border/50 bg-card/20 backdrop-blur-sm">
+        <div className="mx-auto max-w-6xl px-3 py-10 sm:px-8 sm:py-20">
           <Link
             to="/"
-            className="mb-8 inline-flex items-center font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
+            className="mb-6 inline-flex items-center font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary sm:mb-8 sm:text-[10px] sm:tracking-[0.2em]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
 
             Back to Site
           </Link>
 
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-            Competitor Portal
-          </p>
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <span className="h-px w-8 bg-primary/80" />
 
-          <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-6xl">
+            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary sm:text-[10px] sm:tracking-[0.3em]">
+              Competitor Portal
+            </p>
+
+            <span
+              aria-hidden
+              className="h-1.5 w-1.5 rotate-45 border border-primary/50 bg-primary/10"
+            />
+          </div>
+
+          <h1 className="mt-4 max-w-full break-words font-display text-4xl font-bold uppercase leading-[0.92] tracking-[0.02em] text-foreground sm:text-6xl sm:tracking-[0.03em] lg:text-7xl">
             My Registration
           </h1>
+
+          <div className="mt-5 h-px w-24 bg-gradient-to-r from-primary/80 via-primary/35 to-transparent" />
 
           <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
             View your tournament
@@ -616,9 +641,9 @@ function MyRegistrationPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
+      <div className="mx-auto max-w-6xl px-3 py-7 sm:px-8 sm:py-10">
         {!registrations.length ? (
-          <div className="border border-dashed border-border/80 p-10 text-center">
+          <div className="card-interactive card-interactive-glow relative overflow-hidden border border-dashed border-border/55 bg-card/30 p-6 text-center backdrop-blur-md sm:p-10">
             <Users className="mx-auto h-8 w-8 text-primary" />
 
             <h2 className="mt-5 font-display text-2xl font-bold uppercase text-foreground">
@@ -634,7 +659,7 @@ function MyRegistrationPage() {
 
             <Button
               asChild
-              className="mt-6 h-11 rounded-none px-6 font-mono text-[10px] uppercase tracking-[0.2em]"
+              className="mt-6 w-full sm:w-auto"
             >
               <Link to="/join">
                 Register now
@@ -660,13 +685,17 @@ function MyRegistrationPage() {
                     key={
                       registration.id
                     }
-                    className="border border-border/80 bg-card/60"
+                    className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md"
                   >
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
+                    />
                     {/* ENTRY HEADER */}
-                    <div className="border-b border-border/70 p-5 sm:p-6">
-                      <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="relative border-b border-border/50 p-4 sm:p-6">
+                      <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-between">
                         <div>
-                          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                          <p className="break-words font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.22em]">
                             {isSquad
                               ? "MLBB Squad"
                               : "TEKKEN 8 Fighter"}
@@ -678,7 +707,7 @@ function MyRegistrationPage() {
                             }
                           </p>
 
-                          <h2 className="mt-2 font-display text-2xl font-bold uppercase text-foreground sm:text-3xl">
+                          <h2 className="mt-2 break-words font-display text-2xl font-bold uppercase leading-tight text-foreground sm:text-3xl">
                             {isSquad
                               ? registration.team_name ||
                                 "Unnamed Squad"
@@ -704,12 +733,12 @@ function MyRegistrationPage() {
                     </div>
 
                     {/* STATUS */}
-                    <div className="grid gap-px bg-border/60 md:grid-cols-2">
-                      <section className="bg-background/80 p-5 sm:p-6">
+                    <div className="grid gap-3 border-b border-border/45 p-4 sm:p-6 md:grid-cols-2">
+                      <section className="relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6">
                         <div className="flex items-center gap-2">
                           <ShieldCheck className="h-4 w-4 text-primary" />
 
-                          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                          <p className="break-words font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.22em]">
                             Registration
                           </p>
                         </div>
@@ -733,11 +762,11 @@ function MyRegistrationPage() {
                         </p>
                       </section>
 
-                      <section className="bg-background/80 p-5 sm:p-6">
+                      <section className="relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6">
                         <div className="flex items-center gap-2">
                           <CreditCard className="h-4 w-4 text-primary" />
 
-                          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                          <p className="break-words font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.22em]">
                             Payment
                           </p>
                         </div>
@@ -780,7 +809,7 @@ function MyRegistrationPage() {
                     </div>
 
                     {/* REGISTRATION DATA */}
-                    <section className="p-5 sm:p-6">
+                    <section className="p-4 sm:p-6">
                       {isSquad ? (
                         <>
                           <TeamIdentity
@@ -789,8 +818,8 @@ function MyRegistrationPage() {
                             }
                           />
 
-                          <div className="mt-8 border-t border-border/70 pt-6">
-                            <div className="flex flex-wrap items-end justify-between gap-3">
+                          <div className="mt-8 border-t border-border/45 pt-6">
+                            <div className="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3">
                               <div>
                                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary">
                                   Full Roster
@@ -813,7 +842,7 @@ function MyRegistrationPage() {
                             registration
                               .roster
                               .length ? (
-                              <div className="mt-5 grid gap-5 lg:grid-cols-2">
+                              <div className="mt-5 grid gap-4 lg:grid-cols-2">
                                 {registration.roster.map(
                                   (
                                     player,
@@ -835,7 +864,7 @@ function MyRegistrationPage() {
                                 )}
                               </div>
                             ) : (
-                              <p className="mt-5 border border-dashed border-border/70 p-5 text-sm text-muted-foreground">
+                              <p className="mt-5 border border-dashed border-border/55 bg-background/15 p-5 text-sm text-muted-foreground">
                                 No roster
                                 information
                                 available.
@@ -860,8 +889,8 @@ function MyRegistrationPage() {
                     />
 
                     {/* FOOTER */}
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border/70 px-5 py-4 sm:px-6">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex flex-col items-stretch gap-4 border-t border-border/45 bg-background/10 px-4 py-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6">
+                      <div className="flex min-w-0 items-start gap-2 text-xs leading-5 text-muted-foreground sm:items-center">
                         {registration.status ===
                         "approved" ? (
                           <CheckCircle2 className="h-4 w-4 text-emerald-400" />
@@ -883,7 +912,7 @@ function MyRegistrationPage() {
                           asChild
                           variant="outline"
                           size="sm"
-                          className="h-10 rounded-none border-primary/40 px-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary hover:bg-primary/10 hover:text-primary"
+                          className="w-full text-primary sm:w-auto"
                         >
                           <Link
                             to="/edit-registration"

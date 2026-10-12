@@ -8,9 +8,9 @@ import { toast } from "../_libs/sonner.mjs";
 import { ArrowLeft, ArrowRight, CircleCheck, CreditCard, ImagePlus, Send, Upload } from "../_libs/lucide-react.mjs";
 import { Image } from "./image-BwNFCwj5.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
-import { Input, Label } from "./label-CGH87Qge.mjs";
+import { Input, Label } from "./label-DY020iIz.mjs";
 import { motion } from "../_libs/framer-motion.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/join-BnLgfa9P.js
+//#region node_modules/.nitro/vite/services/ssr/assets/join-CNbkV-k6.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var inputClass = [
@@ -251,31 +251,73 @@ var MLBB_ROLES = [
 function RolePicker({ value, onChange, label = "Role", className }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-			className: "font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground",
-			children: label
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex items-end justify-between gap-3",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+				className: "font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[10px]",
+				children: label
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: "font-mono text-[8px] uppercase tracking-[0.16em] text-muted-foreground/60",
+				children: "Optional"
+			})]
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: "mt-2 grid grid-cols-5 gap-2",
-			children: MLBB_ROLES.map((role) => {
+			className: "mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5",
+			children: MLBB_ROLES.map((role, index) => {
 				const selected = value === role.value;
 				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 					type: "button",
 					"aria-pressed": selected,
 					title: role.value,
 					onClick: () => onChange(selected ? "" : role.value),
-					className: cn("flex flex-col items-center gap-2 border px-1 py-2 transition-colors", selected ? "border-primary bg-primary/10" : "border-border bg-background/40 hover:border-primary/40"),
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: "flex h-10 w-10 items-center justify-center rounded-sm bg-foreground/95 p-1",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
-							src: role.icon,
-							alt: "",
-							fittingType: "fit",
-							className: "h-full w-full object-contain"
+					className: cn([
+						"card-interactive",
+						"group",
+						"relative",
+						"flex",
+						"min-h-[112px]",
+						"flex-col",
+						"items-center",
+						"justify-center",
+						"overflow-hidden",
+						"border",
+						"px-2",
+						"py-3",
+						"text-center",
+						"transition-all",
+						"duration-300"
+					].join(" "), selected ? "border-primary/55 bg-primary/[0.07] shadow-[0_0_24px_-18px_hsl(var(--primary)/0.65)]" : "border-border/50 bg-background/20 hover:border-primary/35 hover:bg-primary/[0.035]"),
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"aria-hidden": true,
+							className: cn("pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent transition-opacity duration-300", selected ? "opacity-100" : "opacity-0 group-hover:opacity-70")
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							"aria-hidden": true,
+							className: "pointer-events-none absolute right-2 top-1.5 font-mono text-[7px] tracking-[0.14em] text-primary/25",
+							children: String(index + 1).padStart(2, "0")
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: cn("grid h-11 w-11 place-items-center border p-1.5 transition-all duration-300", selected ? "border-primary/40 bg-primary/[0.07]" : "border-border/50 bg-foreground/95 group-hover:border-primary/30"),
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
+								src: role.icon,
+								alt: "",
+								fittingType: "fit",
+								className: "h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+							})
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: cn("mt-3 font-mono text-[9px] uppercase tracking-[0.14em] transition-colors duration-300", selected ? "text-primary" : "text-muted-foreground group-hover:text-foreground/80"),
+							children: role.short
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							"aria-hidden": true,
+							className: cn("mt-2 h-1.5 w-1.5 rotate-45 transition-all duration-300", selected ? "scale-100 bg-primary" : "scale-75 bg-primary/20 group-hover:scale-100 group-hover:bg-primary/50")
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							"aria-hidden": true,
+							className: cn("pointer-events-none absolute bottom-0 right-0 h-4 w-4 border-b border-r transition-all duration-300", selected ? "border-primary/40" : "border-primary/10 group-hover:h-6 group-hover:w-6 group-hover:border-primary/30")
 						})
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: cn("font-mono text-[10px] uppercase tracking-[0.14em]", selected ? "text-primary" : "text-muted-foreground"),
-						children: role.short
-					})]
+					]
 				}, role.value);
 			})
 		})]
@@ -1767,7 +1809,7 @@ function RegistrationWizard() {
 		}
 	}
 	if (result) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "mx-auto max-w-4xl px-4 sm:px-8",
+		className: "mx-auto w-full max-w-4xl px-3 sm:px-8",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SuccessTransition, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SuccessPanel, {
 			game,
 			reference: result.reference_code
@@ -1776,10 +1818,10 @@ function RegistrationWizard() {
 	const contactStep = game === "mlbb" ? 3 : 2;
 	const paymentStep = game === "mlbb" ? 4 : 3;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "mx-auto max-w-5xl px-4 pt-12 sm:px-8 sm:pt-16",
+		className: "mx-auto w-full max-w-5xl px-3 pt-8 sm:px-8 sm:pt-16",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-5 backdrop-blur-md sm:p-6",
+				className: "card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						"aria-hidden": true,
@@ -1790,19 +1832,19 @@ function RegistrationWizard() {
 						className: "pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-primary/[0.045] blur-3xl"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between",
+						className: "relative flex flex-col gap-4 sm:gap-5 sm:flex-row sm:items-end sm:justify-between",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 							className: "font-mono text-[9px] uppercase tracking-[0.24em] text-primary/70",
 							children: "Registration Flow"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "mt-2 flex items-end gap-3",
+							className: "mt-2 flex items-end gap-2.5 sm:gap-3",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "font-display text-4xl font-bold uppercase leading-none text-primary sm:text-5xl",
+								className: "font-display text-3xl font-bold uppercase leading-none text-primary xs:text-4xl sm:text-5xl",
 								children: String(step + 1).padStart(2, "0")
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "pb-0.5",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-display text-xl font-bold uppercase tracking-[0.05em] text-foreground sm:text-2xl",
+									className: "font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground xs:text-xl sm:text-2xl",
 									children: labels[step]
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 									className: "mt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
@@ -1816,12 +1858,12 @@ function RegistrationWizard() {
 								})]
 							})]
 						})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "max-w-sm text-sm leading-relaxed text-muted-foreground sm:text-right",
+							className: "max-w-sm text-xs leading-relaxed text-muted-foreground sm:text-sm sm:text-right",
 							children: "Complete each section carefully. Your progress moves forward only after the required details are valid."
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ol", {
-						className: "relative mt-6 grid grid-cols-2 gap-2 sm:grid-cols-5",
+						className: "relative mt-5 flex gap-2 overflow-x-auto pb-2 sm:mt-6 sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0",
 						children: labels.map((label, index) => {
 							const isActive = index === step;
 							const isComplete = index < step;
@@ -1830,8 +1872,10 @@ function RegistrationWizard() {
                     relative
                     overflow-hidden
                     border
+                    min-w-[132px]
                     px-3
                     py-3
+                    sm:min-w-0
                     transition-all
                     duration-300
                     motion-reduce:transition-none
@@ -1895,7 +1939,7 @@ function RegistrationWizard() {
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
 				onSubmit: handleSubmit,
-				className: "card-interactive card-interactive-glow relative mt-6 overflow-hidden border border-border/55 bg-card/45 p-5 backdrop-blur-md sm:p-8",
+				className: "card-interactive card-interactive-glow relative mt-4 overflow-hidden border border-border/55 bg-card/45 p-4 backdrop-blur-md sm:mt-6 sm:p-8",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						"aria-hidden": true,
@@ -1990,7 +2034,7 @@ function RegistrationWizard() {
 								}) : null
 							]
 						}), step > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "mt-8 flex flex-col gap-3 border-t border-border/50 pt-6 sm:flex-row sm:items-center sm:justify-between",
+							className: "mt-7 flex flex-col-reverse gap-3 border-t border-border/50 pt-5 sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:pt-6",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								type: "button",
 								variant: "ghost",
@@ -2000,19 +2044,19 @@ function RegistrationWizard() {
 									setTransitionDirection("back");
 									setStep((current) => current - 1);
 								},
-								className: "group justify-start text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none",
+								className: "group w-full justify-center text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none sm:w-auto sm:justify-start",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" }), "Back"]
 							}), step < finalStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								type: "button",
 								size: "lg",
 								onClick: goNext,
-								className: "group",
+								className: "group w-full sm:w-auto",
 								children: ["Continue", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" })]
 							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								type: "submit",
 								size: "lg",
 								disabled: busy,
-								className: "group",
+								className: "group w-full sm:w-auto",
 								children: [busy ? "Transmitting…" : "Submit entry", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, { className: "transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" })]
 							})]
 						}) : null]
@@ -2020,7 +2064,7 @@ function RegistrationWizard() {
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "mt-5 flex items-start gap-3 border border-border/40 bg-card/20 px-4 py-3 backdrop-blur-sm",
+				className: "mt-4 flex items-start gap-3 border border-border/40 bg-card/20 px-3 py-3 backdrop-blur-sm sm:mt-5 sm:px-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 					"aria-hidden": true,
 					className: "mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"

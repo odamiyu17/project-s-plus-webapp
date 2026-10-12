@@ -1,0 +1,1 @@
+import{f as e}from"./index-BJJioRDc.js";var t=e;export{t as errorComponent};

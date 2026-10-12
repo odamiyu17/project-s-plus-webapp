@@ -1233,7 +1233,7 @@ export default function RegistrationWizard() {
 
   if (result) {
     return (
-      <div className="mx-auto max-w-4xl px-4 sm:px-8">
+      <div className="mx-auto w-full max-w-4xl px-3 sm:px-8">
         <SuccessTransition>
           <SuccessPanel
             game={game}
@@ -1257,11 +1257,11 @@ export default function RegistrationWizard() {
       : 3;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pt-12 sm:px-8 sm:pt-16">
+    <div className="mx-auto w-full max-w-5xl px-3 pt-8 sm:px-8 sm:pt-16">
       {/* =====================================================
           REGISTRATION PROGRESS
           ===================================================== */}
-      <div className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-5 backdrop-blur-md sm:p-6">
+      <div className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
@@ -1272,14 +1272,14 @@ export default function RegistrationWizard() {
           className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-primary/[0.045] blur-3xl"
         />
 
-        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="relative flex flex-col gap-4 sm:gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-primary/70">
               Registration Flow
             </p>
 
-            <div className="mt-2 flex items-end gap-3">
-              <span className="font-display text-4xl font-bold uppercase leading-none text-primary sm:text-5xl">
+            <div className="mt-2 flex items-end gap-2.5 sm:gap-3">
+              <span className="font-display text-3xl font-bold uppercase leading-none text-primary xs:text-4xl sm:text-5xl">
                 {String(
                   step + 1,
                 ).padStart(
@@ -1289,7 +1289,7 @@ export default function RegistrationWizard() {
               </span>
 
               <div className="pb-0.5">
-                <p className="font-display text-xl font-bold uppercase tracking-[0.05em] text-foreground sm:text-2xl">
+                <p className="font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground xs:text-xl sm:text-2xl">
                   {labels[step]}
                 </p>
 
@@ -1301,7 +1301,7 @@ export default function RegistrationWizard() {
             </div>
           </div>
 
-          <p className="max-w-sm text-sm leading-relaxed text-muted-foreground sm:text-right">
+          <p className="max-w-sm text-xs leading-relaxed text-muted-foreground sm:text-sm sm:text-right">
             Complete each section carefully.
             Your progress moves forward only
             after the required details are
@@ -1309,7 +1309,7 @@ export default function RegistrationWizard() {
           </p>
         </div>
 
-        <ol className="relative mt-6 grid grid-cols-2 gap-2 sm:grid-cols-5">
+        <ol className="relative mt-5 flex gap-2 overflow-x-auto pb-2 sm:mt-6 sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0">
           {labels.map(
             (
               label,
@@ -1328,8 +1328,10 @@ export default function RegistrationWizard() {
                     relative
                     overflow-hidden
                     border
+                    min-w-[132px]
                     px-3
                     py-3
+                    sm:min-w-0
                     transition-all
                     duration-300
                     motion-reduce:transition-none
@@ -1437,7 +1439,7 @@ export default function RegistrationWizard() {
         onSubmit={
           handleSubmit
         }
-        className="card-interactive card-interactive-glow relative mt-6 overflow-hidden border border-border/55 bg-card/45 p-5 backdrop-blur-md sm:p-8"
+        className="card-interactive card-interactive-glow relative mt-4 overflow-hidden border border-border/55 bg-card/45 p-4 backdrop-blur-md sm:mt-6 sm:p-8"
       >
         <div
           aria-hidden
@@ -1649,7 +1651,7 @@ export default function RegistrationWizard() {
 
           {/* NAVIGATION */}
           {step > 0 ? (
-            <div className="mt-8 flex flex-col gap-3 border-t border-border/50 pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-7 flex flex-col-reverse gap-3 border-t border-border/50 pt-5 sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:pt-6">
               <Button
                 type="button"
                 variant="ghost"
@@ -1671,7 +1673,7 @@ export default function RegistrationWizard() {
                       1,
                   );
                 }}
-                className="group justify-start text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none"
+                className="group w-full justify-center text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none sm:w-auto sm:justify-start"
               >
                 <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
 
@@ -1686,7 +1688,7 @@ export default function RegistrationWizard() {
                   onClick={
                     goNext
                   }
-                  className="group"
+                  className="group w-full sm:w-auto"
                 >
                   Continue
 
@@ -1699,7 +1701,7 @@ export default function RegistrationWizard() {
                   disabled={
                     busy
                   }
-                  className="group"
+                  className="group w-full sm:w-auto"
                 >
                   {busy
                     ? "Transmitting…"
@@ -1716,7 +1718,7 @@ export default function RegistrationWizard() {
       {/* =====================================================
           ACCOUNT / REVIEW NOTE
           ===================================================== */}
-      <div className="mt-5 flex items-start gap-3 border border-border/40 bg-card/20 px-4 py-3 backdrop-blur-sm">
+      <div className="mt-4 flex items-start gap-3 border border-border/40 bg-card/20 px-3 py-3 backdrop-blur-sm sm:mt-5 sm:px-4">
         <span
           aria-hidden
           className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"

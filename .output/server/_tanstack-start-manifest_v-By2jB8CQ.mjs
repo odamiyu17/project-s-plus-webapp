@@ -1,4 +1,4 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-Dt7S2beb.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-By2jB8CQ.js
 var tsrStartManifest = () => ({ routes: {
 	__root__: {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/__root.jsx",
@@ -12,7 +12,7 @@ var tsrStartManifest = () => ({ routes: {
 			"/api/time"
 		],
 		preloads: [
-			"/assets/index-BpGuMC8X.js",
+			"/assets/index-BJJioRDc.js",
 			"/assets/createLucideIcon-Ph69G0YB.js",
 			"/assets/not-found-DIgawKw1.js",
 			"/assets/invariant-CgFvOqN2.js",
@@ -21,7 +21,7 @@ var tsrStartManifest = () => ({ routes: {
 		scripts: [{ attrs: {
 			type: "module",
 			async: !0,
-			src: "/assets/index-BpGuMC8X.js"
+			src: "/assets/index-BJJioRDc.js"
 		} }]
 	},
 	"/_authed": {
@@ -31,13 +31,13 @@ var tsrStartManifest = () => ({ routes: {
 			"/_authed/edit-registration",
 			"/_authed/my-registration"
 		],
-		preloads: ["/assets/_authed-DKviMNg9.js"]
+		preloads: ["/assets/_authed-SMy52plk.js"]
 	},
 	"/_site": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/_site.jsx",
 		children: ["/_site/join", "/_site/"],
 		preloads: [
-			"/assets/_site-DKu06zyl.js",
+			"/assets/_site-Dw35ScqV.js",
 			"/assets/log-in-CQz9QQJy.js",
 			"/assets/x-CZ5St5_B.js",
 			"/assets/mail-C9NWMxet.js"
@@ -47,56 +47,58 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/forgot-password.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/forgot-password-B2U-zac7.js",
+			"/assets/forgot-password-BrRSjZ9r.js",
 			"/assets/arrow-left-DhwyMvfX.js",
-			"/assets/parts-DKZc_Fbl.js",
+			"/assets/parts-COa1_xl8.js",
 			"/assets/mail-C9NWMxet.js",
-			"/assets/label-CAb88jds.js"
+			"/assets/label-QoWi919j.js"
 		]
 	},
 	"/login": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/login.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/login-r2-cG545.js",
-			"/assets/parts-DKZc_Fbl.js",
+			"/assets/login-DbQyyD6m.js",
+			"/assets/parts-COa1_xl8.js",
 			"/assets/lock-DV_UsZ5T.js",
 			"/assets/log-in-CQz9QQJy.js",
 			"/assets/mail-C9NWMxet.js",
-			"/assets/label-CAb88jds.js"
+			"/assets/label-QoWi919j.js"
 		]
 	},
 	"/register": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/register.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/register-DjjG1xDw.js",
-			"/assets/parts-DKZc_Fbl.js",
+			"/assets/register-BjbpRVK6.js",
+			"/assets/parts-COa1_xl8.js",
 			"/assets/lock-DV_UsZ5T.js",
 			"/assets/mail-C9NWMxet.js",
-			"/assets/label-CAb88jds.js"
+			"/assets/label-QoWi919j.js"
 		]
 	},
 	"/reset-password": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/reset-password.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/reset-password-BAujzprb.js",
-			"/assets/parts-DKZc_Fbl.js",
+			"/assets/reset-password-CQDJHJDI.js",
+			"/assets/parts-COa1_xl8.js",
 			"/assets/lock-DV_UsZ5T.js",
-			"/assets/label-CAb88jds.js"
+			"/assets/triangle-alert-CKcDyc84.js",
+			"/assets/label-QoWi919j.js"
 		]
 	},
 	"/_authed/admin": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/_authed/admin.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/admin-vJULG2aa.js",
+			"/assets/admin-DHoZfnq4.js",
 			"/assets/useServerFn-waXd7W41.js",
 			"/assets/shield-check-BhllzEKE.js",
 			"/assets/credit-card-BdNNCZsr.js",
 			"/assets/x-CZ5St5_B.js",
 			"/assets/users-ujePMgsC.js",
+			"/assets/triangle-alert-CKcDyc84.js",
 			"/assets/user-round-CYiyXAKV.js"
 		]
 	},
@@ -104,20 +106,20 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/_authed/edit-registration.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/edit-registration-9qvpZSPH.js",
+			"/assets/edit-registration-Ce_ngh6q.js",
 			"/assets/useServerFn-waXd7W41.js",
 			"/assets/arrow-left-DhwyMvfX.js",
 			"/assets/credit-card-BdNNCZsr.js",
 			"/assets/upload-BcwrI94Y.js",
 			"/assets/user-round-CYiyXAKV.js",
-			"/assets/label-CAb88jds.js"
+			"/assets/label-QoWi919j.js"
 		]
 	},
 	"/_authed/my-registration": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/_authed/my-registration.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/my-registration-Csiw0h9w.js",
+			"/assets/my-registration-C08Jb8h_.js",
 			"/assets/arrow-left-DhwyMvfX.js",
 			"/assets/shield-check-BhllzEKE.js",
 			"/assets/credit-card-BdNNCZsr.js",
@@ -129,21 +131,21 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/_site/join.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/join-DKviMNg9.js",
-			"/assets/join-EGMiMb8x.js",
+			"/assets/join-9tDw-MZd.js",
 			"/assets/useServerFn-waXd7W41.js",
 			"/assets/arrow-left-DhwyMvfX.js",
 			"/assets/image-CVtO9O-L.js",
 			"/assets/credit-card-BdNNCZsr.js",
 			"/assets/upload-BcwrI94Y.js",
-			"/assets/label-CAb88jds.js"
+			"/assets/label-QoWi919j.js",
+			"/assets/join-SMy52plk.js"
 		]
 	},
 	"/_site/": {
 		filePath: "D:/TOURNAMENT ASSETS MLBB/Project S+ webapp/src/routes/_site/index.jsx",
 		children: void 0,
 		preloads: [
-			"/assets/_site-cspHRLS1.js",
+			"/assets/_site-DX0biJYt.js",
 			"/assets/arrow-left-DhwyMvfX.js",
 			"/assets/image-CVtO9O-L.js",
 			"/assets/users-ujePMgsC.js"

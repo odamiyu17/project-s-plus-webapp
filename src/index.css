@@ -186,43 +186,72 @@
     isolation: isolate;
     overflow: hidden;
 
+    transform:
+      translate3d(0, 0, 0);
+
+    backface-visibility:
+      hidden;
+
     transition:
-      transform 300ms
+      transform 320ms
         cubic-bezier(
           0.22,
           1,
           0.36,
           1
         ),
-      border-color 300ms ease,
-      background-color 300ms ease,
-      box-shadow 300ms ease;
+      border-color 260ms ease,
+      background-color 260ms ease,
+      box-shadow 320ms ease,
+      opacity 260ms ease;
   }
 
-  .card-interactive:hover {
-    transform:
-      translate3d(
-        0,
-        -4px,
-        0
-      );
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive:hover {
+      transform:
+        translate3d(
+          0,
+          -4px,
+          0
+        );
 
-    border-color:
-      hsl(
-        var(--primary) /
-          0.55
-      );
-
-    box-shadow:
-      0 16px 40px -28px
+      border-color:
         hsl(
           var(--primary) /
             0.55
-        ),
-      0 0 24px -18px
+        );
+
+      box-shadow:
+        0 16px 40px -28px
+          hsl(
+            var(--primary) /
+              0.55
+          ),
+        0 0 24px -18px
+          hsl(
+            var(--primary) /
+              0.75
+          );
+    }
+  }
+
+  .card-interactive:focus-within {
+    border-color:
+      hsl(
+        var(--primary) /
+          0.45
+      );
+
+    box-shadow:
+      0 0 0 1px
         hsl(
           var(--primary) /
-            0.75
+            0.12
+        ),
+      0 14px 36px -30px
+        hsl(
+          var(--primary) /
+            0.5
         );
   }
 
@@ -271,8 +300,15 @@
         );
   }
 
-  .card-interactive:hover::before {
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive:hover::before {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  .card-interactive:focus-within::before {
+    opacity: 0.7;
     transform: scaleX(1);
   }
 
@@ -321,11 +357,20 @@
         );
   }
 
-  .card-interactive:hover::after {
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive:hover::after {
+      opacity: 1;
+
+      transform:
+        scale(1);
+    }
+  }
+
+  .card-interactive:focus-within::after {
+    opacity: 0.65;
 
     transform:
-      scale(1);
+      scale(0.92);
   }
 
   /*
@@ -333,17 +378,33 @@
    * prize cards, selected cards, etc.
    */
 
-  .card-interactive-glow:hover {
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive-glow:hover {
+      box-shadow:
+        0 20px 50px -30px
+          hsl(
+            var(--primary) /
+              0.7
+          ),
+        0 0 32px -20px
+          hsl(
+            var(--primary) /
+              0.9
+          );
+    }
+  }
+
+  .card-interactive-glow:focus-within {
     box-shadow:
-      0 20px 50px -30px
+      0 18px 44px -30px
         hsl(
           var(--primary) /
-            0.7
+            0.62
         ),
-      0 0 32px -20px
+      0 0 26px -20px
         hsl(
           var(--primary) /
-            0.9
+            0.72
         );
   }
 
@@ -363,10 +424,18 @@
         );
   }
 
-  .card-interactive:hover
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive:hover
+      .card-interactive-shift {
+      transform:
+        translateX(3px);
+    }
+  }
+
+  .card-interactive:focus-within
     .card-interactive-shift {
     transform:
-      translateX(3px);
+      translateX(2px);
   }
 
   /*
@@ -386,24 +455,38 @@
       filter 300ms ease;
   }
 
-  .card-interactive:hover
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive:hover
+      .card-interactive-icon {
+      transform:
+        translateY(-2px)
+        scale(1.05);
+
+      color:
+        hsl(
+          var(--primary)
+        );
+
+      filter:
+        drop-shadow(
+          0 0 8px
+          hsl(
+            var(--primary) /
+              0.3
+          )
+        );
+    }
+  }
+
+  .card-interactive:focus-within
     .card-interactive-icon {
     transform:
-      translateY(-2px)
-      scale(1.05);
+      translateY(-1px)
+      scale(1.025);
 
     color:
       hsl(
         var(--primary)
-      );
-
-    filter:
-      drop-shadow(
-        0 0 8px
-        hsl(
-          var(--primary) /
-            0.3
-        )
       );
   }
 
@@ -424,12 +507,157 @@
       opacity 400ms ease;
   }
 
-  .card-interactive:hover
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive:hover
+      .card-interactive-image {
+      transform:
+        scale(1.035);
+
+      opacity: 0.95;
+    }
+  }
+
+  .card-interactive:focus-within
     .card-interactive-image {
     transform:
-      scale(1.035);
+      scale(1.02);
 
-    opacity: 0.95;
+    opacity: 0.97;
+  }
+
+  /* =====================================================
+     PROJECT S+ MICRO-MOTION UTILITIES
+     ===================================================== */
+
+  .motion-rise {
+    animation:
+      project-rise-in
+      520ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      )
+      both;
+  }
+
+  .motion-fade {
+    animation:
+      project-fade-in
+      420ms
+      ease-out
+      both;
+  }
+
+  .motion-scale-in {
+    animation:
+      project-scale-in
+      420ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      )
+      both;
+  }
+
+  .motion-delay-1 {
+    animation-delay: 70ms;
+  }
+
+  .motion-delay-2 {
+    animation-delay: 140ms;
+  }
+
+  .motion-delay-3 {
+    animation-delay: 210ms;
+  }
+
+  .motion-delay-4 {
+    animation-delay: 280ms;
+  }
+
+  .motion-status {
+    transition:
+      color 220ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease,
+      opacity 220ms ease,
+      transform 260ms
+        cubic-bezier(
+          0.22,
+          1,
+          0.36,
+          1
+        );
+  }
+
+  .motion-status[data-active="true"] {
+    transform:
+      translateY(-1px);
+  }
+
+  .motion-press {
+    transition:
+      transform 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .motion-press:active {
+    transform:
+      scale(0.985);
+  }
+}
+
+/* =========================================================
+   PROJECT S+ MICRO-MOTION KEYFRAMES
+   ========================================================= */
+
+@keyframes project-rise-in {
+  from {
+    opacity: 0;
+    transform:
+      translate3d(
+        0,
+        12px,
+        0
+      );
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      );
+  }
+}
+
+@keyframes project-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes project-scale-in {
+  from {
+    opacity: 0;
+    transform:
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      scale(1);
   }
 }
 
@@ -662,7 +890,24 @@
       auto !important;
   }
 
-  .card-interactive:hover {
+  .card-interactive:hover,
+  .card-interactive:focus-within {
+    transform: none;
+  }
+
+  .motion-rise,
+  .motion-fade,
+  .motion-scale-in {
+    animation: none !important;
+  }
+
+  .motion-status,
+  .motion-press {
+    transition: none !important;
+  }
+
+  .motion-status[data-active="true"],
+  .motion-press:active {
     transform: none;
   }
 }
