@@ -42,7 +42,7 @@ export default function TournamentFacts() {
   return (
     <section
       id="tournament"
-      className="relative scroll-mt-24 border-b border-border/50 py-20 sm:py-28"
+      className="relative scroll-mt-24 border-b border-border/50 py-16 sm:py-24"
     >
       <div
         aria-hidden
@@ -56,14 +56,14 @@ export default function TournamentFacts() {
           description="Two brackets, one stage. Squads of five grind through the MLBB group stage while solo fighters survive a double-elimination TEKKEN 8 bracket — both chasing the first Project S+ title."
         />
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
           {FACTS.map((fact) => {
             const Icon = fact.icon;
 
             return (
               <article
                 key={fact.label}
-                className="card-interactive card-interactive-glow group relative min-h-[190px] border border-border/60 bg-card/45 p-6 backdrop-blur-md"
+                className="card-interactive card-interactive-glow group relative min-h-[176px] border border-border/60 bg-card/45 p-5 backdrop-blur-md sm:min-h-[190px] sm:p-6"
               >
                 {/* soft top sheen */}
                 <div
@@ -79,15 +79,15 @@ export default function TournamentFacts() {
                   />
                 </div>
 
-                <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground sm:mt-6 sm:text-xs sm:tracking-[0.24em]">
                   {fact.label}
                 </p>
 
-                <p className="card-interactive-shift mt-2 font-display text-xl font-bold uppercase tracking-[0.04em] text-foreground">
+                <p className="card-interactive-shift mt-2 font-display text-2xl font-bold uppercase leading-tight tracking-[0.035em] text-foreground">
                   {fact.value}
                 </p>
 
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 text-sm leading-6 text-muted-foreground sm:text-[15px]">
                   {fact.detail}
                 </p>
 

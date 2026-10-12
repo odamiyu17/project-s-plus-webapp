@@ -1261,7 +1261,7 @@ export default function RegistrationWizard() {
       {/* =====================================================
           REGISTRATION PROGRESS
           ===================================================== */}
-      <div className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6">
+      <div className="card-interactive card-interactive-glow motion-rise relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
@@ -1279,7 +1279,10 @@ export default function RegistrationWizard() {
             </p>
 
             <div className="mt-2 flex items-end gap-2.5 sm:gap-3">
-              <span className="font-display text-3xl font-bold uppercase leading-none text-primary xs:text-4xl sm:text-5xl">
+              <span
+                key={`step-number-${step}`}
+                className="motion-scale-in font-display text-3xl font-bold uppercase leading-none text-primary xs:text-4xl sm:text-5xl"
+              >
                 {String(
                   step + 1,
                 ).padStart(
@@ -1289,7 +1292,10 @@ export default function RegistrationWizard() {
               </span>
 
               <div className="pb-0.5">
-                <p className="font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground xs:text-xl sm:text-2xl">
+                <p
+                  key={`step-title-${step}`}
+                  className="motion-fade font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground xs:text-xl sm:text-2xl"
+                >
                   {labels[step]}
                 </p>
 
@@ -1324,7 +1330,13 @@ export default function RegistrationWizard() {
               return (
                 <li
                   key={label}
+                  data-active={
+                    isActive
+                      ? "true"
+                      : "false"
+                  }
                   className={`
+                    motion-status
                     relative
                     overflow-hidden
                     border
@@ -1332,12 +1344,10 @@ export default function RegistrationWizard() {
                     px-3
                     py-3
                     sm:min-w-0
-                    transition-all
-                    duration-300
                     motion-reduce:transition-none
                     ${
                       isActive
-                        ? "border-primary/45 bg-primary/[0.07]"
+                        ? "border-primary/45 bg-primary/[0.07] shadow-[0_10px_28px_-22px_rgba(201,169,108,0.7)]"
                         : isComplete
                           ? "border-primary/20 bg-primary/[0.025]"
                           : "border-border/45 bg-background/15"
@@ -1409,7 +1419,7 @@ export default function RegistrationWizard() {
                   {isComplete ? (
                     <span
                       aria-hidden
-                      className="absolute bottom-2 right-2 h-1.5 w-1.5 rotate-45 bg-primary/60"
+                      className="motion-scale-in absolute bottom-2 right-2 h-1.5 w-1.5 rotate-45 bg-primary/60"
                     />
                   ) : null}
                 </li>
@@ -1439,7 +1449,7 @@ export default function RegistrationWizard() {
         onSubmit={
           handleSubmit
         }
-        className="card-interactive card-interactive-glow relative mt-4 overflow-hidden border border-border/55 bg-card/45 p-4 backdrop-blur-md sm:mt-6 sm:p-8"
+        className="card-interactive card-interactive-glow motion-rise motion-delay-1 relative mt-4 overflow-hidden border border-border/55 bg-card/45 p-4 backdrop-blur-md sm:mt-6 sm:p-8"
       >
         <div
           aria-hidden
@@ -1673,7 +1683,7 @@ export default function RegistrationWizard() {
                       1,
                   );
                 }}
-                className="group w-full justify-center text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none sm:w-auto sm:justify-start"
+                className="group motion-press w-full justify-center text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none sm:w-auto sm:justify-start"
               >
                 <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" />
 
@@ -1688,7 +1698,7 @@ export default function RegistrationWizard() {
                   onClick={
                     goNext
                   }
-                  className="group w-full sm:w-auto"
+                  className="group motion-press w-full sm:w-auto"
                 >
                   Continue
 
@@ -1701,7 +1711,7 @@ export default function RegistrationWizard() {
                   disabled={
                     busy
                   }
-                  className="group w-full sm:w-auto"
+                  className="group motion-press w-full sm:w-auto"
                 >
                   {busy
                     ? "Transmitting…"
@@ -1718,7 +1728,7 @@ export default function RegistrationWizard() {
       {/* =====================================================
           ACCOUNT / REVIEW NOTE
           ===================================================== */}
-      <div className="mt-4 flex items-start gap-3 border border-border/40 bg-card/20 px-3 py-3 backdrop-blur-sm sm:mt-5 sm:px-4">
+      <div className="motion-fade motion-delay-2 mt-4 flex items-start gap-3 border border-border/40 bg-card/20 px-3 py-3 backdrop-blur-sm sm:mt-5 sm:px-4">
         <span
           aria-hidden
           className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"

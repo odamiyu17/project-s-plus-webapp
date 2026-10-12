@@ -165,7 +165,7 @@ function TeamIdentity({
     );
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+    <div className="motion-fade flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
       <div className="group relative grid h-24 w-24 shrink-0 place-items-center overflow-hidden border border-primary/20 bg-card/35 backdrop-blur-sm sm:h-28 sm:w-28">
         {logoUrl ? (
           <img
@@ -265,7 +265,7 @@ function PlayerCard({
     "main";
 
   return (
-    <article className="card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm">
+    <article className="card-interactive card-interactive-glow motion-rise group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
@@ -465,7 +465,7 @@ function TekkenDetails({
     );
 
   return (
-    <div className="flex flex-col gap-5 sm:flex-row sm:gap-6">
+    <div className="motion-fade flex flex-col gap-5 sm:flex-row sm:gap-6">
       <div className="group relative h-32 w-32 shrink-0 overflow-hidden border border-primary/20 bg-card/30 sm:h-40 sm:w-40">
         {photoUrl ? (
           <img
@@ -602,7 +602,7 @@ function MyRegistrationPage() {
       />
 
       <header className="relative border-b border-border/50 bg-card/20 backdrop-blur-sm">
-        <div className="mx-auto max-w-6xl px-3 py-10 sm:px-8 sm:py-20">
+        <div className="motion-rise mx-auto max-w-6xl px-3 py-10 sm:px-8 sm:py-20">
           <Link
             to="/"
             className="mb-6 inline-flex items-center font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary sm:mb-8 sm:text-[10px] sm:tracking-[0.2em]"
@@ -643,7 +643,7 @@ function MyRegistrationPage() {
 
       <div className="mx-auto max-w-6xl px-3 py-7 sm:px-8 sm:py-10">
         {!registrations.length ? (
-          <div className="card-interactive card-interactive-glow relative overflow-hidden border border-dashed border-border/55 bg-card/30 p-6 text-center backdrop-blur-md sm:p-10">
+          <div className="card-interactive card-interactive-glow motion-scale-in relative overflow-hidden border border-dashed border-border/55 bg-card/30 p-6 text-center backdrop-blur-md sm:p-10">
             <Users className="mx-auto h-8 w-8 text-primary" />
 
             <h2 className="mt-5 font-display text-2xl font-bold uppercase text-foreground">
@@ -659,7 +659,7 @@ function MyRegistrationPage() {
 
             <Button
               asChild
-              className="mt-6 w-full sm:w-auto"
+              className="motion-press mt-6 w-full sm:w-auto"
             >
               <Link to="/join">
                 Register now
@@ -671,6 +671,7 @@ function MyRegistrationPage() {
             {registrations.map(
               (
                 registration,
+                registrationIndex,
               ) => {
                 const isSquad =
                   registration.game ===
@@ -685,7 +686,15 @@ function MyRegistrationPage() {
                     key={
                       registration.id
                     }
-                    className="card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md"
+                    className={`card-interactive card-interactive-glow motion-rise relative overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md ${
+                      registrationIndex === 0
+                        ? ""
+                        : registrationIndex === 1
+                          ? "motion-delay-1"
+                          : registrationIndex === 2
+                            ? "motion-delay-2"
+                            : "motion-delay-3"
+                    }`}
                   >
                     <div
                       aria-hidden
@@ -734,7 +743,7 @@ function MyRegistrationPage() {
 
                     {/* STATUS */}
                     <div className="grid gap-3 border-b border-border/45 p-4 sm:p-6 md:grid-cols-2">
-                      <section className="relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6">
+                      <section className="motion-scale-in relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6">
                         <div className="flex items-center gap-2">
                           <ShieldCheck className="h-4 w-4 text-primary" />
 
@@ -762,7 +771,7 @@ function MyRegistrationPage() {
                         </p>
                       </section>
 
-                      <section className="relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6">
+                      <section className="motion-scale-in motion-delay-1 relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6">
                         <div className="flex items-center gap-2">
                           <CreditCard className="h-4 w-4 text-primary" />
 
@@ -912,7 +921,7 @@ function MyRegistrationPage() {
                           asChild
                           variant="outline"
                           size="sm"
-                          className="w-full text-primary sm:w-auto"
+                          className="motion-press w-full text-primary sm:w-auto"
                         >
                           <Link
                             to="/edit-registration"

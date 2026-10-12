@@ -34,7 +34,7 @@ export default function RegisterBand() {
         className="pointer-events-none absolute -right-24 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-primary/[0.055] blur-[120px]"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28">
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24">
         <div className="max-w-3xl">
           {/* Eyebrow */}
           <Reveal
@@ -44,7 +44,7 @@ export default function RegisterBand() {
             <div className="flex items-center gap-3">
               <span className="h-px w-8 bg-primary/80" />
 
-              <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-primary sm:text-[11px]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-primary sm:text-xs sm:tracking-[0.3em]">
                 05 — Claim your slot
               </p>
 
@@ -61,7 +61,7 @@ export default function RegisterBand() {
             distance={18}
             duration={550}
           >
-            <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold uppercase leading-[0.9] tracking-[0.02em] text-foreground sm:text-5xl lg:text-6xl">
+            <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold uppercase leading-[0.92] tracking-[0.015em] text-foreground sm:text-5xl lg:text-6xl">
               The bracket closes when the
               slots are gone
             </h2>
@@ -82,7 +82,7 @@ export default function RegisterBand() {
             distance={16}
             duration={500}
           >
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
               Free entry, limited slots.
               Staff review every entry
               within 48 hours — the form
@@ -97,15 +97,15 @@ export default function RegisterBand() {
             distance={16}
             duration={500}
           >
-            <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+            <ul className="mt-7 grid gap-3 sm:mt-8 sm:grid-cols-3">
               {CHECKLIST.map(
                 (item, index) => (
                   <li
                     key={item}
-                    className="card-interactive group relative overflow-hidden border border-border/50 bg-card/35 p-4 backdrop-blur-sm"
+                    className="card-interactive group relative overflow-hidden border border-border/50 bg-card/35 p-4 backdrop-blur-sm sm:p-5"
                   >
                     <div className="flex items-start gap-3">
-                      <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center border border-primary/25 bg-primary/[0.04] font-mono text-[8px] text-primary">
+                      <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center border border-primary/25 bg-primary/[0.04] font-mono text-[10px] text-primary">
                         {String(
                           index + 1,
                         ).padStart(
@@ -114,7 +114,7 @@ export default function RegisterBand() {
                         )}
                       </span>
 
-                      <span className="text-sm leading-relaxed text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
+                      <span className="text-sm leading-6 text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80 sm:text-[15px]">
                         {item}
                       </span>
                     </div>
@@ -135,11 +135,11 @@ export default function RegisterBand() {
             distance={16}
             duration={550}
           >
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center">
               <Button
                 asChild
                 size="lg"
-                className="group glow-pulse h-14 px-8"
+                className="group glow-pulse motion-press h-14 w-full px-8 sm:w-auto"
               >
                 <Link to="/join">
                   Register Now
@@ -148,7 +148,7 @@ export default function RegisterBand() {
                 </Link>
               </Button>
 
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground sm:text-[10px]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px] sm:tracking-[0.18em]">
                 Limited slots · Staff verified
               </p>
             </div>

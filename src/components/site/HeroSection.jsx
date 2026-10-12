@@ -94,7 +94,7 @@ export default function HeroSection({
         S+
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28 lg:pb-32 lg:pt-32">
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:pb-28 lg:pt-28">
         <div className="max-w-4xl">
           {/* Eyebrow */}
           <Reveal
@@ -105,7 +105,7 @@ export default function HeroSection({
             <div className="flex items-center gap-3">
               <span className="hero-rule h-px w-10 bg-primary" />
 
-              <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-primary sm:text-[11px]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-primary sm:text-xs sm:tracking-[0.32em]">
                 Hagit Esports Tournament ·
                 Season 01
               </p>
@@ -123,7 +123,7 @@ export default function HeroSection({
             distance={22}
             duration={600}
           >
-            <h1 className="mt-6 max-w-5xl font-display text-[clamp(4rem,13vw,10rem)] font-bold uppercase leading-[0.78] tracking-[-0.015em] text-foreground">
+            <h1 className="mt-6 max-w-5xl font-display text-[clamp(3.5rem,13vw,10rem)] font-bold uppercase leading-[0.78] tracking-[-0.015em] text-foreground">
               Project{" "}
               <span className="hero-title-accent relative inline-block text-primary">
                 S+
@@ -140,7 +140,7 @@ export default function HeroSection({
             <div className="mt-6 flex items-center gap-3">
               <span className="h-px w-20 bg-gradient-to-r from-primary via-primary/60 to-transparent" />
 
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-primary/60">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70 sm:text-[11px]">
                 Passion · Purpose · Competition
               </span>
             </div>
@@ -170,7 +170,7 @@ export default function HeroSection({
               <Button
                 asChild
                 size="lg"
-                className="group glow-pulse h-14 rounded-none px-8 font-mono text-[11px] uppercase tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_35px_hsl(var(--primary)/0.24)] active:translate-y-0 active:scale-[0.98]"
+                className="group glow-pulse motion-press h-14 w-full rounded-none px-8 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_35px_hsl(var(--primary)/0.24)] active:translate-y-0 active:scale-[0.98] sm:w-auto"
               >
                 <Link to="/join">
                   Register Now
@@ -183,7 +183,7 @@ export default function HeroSection({
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-14 rounded-none border-border/60 bg-card/30 px-8 font-mono text-[11px] uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/[0.05] hover:text-foreground active:translate-y-0 active:scale-[0.98]"
+                className="motion-press h-14 w-full rounded-none border-border/60 bg-card/30 px-8 font-mono text-[11px] uppercase tracking-[0.2em] text-foreground backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/[0.05] hover:text-foreground active:translate-y-0 active:scale-[0.98] sm:w-auto"
               >
                 <Link
                   to="/"
@@ -207,7 +207,7 @@ export default function HeroSection({
                 className="mt-[0.35rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/60"
               />
 
-              <p className="font-mono text-[9px] uppercase leading-relaxed tracking-[0.22em] text-muted-foreground sm:text-[10px]">
+              <p className="font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground sm:text-[11px] sm:tracking-[0.2em]">
                 Registration closes Nov 8,
                 2026 · Online qualifiers,
                 grand finals on-site
@@ -217,7 +217,7 @@ export default function HeroSection({
         </div>
 
         {/* Stats */}
-        <dl className="mt-16 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-4">
+        <dl className="mt-14 grid grid-cols-2 gap-3 sm:mt-18 sm:grid-cols-4">
           {stats.map(
             (stat, index) => (
               <Reveal
@@ -228,7 +228,7 @@ export default function HeroSection({
                 distance={20}
                 duration={550}
               >
-                <div className="card-interactive group relative h-full overflow-hidden border border-border/55 bg-card/40 p-5 backdrop-blur-md sm:p-6">
+                <div className="card-interactive group relative h-full overflow-hidden border border-border/55 bg-card/40 p-4 backdrop-blur-md sm:p-6">
                   <div
                     aria-hidden
                     className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent opacity-70"
@@ -239,11 +239,11 @@ export default function HeroSection({
                     className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/[0.045] blur-2xl transition-all duration-500 group-hover:bg-primary/[0.08]"
                   />
 
-                  <dt className="relative font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-[10px]">
+                  <dt className="relative font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-[11px] sm:tracking-[0.2em]">
                     {stat.label}
                   </dt>
 
-                  <dd className="card-interactive-shift relative mt-3 font-display text-2xl font-bold uppercase tracking-[0.04em] text-primary sm:text-3xl">
+                  <dd className="card-interactive-shift relative mt-2.5 font-display text-2xl font-bold uppercase tracking-[0.035em] text-primary sm:mt-3 sm:text-3xl">
                     {stat.value}
                   </dd>
 
