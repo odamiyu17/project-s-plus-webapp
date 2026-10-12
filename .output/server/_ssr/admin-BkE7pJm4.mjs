@@ -5,10 +5,10 @@ import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { Button, getPaymentReceiptUrl, setPaymentStatus, setRegistrationStatus } from "./server-fns-D7ymjI7_.mjs";
 import { toast } from "../_libs/sonner.mjs";
-import { CalendarDays, Check, CircleCheck, CircleX, CreditCard, ExternalLink, Eye, Gamepad2, GraduationCap, Image, ListFilter, LogOut, MapPin, Phone, RotateCcw, ShieldAlert, ShieldCheck, TriangleAlert, UserRound, Users, X } from "../_libs/lucide-react.mjs";
-import { Route$5, useAuth } from "./router-CW0eFnIh.mjs";
+import { CalendarDays, Check, ChevronDown, ChevronUp, CircleCheck, CircleX, CreditCard, ExternalLink, Eye, Gamepad2, GraduationCap, Image, ListFilter, LogOut, MapPin, Phone, RotateCcw, ShieldAlert, ShieldCheck, TriangleAlert, UserRound, Users, X } from "../_libs/lucide-react.mjs";
+import { Route$5, useAuth } from "./router-B39Ns8ML.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/admin-Cxe6dCg5.js
+//#region node_modules/.nitro/vite/services/ssr/assets/admin-BkE7pJm4.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function AccessDenied({ email, onSignOut }) {
@@ -60,7 +60,7 @@ var STATUS_STYLES = {
 function StatusBadge({ status }) {
 	const value = status ?? "pending";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: `border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] ${STATUS_STYLES[value] ?? STATUS_STYLES.pending}`,
+		className: `border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] ${STATUS_STYLES[value] ?? STATUS_STYLES.pending}`,
 		children: value
 	});
 }
@@ -92,10 +92,10 @@ function Detail({ label, children, icon: Icon, className = "" }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: `min-w-0 border border-border/35 bg-background/15 p-3 ${className}`,
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-			className: "flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground",
+			className: "flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground",
 			children: [Icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "h-3 w-3 text-primary/80" }) : null, label]
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: "mt-1 break-words text-sm text-foreground",
+			className: "mt-1 break-words text-base leading-6 text-foreground",
 			children: children || "—"
 		})]
 	});
@@ -120,10 +120,10 @@ function PlayerReviewCard({ player, index }) {
 						index + 1
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+					className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
 					children: isMain ? "Main Roster" : "Substitute"
 				})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					className: `border px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.18em] ${isMain ? "border-primary/35 bg-primary/[0.06] text-primary" : "border-border/50 bg-background/15 text-muted-foreground"}`,
+					className: `border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] ${isMain ? "border-primary/35 bg-primary/[0.06] text-primary" : "border-border/50 bg-background/15 text-muted-foreground"}`,
 					children: isMain ? "Main" : "Sub"
 				})]
 			}),
@@ -145,15 +145,15 @@ function PlayerReviewCard({ player, index }) {
 						className: "min-w-0 flex-1",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-								className: "break-words font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground sm:text-xl",
+								className: "break-words font-display text-xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-2xl",
 								children: player.ign || "No IGN"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-1 text-sm text-muted-foreground",
+								className: "mt-1 text-base text-muted-foreground",
 								children: player.full_name || "No full name"
 							}),
 							player.role ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "mt-3 inline-flex border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-primary",
+								className: "mt-3 inline-flex border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-xs uppercase tracking-[0.14em] text-primary",
 								children: player.role
 							}) : null
 						]
@@ -232,7 +232,7 @@ function MlbbReview({ item }) {
 				className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-				className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary",
+				className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 				children: "Team Identity"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -245,10 +245,10 @@ function MlbbReview({ item }) {
 						className: "h-full w-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
 					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Users, { className: "h-9 w-9 text-primary/40" })
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-					className: "break-words font-display text-xl font-bold uppercase text-foreground sm:text-2xl",
+					className: "break-words font-display text-2xl font-bold uppercase text-foreground sm:text-3xl",
 					children: item.team_name || "Untitled Squad"
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground",
+					className: "mt-3 flex flex-wrap gap-x-5 gap-y-2 text-base text-muted-foreground",
 					children: [item.team_tag ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
 						"Tag:",
 						" ",
@@ -268,13 +268,13 @@ function MlbbReview({ item }) {
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-				className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary",
+				className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 				children: "Full Registration"
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-				className: "mt-1 font-display text-xl font-bold uppercase text-foreground",
+				className: "mt-1 font-display text-2xl font-bold uppercase text-foreground",
 				children: "7-Player Roster"
 			})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+				className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
 				children: "5 Main · 2 Substitute"
 			})]
 		}), Array.isArray(item.roster) && item.roster.length ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -284,7 +284,7 @@ function MlbbReview({ item }) {
 				index
 			}, `${player.ign || "player"}-${index}`))
 		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-			className: "mt-4 border border-dashed border-border/55 bg-background/15 p-5 text-sm text-muted-foreground",
+			className: "mt-4 border border-dashed border-border/55 bg-background/15 p-5 text-base leading-6 text-muted-foreground",
 			children: "No roster information available."
 		})]
 	})] });
@@ -299,7 +299,7 @@ function TekkenReview({ item }) {
 				className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-				className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary",
+				className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 				children: "Fighter Information"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -317,7 +317,7 @@ function TekkenReview({ item }) {
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "min-w-0 flex-1",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-						className: "break-words font-display text-xl font-bold uppercase text-foreground sm:text-2xl",
+						className: "break-words font-display text-2xl font-bold uppercase text-foreground sm:text-3xl",
 						children: item.in_game_id || "Unnamed Fighter"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "mt-5 grid gap-4 sm:grid-cols-2",
@@ -404,7 +404,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 						className: "min-w-0",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-								className: "break-words font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.24em]",
+								className: "break-words font-mono text-xs uppercase leading-5 tracking-[0.12em] text-muted-foreground sm:text-sm sm:tracking-[0.16em]",
 								children: [
 									isSquad ? "MLBB Squad" : "TEKKEN 8 Fighter",
 									" · ",
@@ -413,11 +413,11 @@ function RegistrationRow({ item, busy, onDecide }) {
 								]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-								className: "mt-2 break-words font-display text-2xl font-bold uppercase leading-tight tracking-[0.02em] text-foreground sm:text-4xl",
+								className: "mt-2 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.02em] text-foreground sm:text-4xl",
 								children: isSquad ? item.team_name || "Untitled Squad" : item.in_game_id || item.player_name || "Unnamed Fighter"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-1 text-sm text-muted-foreground",
+								className: "mt-1 text-base text-muted-foreground",
 								children: isSquad ? [item.team_tag ? `Tag ${item.team_tag}` : null, item.region].filter(Boolean).join(" · ") || "—" : [item.player_name, item.region].filter(Boolean).join(" · ") || "—"
 							})
 						]
@@ -431,7 +431,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 				className: "border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary",
+					className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 					children: "Main Contact"
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4",
@@ -473,7 +473,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-center gap-2",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CreditCard, { className: "h-4 w-4 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary",
+								className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 								children: "Payment Review"
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -488,7 +488,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 							className: "w-full text-primary sm:w-auto",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Eye, { className: "mr-2 h-4 w-4" }), receiptBusy ? "Opening…" : "View Receipt"]
 						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							className: "inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+							className: "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, { className: "h-4 w-4" }), "No receipt"]
 						})]
 					}),
@@ -497,10 +497,10 @@ function RegistrationRow({ item, busy, onDecide }) {
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-start gap-3",
 							children: [paymentVerified ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "mt-0.5 h-4 w-4 shrink-0 text-emerald-400" }) : paymentRejected ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "mt-0.5 h-4 w-4 shrink-0 text-destructive" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "mt-0.5 h-4 w-4 shrink-0 text-amber-300" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[9px] uppercase tracking-[0.18em] text-foreground",
+								className: "font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground",
 								children: paymentVerified ? "Payment cleared" : paymentRejected ? "Payment rejected" : hasReceipt ? "Payment needs verification" : "Receipt missing"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-1 text-xs leading-5 text-muted-foreground",
+								className: "mt-1 text-sm leading-6 text-muted-foreground",
 								children: paymentVerified ? "The payment has been verified. Staff may continue to the final registration decision." : paymentRejected ? "Do not authorize this registration until the payment issue is resolved." : hasReceipt ? "Open the receipt and verify the payment reference before authorizing the registration." : "No payment receipt is attached. Do not authorize this registration yet."
 							})] })]
 						})
@@ -555,7 +555,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { className: "mr-2 h-3.5 w-3.5" }), "Reset Payment"]
 							}) : null,
 							paymentBusy ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "self-center font-mono text-[9px] uppercase tracking-[0.18em] text-primary",
+								className: "self-center font-mono text-xs uppercase tracking-[0.14em] text-primary",
 								children: "Updating…"
 							}) : null
 						]
@@ -568,7 +568,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "mb-4 flex items-center gap-2",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "h-4 w-4 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary",
+							className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 							children: "Registration Decision"
 						})]
 					}),
@@ -577,10 +577,10 @@ function RegistrationRow({ item, busy, onDecide }) {
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-start gap-3",
 							children: [status === "approved" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "mt-0.5 h-4 w-4 shrink-0 text-emerald-400" }) : status === "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "mt-0.5 h-4 w-4 shrink-0 text-destructive" }) : canAuthorize ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "mt-0.5 h-4 w-4 shrink-0 text-primary" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "mt-0.5 h-4 w-4 shrink-0 text-amber-300" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[9px] uppercase tracking-[0.18em] text-foreground",
+								className: "font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground",
 								children: status === "approved" ? "Registration approved" : status === "rejected" ? "Registration rejected" : canAuthorize ? "Ready for final decision" : "Final approval blocked"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-1 text-xs leading-5 text-muted-foreground",
+								className: "mt-1 text-sm leading-6 text-muted-foreground",
 								children: status === "approved" ? "This entry is already authorized and live on the roster board." : status === "rejected" ? "This entry is currently rejected. Return it to the queue if staff needs to review it again." : canAuthorize ? "Payment is verified and a receipt is on file. Complete your final registration review before authorizing." : "Payment must be verified and a receipt must be on file before this registration can be authorized."
 							})] })]
 						})
@@ -613,7 +613,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { className: "mr-2 h-3.5 w-3.5" }), "Back to Queue"]
 							}) : null,
 							busy ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "font-mono text-[10px] uppercase tracking-[0.2em] text-primary",
+								className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
 								children: "Updating…"
 							}) : null
 						]
@@ -690,6 +690,7 @@ function AdminDashboard({ items, email, onSignOut }) {
 	const [tab, setTab] = (0, import_react.useState)("needs_review");
 	const [game, setGame] = (0, import_react.useState)("all");
 	const [paymentFilter, setPaymentFilter] = (0, import_react.useState)("all");
+	const [expandedId, setExpandedId] = (0, import_react.useState)(null);
 	const [busyId, setBusyId] = (0, import_react.useState)(null);
 	const [paymentBusyId, setPaymentBusyId] = (0, import_react.useState)(null);
 	const [receiptBusyId, setReceiptBusyId] = (0, import_react.useState)(null);
@@ -801,17 +802,17 @@ function AdminDashboard({ items, email, onSignOut }) {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "flex items-center gap-2.5 sm:gap-3",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-px w-8 bg-primary/80" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "font-mono text-[9px] uppercase tracking-[0.2em] text-primary sm:text-[10px] sm:tracking-[0.28em]",
+							className: "font-mono text-[11px] uppercase tracking-[0.2em] text-primary sm:text-xs sm:tracking-[0.28em]",
 							children: "Hagit Tournament · Staff"
 						})]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-						className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-3xl sm:tracking-[0.05em]",
+						className: "mt-2 font-display text-3xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-4xl sm:tracking-[0.05em]",
 						children: "Command Center"
 					})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "flex w-full flex-wrap items-center gap-2 sm:w-auto sm:gap-3",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "w-full break-all font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground sm:w-auto sm:text-[10px] sm:tracking-[0.18em]",
+								className: "w-full break-all font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground sm:w-auto sm:text-sm sm:tracking-[0.14em]",
 								children: email
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
@@ -849,15 +850,15 @@ function AdminDashboard({ items, email, onSignOut }) {
 								className: "max-w-2xl",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[9px] uppercase tracking-[0.24em] text-primary",
+										className: "font-mono text-[11px] uppercase tracking-[0.24em] text-primary",
 										children: "Staff Verification Flow"
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-										className: "mt-2 font-display text-xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl sm:tracking-[0.04em]",
+										className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-4xl sm:tracking-[0.04em]",
 										children: "Review each entry in the same order"
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "mt-3 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6",
+										className: "mt-3 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7",
 										children: "Check the registration first, verify the payment second, then make the final tournament decision."
 									})
 								]
@@ -890,16 +891,16 @@ function AdminDashboard({ items, email, onSignOut }) {
 											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 												className: "flex items-center justify-between gap-3",
 												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-													className: "font-mono text-[9px] uppercase tracking-[0.18em] text-primary",
+													className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary",
 													children: ["Step ", entry.step]
 												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "h-4 w-4 text-primary/70" })]
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "mt-2 font-display text-base font-bold uppercase tracking-[0.03em] text-foreground sm:mt-3 sm:text-lg",
+												className: "mt-2 font-display text-lg font-bold uppercase tracking-[0.03em] text-foreground sm:mt-3 sm:text-xl",
 												children: entry.title
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "mt-2 text-xs leading-5 text-muted-foreground",
+												className: "mt-2 text-sm leading-6 text-muted-foreground",
 												children: entry.copy
 											})
 										]
@@ -917,10 +918,10 @@ function AdminDashboard({ items, email, onSignOut }) {
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "flex items-start justify-between gap-3",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", {
-										className: "font-mono text-[8px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[9px] sm:tracking-[0.2em]",
+										className: "font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.2em]",
 										children: stat.label
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", {
-										className: "mt-2 font-display text-2xl font-bold text-primary sm:text-3xl",
+										className: "mt-2 font-display text-3xl font-bold text-primary sm:text-4xl",
 										children: stat.value
 									})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "h-5 w-5 text-primary/45" })]
 								})
@@ -935,16 +936,16 @@ function AdminDashboard({ items, email, onSignOut }) {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "flex items-center gap-2",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ListFilter, { className: "h-4 w-4 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[9px] uppercase tracking-[0.22em] text-primary",
+										className: "font-mono text-[11px] uppercase tracking-[0.22em] text-primary",
 										children: "Review Queue"
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-									className: "mt-2 font-display text-xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-2xl",
+									className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl",
 									children: activeTab.label
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "mt-1 max-w-xl text-xs leading-5 text-muted-foreground sm:text-sm",
+									className: "mt-1 max-w-xl text-sm leading-6 text-muted-foreground sm:text-sm",
 									children: activeTab.description
 								})
 							] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -953,7 +954,7 @@ function AdminDashboard({ items, email, onSignOut }) {
 									type: "button",
 									"aria-pressed": tab === entry.id,
 									onClick: () => setTab(entry.id),
-									className: `shrink-0 border px-3 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-all duration-300 ${tab === entry.id ? "border-primary/50 bg-primary/[0.07] text-primary" : "border-border/50 bg-background/15 text-muted-foreground hover:border-primary/25 hover:text-foreground"}`,
+									className: `shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${tab === entry.id ? "border-primary/50 bg-primary/[0.07] text-primary" : "border-border/50 bg-background/15 text-muted-foreground hover:border-primary/25 hover:text-foreground"}`,
 									children: [
 										entry.label,
 										" (",
@@ -965,7 +966,7 @@ function AdminDashboard({ items, email, onSignOut }) {
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "mt-5 grid gap-4 border-t border-border/40 pt-5 lg:grid-cols-2",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[8px] uppercase tracking-[0.18em] text-muted-foreground",
+								className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
 								children: "Bracket"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "mt-2 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0",
@@ -973,11 +974,11 @@ function AdminDashboard({ items, email, onSignOut }) {
 									type: "button",
 									"aria-pressed": game === entry.id,
 									onClick: () => setGame(entry.id),
-									className: `shrink-0 border px-3 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-all duration-300 ${game === entry.id ? "border-primary/45 bg-primary/[0.06] text-primary" : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"}`,
+									className: `shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${game === entry.id ? "border-primary/45 bg-primary/[0.06] text-primary" : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"}`,
 									children: entry.label
 								}, entry.id))
 							})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[8px] uppercase tracking-[0.18em] text-muted-foreground",
+								className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
 								children: "Payment Status"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "mt-2 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0",
@@ -985,7 +986,7 @@ function AdminDashboard({ items, email, onSignOut }) {
 									type: "button",
 									"aria-pressed": paymentFilter === entry.id,
 									onClick: () => setPaymentFilter(entry.id),
-									className: `shrink-0 border px-3 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-all duration-300 ${paymentFilter === entry.id ? "border-primary/45 bg-primary/[0.06] text-primary" : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"}`,
+									className: `shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${paymentFilter === entry.id ? "border-primary/45 bg-primary/[0.06] text-primary" : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"}`,
 									children: entry.label
 								}, entry.id))
 							})] })]
@@ -997,7 +998,7 @@ function AdminDashboard({ items, email, onSignOut }) {
 							className: "mb-4 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
 									children: [
 										"Showing ",
 										visible.length,
@@ -1008,25 +1009,104 @@ function AdminDashboard({ items, email, onSignOut }) {
 									]
 								}),
 								tab === "payment_issue" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "inline-flex w-full items-center gap-2 border border-amber-500/25 bg-amber-500/[0.05] px-3 py-2 font-mono text-[8px] uppercase tracking-[0.14em] text-amber-300 sm:w-auto sm:tracking-[0.16em]",
+									className: "inline-flex w-full items-center gap-2 border border-amber-500/25 bg-amber-500/[0.05] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-300 sm:w-auto sm:tracking-[0.16em]",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "h-3.5 w-3.5" }), "Check receipts before approving"]
 								}) : null,
 								tab === "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "inline-flex w-full items-center gap-2 border border-destructive/25 bg-destructive/[0.05] px-3 py-2 font-mono text-[8px] uppercase tracking-[0.14em] text-destructive sm:w-auto sm:tracking-[0.16em]",
+									className: "inline-flex w-full items-center gap-2 border border-destructive/25 bg-destructive/[0.05] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-destructive sm:w-auto sm:tracking-[0.16em]",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "h-3.5 w-3.5" }), "Rejected archive"]
 								}) : null
 							]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "space-y-5",
-							children: visible.length ? visible.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegistrationRow, {
-								item,
-								busy: busyId === item.id,
-								paymentBusy: paymentBusyId === item.id,
-								receiptBusy: receiptBusyId === item.id,
-								onDecide: decide,
-								onPaymentDecide: decidePayment,
-								onViewReceipt: viewReceipt
-							}, item.id)) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "space-y-3",
+							children: visible.length ? visible.map((item) => {
+								const isExpanded = expandedId === item.id;
+								const registrationStatus = statusOf(item);
+								const currentPaymentStatus = paymentStatusOf(item);
+								const isSquad = item.game === "mlbb";
+								const entryName = isSquad ? item.team_name || "Untitled Squad" : item.in_game_id || item.player_name || "Unnamed Fighter";
+								return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "overflow-hidden border border-border/50 bg-card/30 backdrop-blur-sm",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "card-interactive relative p-4 sm:p-5",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											"aria-hidden": true,
+											className: "pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "min-w-0 flex-1",
+												children: [
+													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+														className: "flex flex-wrap items-center gap-2",
+														children: [
+															/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+																className: "border border-primary/30 bg-primary/[0.05] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary",
+																children: isSquad ? "MLBB" : "TEKKEN 8"
+															}),
+															/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+																className: `border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${registrationStatus === "approved" ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400" : registrationStatus === "rejected" ? "border-destructive/35 bg-destructive/[0.06] text-destructive" : "border-primary/30 bg-primary/[0.05] text-primary"}`,
+																children: [
+																	"Registration:",
+																	" ",
+																	registrationStatus
+																]
+															}),
+															/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+																className: `border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${currentPaymentStatus === "verified" ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400" : currentPaymentStatus === "rejected" ? "border-destructive/35 bg-destructive/[0.06] text-destructive" : "border-amber-500/30 bg-amber-500/[0.05] text-amber-300"}`,
+																children: [
+																	"Payment:",
+																	" ",
+																	currentPaymentStatus
+																]
+															})
+														]
+													}),
+													/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+														className: "mt-3 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.03em] text-foreground sm:text-4xl",
+														children: entryName
+													}),
+													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+														className: "mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase leading-5 tracking-[0.12em] text-muted-foreground",
+														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+															"Ref:",
+															" ",
+															item.reference_code || "—"
+														] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+															"Submitted:",
+															" ",
+															item.created_at ? new Date(item.created_at).toLocaleDateString("en-PH", {
+																year: "numeric",
+																month: "short",
+																day: "numeric"
+															}) : "—"
+														] })]
+													})
+												]
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+												type: "button",
+												variant: isExpanded ? "secondary" : "outline",
+												size: "sm",
+												onClick: () => setExpandedId(isExpanded ? null : item.id),
+												"aria-expanded": isExpanded,
+												className: "w-full shrink-0 sm:w-auto",
+												children: isExpanded ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronUp, { className: "mr-2 h-4 w-4" }), "Close Entry"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "mr-2 h-4 w-4" }), "Review Entry"] })
+											})]
+										})]
+									}), isExpanded ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "border-t border-border/50 p-2 sm:p-3",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegistrationRow, {
+											item,
+											busy: busyId === item.id,
+											paymentBusy: paymentBusyId === item.id,
+											receiptBusy: receiptBusyId === item.id,
+											onDecide: decide,
+											onPaymentDecide: decidePayment,
+											onViewReceipt: viewReceipt
+										})
+									}) : null]
+								}, item.id);
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "border border-dashed border-border/55 bg-card/20 p-6 text-center sm:p-10",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "mx-auto h-8 w-8 text-primary/45" }),

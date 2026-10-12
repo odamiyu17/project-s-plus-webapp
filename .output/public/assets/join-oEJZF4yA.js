@@ -1,1 +1,0 @@
-import{f as e}from"./index-Dx6nRUJT.js";var t=e;export{t as errorComponent};

@@ -366,18 +366,18 @@ export default function AdminDashboard({
             <div className="flex items-center gap-2.5 sm:gap-3">
               <span className="h-px w-8 bg-primary/80" />
 
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary sm:text-[10px] sm:tracking-[0.28em]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary sm:text-xs sm:tracking-[0.28em]">
                 Hagit Tournament · Staff
               </p>
             </div>
 
-            <h1 className="mt-2 font-display text-2xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-3xl sm:tracking-[0.05em]">
+            <h1 className="mt-2 font-display text-3xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-4xl sm:tracking-[0.05em]">
               Command Center
             </h1>
           </div>
 
           <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:gap-3">
-            <span className="w-full break-all font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground sm:w-auto sm:text-[10px] sm:tracking-[0.18em]">
+            <span className="w-full break-all font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground sm:w-auto sm:text-sm sm:tracking-[0.14em]">
               {email}
             </span>
 
@@ -415,15 +415,15 @@ export default function AdminDashboard({
 
           <div className="flex flex-col gap-5 sm:gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-2xl">
-              <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-primary">
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-primary">
                 Staff Verification Flow
               </p>
 
-              <h2 className="mt-2 font-display text-xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl sm:tracking-[0.04em]">
+              <h2 className="mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-4xl sm:tracking-[0.04em]">
                 Review each entry in the same order
               </h2>
 
-              <p className="mt-3 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">
+              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
                 Check the registration first, verify the payment second, then make the final tournament decision.
               </p>
             </div>
@@ -457,18 +457,18 @@ export default function AdminDashboard({
                     className="relative border border-border/45 bg-background/20 p-3 sm:p-4"
                   >
                     <div className="flex items-center justify-between gap-3">
-                      <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-primary">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
                         Step {entry.step}
                       </span>
 
                       <Icon className="h-4 w-4 text-primary/70" />
                     </div>
 
-                    <p className="mt-2 font-display text-base font-bold uppercase tracking-[0.03em] text-foreground sm:mt-3 sm:text-lg">
+                    <p className="mt-2 font-display text-lg font-bold uppercase tracking-[0.03em] text-foreground sm:mt-3 sm:text-xl">
                       {entry.title}
                     </p>
 
-                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
                       {entry.copy}
                     </p>
                   </div>
@@ -490,11 +490,11 @@ export default function AdminDashboard({
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <dt className="font-mono text-[8px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[9px] sm:tracking-[0.2em]">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.2em]">
                       {stat.label}
                     </dt>
 
-                    <dd className="mt-2 font-display text-2xl font-bold text-primary sm:text-3xl">
+                    <dd className="mt-2 font-display text-3xl font-bold text-primary sm:text-4xl">
                       {stat.value}
                     </dd>
                   </div>
@@ -513,16 +513,16 @@ export default function AdminDashboard({
               <div className="flex items-center gap-2">
                 <ListFilter className="h-4 w-4 text-primary" />
 
-                <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-primary">
                   Review Queue
                 </p>
               </div>
 
-              <h2 className="mt-2 font-display text-xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-2xl">
+              <h2 className="mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl">
                 {activeTab.label}
               </h2>
 
-              <p className="mt-1 max-w-xl text-xs leading-5 text-muted-foreground sm:text-sm">
+              <p className="mt-1 max-w-xl text-sm leading-6 text-muted-foreground sm:text-sm">
                 {activeTab.description}
               </p>
             </div>
@@ -538,7 +538,7 @@ export default function AdminDashboard({
                   onClick={() =>
                     setTab(entry.id)
                   }
-                  className={`shrink-0 border px-3 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-all duration-300 ${
+                  className={`shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${
                     tab === entry.id
                       ? "border-primary/50 bg-primary/[0.07] text-primary"
                       : "border-border/50 bg-background/15 text-muted-foreground hover:border-primary/25 hover:text-foreground"
@@ -553,7 +553,7 @@ export default function AdminDashboard({
 
           <div className="mt-5 grid gap-4 border-t border-border/40 pt-5 lg:grid-cols-2">
             <div>
-              <p className="font-mono text-[8px] uppercase tracking-[0.18em] text-muted-foreground">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                 Bracket
               </p>
 
@@ -568,7 +568,7 @@ export default function AdminDashboard({
                     onClick={() =>
                       setGame(entry.id)
                     }
-                    className={`shrink-0 border px-3 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-all duration-300 ${
+                    className={`shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${
                       game === entry.id
                         ? "border-primary/45 bg-primary/[0.06] text-primary"
                         : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"
@@ -581,7 +581,7 @@ export default function AdminDashboard({
             </div>
 
             <div>
-              <p className="font-mono text-[8px] uppercase tracking-[0.18em] text-muted-foreground">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                 Payment Status
               </p>
 
@@ -600,7 +600,7 @@ export default function AdminDashboard({
                           entry.id,
                         )
                       }
-                      className={`shrink-0 border px-3 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-all duration-300 ${
+                      className={`shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${
                         paymentFilter ===
                         entry.id
                           ? "border-primary/45 bg-primary/[0.06] text-primary"
@@ -619,21 +619,21 @@ export default function AdminDashboard({
         {/* ACTIVE QUEUE */}
         <div className="mt-6">
           <div className="mb-4 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
               Showing {visible.length} of{" "}
               {items.length} entries
             </p>
 
             {tab ===
             "payment_issue" ? (
-              <span className="inline-flex w-full items-center gap-2 border border-amber-500/25 bg-amber-500/[0.05] px-3 py-2 font-mono text-[8px] uppercase tracking-[0.14em] text-amber-300 sm:w-auto sm:tracking-[0.16em]">
+              <span className="inline-flex w-full items-center gap-2 border border-amber-500/25 bg-amber-500/[0.05] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-300 sm:w-auto sm:tracking-[0.16em]">
                 <AlertTriangle className="h-3.5 w-3.5" />
                 Check receipts before approving
               </span>
             ) : null}
 
             {tab === "rejected" ? (
-              <span className="inline-flex w-full items-center gap-2 border border-destructive/25 bg-destructive/[0.05] px-3 py-2 font-mono text-[8px] uppercase tracking-[0.14em] text-destructive sm:w-auto sm:tracking-[0.16em]">
+              <span className="inline-flex w-full items-center gap-2 border border-destructive/25 bg-destructive/[0.05] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-destructive sm:w-auto sm:tracking-[0.16em]">
                 <XCircle className="h-3.5 w-3.5" />
                 Rejected archive
               </span>
@@ -677,14 +677,14 @@ export default function AdminDashboard({
                       <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="border border-primary/30 bg-primary/[0.05] px-2 py-1 font-mono text-[8px] uppercase tracking-[0.16em] text-primary">
+                            <span className="border border-primary/30 bg-primary/[0.05] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary">
                               {isSquad
                                 ? "MLBB"
                                 : "TEKKEN 8"}
                             </span>
 
                             <span
-                              className={`border px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] ${
+                              className={`border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${
                                 registrationStatus ===
                                 "approved"
                                   ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400"
@@ -699,7 +699,7 @@ export default function AdminDashboard({
                             </span>
 
                             <span
-                              className={`border px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] ${
+                              className={`border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${
                                 currentPaymentStatus ===
                                 "verified"
                                   ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400"
@@ -714,11 +714,11 @@ export default function AdminDashboard({
                             </span>
                           </div>
 
-                          <h3 className="mt-3 break-words font-display text-2xl font-bold uppercase leading-tight tracking-[0.03em] text-foreground sm:text-3xl">
+                          <h3 className="mt-3 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.03em] text-foreground sm:text-4xl">
                             {entryName}
                           </h3>
 
-                          <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                          <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase leading-5 tracking-[0.12em] text-muted-foreground">
                             <span>
                               Ref:{" "}
                               {item.reference_code ||

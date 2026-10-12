@@ -191,6 +191,26 @@ var Check = createLucideIcon("Check", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var ChevronDown = createLucideIcon("ChevronDown", [["path", {
+	d: "m6 9 6 6 6-6",
+	key: "qrunsl"
+}]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var ChevronUp = createLucideIcon("ChevronUp", [["path", {
+	d: "m18 15-6-6-6 6",
+	key: "153udz"
+}]]);
+/**
+* @license lucide-react v0.475.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var CircleCheck = createLucideIcon("CircleCheck", [["circle", {
 	cx: "12",
 	cy: "12",
@@ -980,4 +1000,4 @@ var X = createLucideIcon("X", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { ArrowLeft, ArrowRight, Calendar, CalendarDays, Check, CircleCheck, CircleX, ClipboardList, Clock3, CreditCard, ExternalLink, Eye, Gamepad2, GraduationCap, Image, ImagePlus, ImageUp, ListFilter, LoaderCircle, Lock, LogIn, LogOut, Mail, MapPin, Menu, Minus, Pencil, Phone, Plus, RotateCcw, Save, Send, Shield, ShieldAlert, ShieldCheck, Ticket, TriangleAlert, Trophy, Upload, UserPlus, UserRound, UserX, Users, X };
+export { ArrowLeft, ArrowRight, Calendar, CalendarDays, Check, ChevronDown, ChevronUp, CircleCheck, CircleX, ClipboardList, Clock3, CreditCard, ExternalLink, Eye, Gamepad2, GraduationCap, Image, ImagePlus, ImageUp, ListFilter, LoaderCircle, Lock, LogIn, LogOut, Mail, MapPin, Menu, Minus, Pencil, Phone, Plus, RotateCcw, Save, Send, Shield, ShieldAlert, ShieldCheck, Ticket, TriangleAlert, Trophy, Upload, UserPlus, UserRound, UserX, Users, X };

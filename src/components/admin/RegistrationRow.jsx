@@ -54,7 +54,7 @@ function StatusBadge({
 
   return (
     <span
-      className={`border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] ${
+      className={`border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] ${
         STATUS_STYLES[value] ??
         STATUS_STYLES.pending
       }`}
@@ -150,7 +150,7 @@ function Detail({
     <div
       className={`min-w-0 border border-border/35 bg-background/15 p-3 ${className}`}
     >
-      <p className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
+      <p className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
         {Icon ? (
           <Icon className="h-3 w-3 text-primary/80" />
         ) : null}
@@ -158,7 +158,7 @@ function Detail({
         {label}
       </p>
 
-      <div className="mt-1 break-words text-sm text-foreground">
+      <div className="mt-1 break-words text-base leading-6 text-foreground">
         {children ||
           "—"}
       </div>
@@ -199,7 +199,7 @@ function PlayerReviewCard({
             {index + 1}
           </p>
 
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
             {isMain
               ? "Main Roster"
               : "Substitute"}
@@ -207,7 +207,7 @@ function PlayerReviewCard({
         </div>
 
         <span
-          className={`border px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.18em] ${
+          className={`border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] ${
             isMain
               ? "border-primary/35 bg-primary/[0.06] text-primary"
               : "border-border/50 bg-background/15 text-muted-foreground"
@@ -239,18 +239,18 @@ function PlayerReviewCard({
           </div>
 
           <div className="min-w-0 flex-1">
-            <h4 className="break-words font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground sm:text-xl">
+            <h4 className="break-words font-display text-xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-2xl">
               {player.ign ||
                 "No IGN"}
             </h4>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-base text-muted-foreground">
               {player.full_name ||
                 "No full name"}
             </p>
 
             {player.role ? (
-              <span className="mt-3 inline-flex border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-primary">
+              <span className="mt-3 inline-flex border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-xs uppercase tracking-[0.14em] text-primary">
                 {
                   player.role
                 }
@@ -379,7 +379,7 @@ function MlbbReview({
           aria-hidden
           className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
         />
-        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary">
+        <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
           Team Identity
         </p>
 
@@ -402,12 +402,12 @@ function MlbbReview({
           </div>
 
           <div>
-            <h4 className="break-words font-display text-xl font-bold uppercase text-foreground sm:text-2xl">
+            <h4 className="break-words font-display text-2xl font-bold uppercase text-foreground sm:text-3xl">
               {item.team_name ||
                 "Untitled Squad"}
             </h4>
 
-            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-base text-muted-foreground">
               {item.team_tag ? (
                 <span>
                   Tag:{" "}
@@ -436,16 +436,16 @@ function MlbbReview({
       <section className="mt-5">
         <div className="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary">
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
               Full Registration
             </p>
 
-            <h4 className="mt-1 font-display text-xl font-bold uppercase text-foreground">
+            <h4 className="mt-1 font-display text-2xl font-bold uppercase text-foreground">
               7-Player Roster
             </h4>
           </div>
 
-          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
             5 Main · 2 Substitute
           </span>
         </div>
@@ -476,7 +476,7 @@ function MlbbReview({
             )}
           </div>
         ) : (
-          <p className="mt-4 border border-dashed border-border/55 bg-background/15 p-5 text-sm text-muted-foreground">
+          <p className="mt-4 border border-dashed border-border/55 bg-background/15 p-5 text-base leading-6 text-muted-foreground">
             No roster
             information
             available.
@@ -502,7 +502,7 @@ function TekkenReview({
         aria-hidden
         className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
       />
-      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary">
+      <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
         Fighter Information
       </p>
 
@@ -525,7 +525,7 @@ function TekkenReview({
         </div>
 
         <div className="min-w-0 flex-1">
-          <h4 className="break-words font-display text-xl font-bold uppercase text-foreground sm:text-2xl">
+          <h4 className="break-words font-display text-2xl font-bold uppercase text-foreground sm:text-3xl">
             {item.in_game_id ||
               "Unnamed Fighter"}
           </h4>
@@ -708,7 +708,7 @@ export default function RegistrationRow({
       <header className="relative border-b border-border/50 p-4 sm:p-6">
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-between">
           <div className="min-w-0">
-            <p className="break-words font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.24em]">
+            <p className="break-words font-mono text-xs uppercase leading-5 tracking-[0.12em] text-muted-foreground sm:text-sm sm:tracking-[0.16em]">
               {isSquad
                 ? "MLBB Squad"
                 : "TEKKEN 8 Fighter"}
@@ -725,7 +725,7 @@ export default function RegistrationRow({
                 : ""}
             </p>
 
-            <h3 className="mt-2 break-words font-display text-2xl font-bold uppercase leading-tight tracking-[0.02em] text-foreground sm:text-4xl">
+            <h3 className="mt-2 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.02em] text-foreground sm:text-4xl">
               {isSquad
                 ? item.team_name ||
                   "Untitled Squad"
@@ -734,7 +734,7 @@ export default function RegistrationRow({
                   "Unnamed Fighter"}
             </h3>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-base text-muted-foreground">
               {isSquad
                 ? [
                     item.team_tag
@@ -784,7 +784,7 @@ export default function RegistrationRow({
 
       {/* MAIN CONTACT */}
       <section className="border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary">
+        <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
           Main Contact
         </p>
 
@@ -845,7 +845,7 @@ export default function RegistrationRow({
             <div className="flex items-center gap-2">
               <CreditCard className="h-4 w-4 text-primary" />
 
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary">
+              <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
                 Payment Review
               </p>
             </div>
@@ -879,7 +879,7 @@ export default function RegistrationRow({
                 : "View Receipt"}
             </Button>
           ) : (
-            <span className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
               <ImageIcon className="h-4 w-4" />
               No receipt
             </span>
@@ -905,7 +905,7 @@ export default function RegistrationRow({
             )}
 
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-foreground">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground">
                 {paymentVerified
                   ? "Payment cleared"
                   : paymentRejected
@@ -915,7 +915,7 @@ export default function RegistrationRow({
                       : "Receipt missing"}
               </p>
 
-              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
                 {paymentVerified
                   ? "The payment has been verified. Staff may continue to the final registration decision."
                   : paymentRejected
@@ -1022,7 +1022,7 @@ export default function RegistrationRow({
           ) : null}
 
           {paymentBusy ? (
-            <span className="self-center font-mono text-[9px] uppercase tracking-[0.18em] text-primary">
+            <span className="self-center font-mono text-xs uppercase tracking-[0.14em] text-primary">
               Updating…
             </span>
           ) : null}
@@ -1034,7 +1034,7 @@ export default function RegistrationRow({
         <div className="mb-4 flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-primary" />
 
-          <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
             Registration Decision
           </p>
         </div>
@@ -1062,7 +1062,7 @@ export default function RegistrationRow({
             )}
 
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-foreground">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground">
                 {status === "approved"
                   ? "Registration approved"
                   : status === "rejected"
@@ -1072,7 +1072,7 @@ export default function RegistrationRow({
                       : "Final approval blocked"}
               </p>
 
-              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
                 {status === "approved"
                   ? "This entry is already authorized and live on the roster board."
                   : status === "rejected"
@@ -1155,7 +1155,7 @@ export default function RegistrationRow({
           ) : null}
 
           {busy ? (
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+            <span className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
               Updating…
             </span>
           ) : null}

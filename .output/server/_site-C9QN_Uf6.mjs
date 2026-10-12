@@ -5,10 +5,10 @@ import { require_jsx_runtime } from "./_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./_ssr/auth-middleware-CmY4KpCX.mjs";
 import { Button, cn } from "./_ssr/server-fns-D7ymjI7_.mjs";
 import { ArrowLeft, ArrowRight, Calendar, MapPin, Plus, Ticket, Trophy, Users } from "./_libs/lucide-react.mjs";
-import { Route$2 } from "./_ssr/router-CW0eFnIh.mjs";
+import { Route$2 } from "./_ssr/router-B39Ns8ML.mjs";
 import { Image } from "./_ssr/image-BwNFCwj5.mjs";
 import { useEmblaCarousel } from "./_libs/embla-carousel-react+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/_site-Bbzz5cEH.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_site-C9QN_Uf6.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function SectionHeading({ eyebrow, title, description, align = "left", className }) {
