@@ -5,8 +5,8 @@ import { require_jsx_runtime } from "./_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./_ssr/auth-middleware-CmY4KpCX.mjs";
 import { Button } from "./_ssr/server-fns-D7ymjI7_.mjs";
 import { ClipboardList, LogIn, LogOut, Mail, Menu, Shield, X } from "./_libs/lucide-react.mjs";
-import { useAuth } from "./_ssr/router-B39Ns8ML.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/_site-MXvLru-E.js
+import { useAuth } from "./_ssr/router-x0UN7VX6.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/_site-DVjpOkr0.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var NAV$1 = [
@@ -199,7 +199,7 @@ function SiteHeader() {
 								className: "relative h-10 w-10 object-contain transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)] sm:h-12 sm:w-12"
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							className: "font-display text-sm font-bold uppercase leading-none tracking-[0.22em] text-foreground transition-all duration-300 group-hover:tracking-[0.25em] sm:text-base",
+							className: "font-display text-base font-bold uppercase leading-none tracking-[0.18em] text-foreground transition-all duration-300 group-hover:tracking-[0.21em] sm:text-lg",
 							children: ["Project", /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 								className: "text-primary",
 								children: [" ", "S+"]
@@ -207,11 +207,11 @@ function SiteHeader() {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", {
-						className: "hidden items-center gap-8 lg:flex",
+						className: "hidden items-center gap-6 lg:flex xl:gap-8",
 						children: NAV.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 							to: "/",
 							hash: item.hash,
-							className: "group/nav relative py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-300 hover:text-primary",
+							className: "group/nav relative py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:text-primary xl:text-xs xl:tracking-[0.2em]",
 							children: [item.label, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"aria-hidden": true,
 								className: "absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-primary transition-transform duration-300 ease-out group-hover/nav:scale-x-100"
@@ -225,7 +225,7 @@ function SiteHeader() {
 								asChild: true,
 								variant: "ghost",
 								size: "sm",
-								className: "hidden sm:inline-flex",
+								className: "hidden text-[13px] sm:inline-flex",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 									to: "/login",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogIn, { className: "h-3.5 w-3.5" }), "Login"]
@@ -235,7 +235,7 @@ function SiteHeader() {
 								asChild: true,
 								variant: "ghost",
 								size: "sm",
-								className: "hidden sm:inline-flex",
+								className: "hidden text-[13px] sm:inline-flex",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 									to: "/my-registration",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClipboardList, { className: "h-3.5 w-3.5" }), "My Registration"]
@@ -245,7 +245,7 @@ function SiteHeader() {
 								asChild: true,
 								variant: "ghost",
 								size: "sm",
-								className: "hidden text-primary sm:inline-flex",
+								className: "hidden text-[13px] text-primary sm:inline-flex",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 									to: "/admin",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Shield, { className: "h-3.5 w-3.5" }), "Command Center"]
@@ -257,13 +257,13 @@ function SiteHeader() {
 								size: "sm",
 								disabled: loggingOut,
 								onClick: handleLogout,
-								className: "hidden hover:bg-destructive/10 hover:text-destructive sm:inline-flex",
+								className: "hidden text-[13px] hover:bg-destructive/10 hover:text-destructive sm:inline-flex",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogOut, { className: "h-3.5 w-3.5" }), loggingOut ? "Logging Out..." : "Logout"]
 							}) : null,
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 								asChild: true,
 								size: "sm",
-								className: "group glow-pulse h-11 px-4 sm:px-6",
+								className: "group glow-pulse motion-press h-11 px-4 sm:px-6",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 									to: "/join",
 									children: "Register Now"
@@ -274,7 +274,7 @@ function SiteHeader() {
 								"aria-label": open ? "Close menu" : "Open menu",
 								"aria-expanded": open,
 								onClick: () => setOpen((value) => !value),
-								className: "group relative grid h-11 w-11 place-items-center overflow-hidden border border-border/70 bg-background/20 text-foreground backdrop-blur-sm transition-all duration-300 hover:border-primary/55 hover:bg-primary/[0.05] hover:text-primary active:scale-95 lg:hidden",
+								className: "group motion-press relative grid h-11 w-11 place-items-center overflow-hidden border border-border/70 bg-background/20 text-foreground backdrop-blur-sm transition-all duration-300 hover:border-primary/55 hover:bg-primary/[0.05] hover:text-primary active:scale-95 lg:hidden",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									className: `
                 absolute
@@ -328,7 +328,7 @@ function SiteHeader() {
 										to: "/",
 										hash: item.hash,
 										onClick: () => setOpen(false),
-										className: "group/mobile flex items-center justify-between border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-all duration-300 hover:pl-1 hover:text-primary",
+										className: "group/mobile flex items-center justify-between border-b border-border/50 py-4.5 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-all duration-300 hover:pl-1 hover:text-primary",
 										children: [item.label, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 											"aria-hidden": true,
 											className: "h-1.5 w-1.5 rotate-45 bg-primary/30 transition-all duration-300 group-hover/mobile:scale-125 group-hover/mobile:bg-primary"
@@ -345,7 +345,7 @@ function SiteHeader() {
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 										to: "/login",
 										onClick: () => setOpen(false),
-										className: "flex items-center border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-primary transition-all duration-300 hover:pl-1",
+										className: "flex items-center border-b border-border/50 py-4.5 font-mono text-xs uppercase tracking-[0.18em] text-primary transition-all duration-300 hover:pl-1",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogIn, { className: "mr-2 h-4 w-4" }), "Login"]
 									})
 								}) : null,
@@ -359,7 +359,7 @@ function SiteHeader() {
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 										to: "/my-registration",
 										onClick: () => setOpen(false),
-										className: "flex items-center border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-all duration-300 hover:pl-1 hover:text-primary",
+										className: "flex items-center border-b border-border/50 py-4.5 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground transition-all duration-300 hover:pl-1 hover:text-primary",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClipboardList, { className: "mr-2 h-4 w-4" }), "My Registration"]
 									})
 								}) : null,
@@ -373,7 +373,7 @@ function SiteHeader() {
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 										to: "/admin",
 										onClick: () => setOpen(false),
-										className: "flex items-center border-b border-border/50 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-primary transition-all duration-300 hover:pl-1",
+										className: "flex items-center border-b border-border/50 py-4.5 font-mono text-xs uppercase tracking-[0.18em] text-primary transition-all duration-300 hover:pl-1",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Shield, { className: "mr-2 h-4 w-4" }), "Command Center"]
 									})
 								}) : null,
@@ -388,7 +388,7 @@ function SiteHeader() {
 										type: "button",
 										disabled: loggingOut,
 										onClick: handleLogout,
-										className: "flex w-full items-center py-4 text-left font-mono text-[11px] uppercase tracking-[0.22em] text-destructive transition-all duration-300 hover:pl-1 hover:text-destructive/80 disabled:cursor-not-allowed disabled:opacity-40",
+										className: "flex w-full items-center py-4.5 text-left font-mono text-xs uppercase tracking-[0.18em] text-destructive transition-all duration-300 hover:pl-1 hover:text-destructive/80 disabled:cursor-not-allowed disabled:opacity-40",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogOut, { className: "mr-2 h-4 w-4" }), loggingOut ? "Logging Out..." : "Logout"]
 									})
 								}) : null

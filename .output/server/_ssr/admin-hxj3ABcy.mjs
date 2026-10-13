@@ -6,9 +6,9 @@ import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { Button, getPaymentReceiptUrl, setPaymentStatus, setRegistrationStatus } from "./server-fns-D7ymjI7_.mjs";
 import { toast } from "../_libs/sonner.mjs";
 import { CalendarDays, Check, ChevronDown, ChevronUp, CircleCheck, CircleX, CreditCard, ExternalLink, Eye, Gamepad2, GraduationCap, Image, ListFilter, LogOut, MapPin, Phone, RotateCcw, ShieldAlert, ShieldCheck, TriangleAlert, UserRound, Users, X } from "../_libs/lucide-react.mjs";
-import { Route$5, useAuth } from "./router-B39Ns8ML.mjs";
+import { Route$5, useAuth } from "./router-x0UN7VX6.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/admin-BkE7pJm4.js
+//#region node_modules/.nitro/vite/services/ssr/assets/admin-hxj3ABcy.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function AccessDenied({ email, onSignOut }) {
@@ -52,16 +52,20 @@ function AccessDenied({ email, onSignOut }) {
 	});
 }
 var STATUS_STYLES = {
-	pending: "border-primary/50 bg-primary/5 text-primary",
-	approved: "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
-	verified: "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
-	rejected: "border-destructive/40 bg-destructive/10 text-destructive"
+	pending: "border-amber-500/35 bg-amber-500/[0.08] text-amber-300 shadow-[inset_0_0_0_1px_hsl(var(--primary)/0.015)]",
+	approved: "border-emerald-500/40 bg-emerald-500/[0.10] text-emerald-400 shadow-[0_0_24px_-16px_rgba(52,211,153,0.55)]",
+	verified: "border-emerald-500/40 bg-emerald-500/[0.10] text-emerald-400 shadow-[0_0_24px_-16px_rgba(52,211,153,0.55)]",
+	rejected: "border-destructive/45 bg-destructive/[0.10] text-destructive shadow-[0_0_24px_-16px_hsl(var(--destructive)/0.45)]"
 };
 function StatusBadge({ status }) {
 	const value = status ?? "pending";
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: `border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] ${STATUS_STYLES[value] ?? STATUS_STYLES.pending}`,
-		children: value
+	const dotClass = value === "approved" || value === "verified" ? "bg-emerald-400" : value === "rejected" ? "bg-destructive" : "bg-amber-300";
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		className: `inline-flex items-center gap-2 border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] ${STATUS_STYLES[value] ?? STATUS_STYLES.pending}`,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			"aria-hidden": true,
+			className: `h-1.5 w-1.5 rounded-full ${dotClass}`
+		}), value]
 	});
 }
 function formatDate(value) {
@@ -90,7 +94,7 @@ function getPublicUrl(bucket, path) {
 }
 function Detail({ label, children, icon: Icon, className = "" }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: `min-w-0 border border-border/35 bg-background/15 p-3 ${className}`,
+		className: `min-w-0 border border-border/40 bg-background/20 p-3.5 shadow-[inset_0_1px_0_hsl(var(--primary)/0.025)] backdrop-blur-sm ${className}`,
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 			className: "flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground",
 			children: [Icon ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "h-3 w-3 text-primary/80" }) : null, label]
@@ -104,14 +108,14 @@ function PlayerReviewCard({ player, index }) {
 	const photoUrl = getPublicUrl("player-photos", player.player_photo_path);
 	const isMain = (player.roster_type || (index < 5 ? "main" : "substitute")) === "main";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-		className: "card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm",
+		className: "card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-primary/10 bg-card/35 shadow-[0_18px_42px_-34px_hsl(var(--primary)/0.35)] backdrop-blur-xl",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
 				className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
-				className: "relative flex flex-col items-start gap-3 border-b border-border/50 bg-card/35 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-4",
+				className: "relative flex flex-col items-start gap-3 border-b border-primary/10 bg-background/20 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 					className: "font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground",
 					children: [
@@ -225,7 +229,7 @@ function PlayerReviewCard({ player, index }) {
 function MlbbReview({ item }) {
 	const teamLogoUrl = getPublicUrl("team-logos", item.team_logo_path);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-		className: "card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-border/55 bg-background/20 p-3 backdrop-blur-sm sm:p-5",
+		className: "card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-primary/10 bg-card/35 p-4 shadow-[0_18px_42px_-34px_hsl(var(--primary)/0.35)] backdrop-blur-xl sm:p-5",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
@@ -292,7 +296,7 @@ function MlbbReview({ item }) {
 function TekkenReview({ item }) {
 	const photoUrl = getPublicUrl("player-photos", item.player_photo_path);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-		className: "card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-border/55 bg-background/20 p-3 backdrop-blur-sm sm:p-5",
+		className: "card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-primary/10 bg-card/35 p-4 shadow-[0_18px_42px_-34px_hsl(var(--primary)/0.35)] backdrop-blur-xl sm:p-5",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
@@ -386,7 +390,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 		}
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-		className: "card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md",
+		className: "card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-primary/15 bg-card/45 shadow-[0_28px_80px_-54px_hsl(var(--primary)/0.5)] backdrop-blur-2xl",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
@@ -394,10 +398,14 @@ function RegistrationRow({ item, busy, onDecide }) {
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
-				className: "pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/[0.035] blur-3xl"
+				className: "pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/[0.055] blur-[100px]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute -left-24 top-[38%] h-52 w-52 rounded-full bg-primary/[0.025] blur-[110px]"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
-				className: "relative border-b border-border/50 p-4 sm:p-6",
+				className: "relative border-b border-primary/10 bg-background/15 p-4 sm:p-6 lg:p-7",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-between",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -413,7 +421,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-								className: "mt-2 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.02em] text-foreground sm:text-4xl",
+								className: "mt-2 break-words font-display text-3xl font-bold uppercase leading-[0.95] tracking-[0.02em] text-foreground sm:text-4xl lg:text-5xl",
 								children: isSquad ? item.team_name || "Untitled Squad" : item.in_game_id || item.player_name || "Unnamed Fighter"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -421,18 +429,63 @@ function RegistrationRow({ item, busy, onDecide }) {
 								children: isSquad ? [item.team_tag ? `Tag ${item.team_tag}` : null, item.region].filter(Boolean).join(" · ") || "—" : [item.player_name, item.region].filter(Boolean).join(" · ") || "—"
 							})
 						]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusBadge, { status })]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex flex-col items-start gap-1.5 sm:items-end",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground",
+							children: "Registration Status"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusBadge, { status })]
+					})]
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "relative p-4 sm:p-6",
+				className: "relative border-b border-primary/10 bg-card/15 px-4 py-3 sm:px-6 lg:px-7",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex flex-wrap items-center gap-2.5",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "mr-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground",
+							children: "Review Workspace"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: "inline-flex items-center gap-1.5 border border-primary/25 bg-primary/[0.05] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-primary",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"aria-hidden": true,
+								className: "h-1.5 w-1.5 rounded-full bg-primary"
+							}), "01 Registration"]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: `inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${paymentVerified ? "border-emerald-500/30 bg-emerald-500/[0.07] text-emerald-400" : paymentRejected ? "border-destructive/30 bg-destructive/[0.07] text-destructive" : "border-amber-500/30 bg-amber-500/[0.06] text-amber-300"}`,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"aria-hidden": true,
+								className: `h-1.5 w-1.5 rounded-full ${paymentVerified ? "bg-emerald-400" : paymentRejected ? "bg-destructive" : "bg-amber-300"}`
+							}), "02 Payment"]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: `inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${status === "approved" ? "border-emerald-500/30 bg-emerald-500/[0.07] text-emerald-400" : status === "rejected" ? "border-destructive/30 bg-destructive/[0.07] text-destructive" : canAuthorize ? "border-primary/30 bg-primary/[0.06] text-primary" : "border-border/40 bg-background/15 text-muted-foreground"}`,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"aria-hidden": true,
+								className: `h-1.5 w-1.5 rounded-full ${status === "approved" ? "bg-emerald-400" : status === "rejected" ? "bg-destructive" : canAuthorize ? "bg-primary" : "bg-muted-foreground/60"}`
+							}), "03 Decision"]
+						})
+					]
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "relative p-4 sm:p-6 lg:p-7",
 				children: isSquad ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MlbbReview, { item }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TekkenReview, { item })
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-				className: "border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
-					children: "Main Contact"
+				className: "relative border-t border-primary/10 bg-background/15 px-4 py-5 sm:px-6 lg:px-7 lg:py-6",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center justify-between gap-3",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "font-mono text-xs uppercase tracking-[0.16em] text-primary",
+						children: "Main Contact"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground",
+						children: "Registration"
+					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4",
 					children: [
@@ -466,8 +519,12 @@ function RegistrationRow({ item, busy, onDecide }) {
 				})]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-				className: "border-t border-border/45 bg-background/15 px-4 py-5 sm:px-6",
+				className: "relative border-t border-primary/10 bg-card/20 px-4 py-5 sm:px-6 lg:px-7 lg:py-6",
 				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						"aria-hidden": true,
+						className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-between",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -485,7 +542,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 							variant: "outline",
 							disabled: receiptBusy,
 							onClick: openReceipt,
-							className: "w-full text-primary sm:w-auto",
+							className: "motion-press w-full border-primary/20 bg-background/25 text-primary backdrop-blur-sm sm:w-auto",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Eye, { className: "mr-2 h-4 w-4" }), receiptBusy ? "Opening…" : "View Receipt"]
 						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 							className: "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
@@ -493,7 +550,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: `mt-5 border p-3 sm:p-4 ${paymentVerified ? "border-emerald-500/30 bg-emerald-500/[0.05]" : paymentRejected ? "border-destructive/30 bg-destructive/[0.05]" : "border-amber-500/30 bg-amber-500/[0.05]"}`,
+						className: `mt-5 border p-3 shadow-[inset_0_1px_0_hsl(var(--primary)/0.025)] backdrop-blur-sm sm:p-4 ${paymentVerified ? "border-emerald-500/35 bg-emerald-500/[0.07] shadow-[0_16px_40px_-30px_rgba(52,211,153,0.45)]" : paymentRejected ? "border-destructive/35 bg-destructive/[0.07] shadow-[0_16px_40px_-30px_hsl(var(--destructive)/0.35)]" : "border-amber-500/35 bg-amber-500/[0.06] shadow-[0_16px_40px_-30px_rgba(251,191,36,0.30)]"}`,
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-start gap-3",
 							children: [paymentVerified ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "mt-0.5 h-4 w-4 shrink-0 text-emerald-400" }) : paymentRejected ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "mt-0.5 h-4 w-4 shrink-0 text-destructive" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "mt-0.5 h-4 w-4 shrink-0 text-amber-300" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -526,14 +583,14 @@ function RegistrationRow({ item, busy, onDecide }) {
 						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "mt-5 flex flex-col gap-2 border-t border-border/60 pt-5 sm:flex-row sm:flex-wrap sm:gap-3",
+						className: "mt-5 flex flex-col gap-2 border-t border-border/60 pt-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3",
 						children: [
 							paymentStatus !== "verified" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								type: "button",
 								size: "sm",
 								disabled: paymentBusy || !hasReceipt,
 								onClick: () => updatePayment("verified"),
-								className: "w-full sm:w-auto",
+								className: "motion-press w-full border-emerald-500/35 bg-emerald-500/[0.10] text-emerald-300 shadow-[0_0_26px_-18px_rgba(52,211,153,0.55)] hover:bg-emerald-500/[0.16] hover:text-emerald-200 sm:w-auto",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "mr-2 h-4 w-4" }), "Verify Payment"]
 							}) : null,
 							paymentStatus !== "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
@@ -542,7 +599,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								variant: "outline",
 								disabled: paymentBusy,
 								onClick: () => updatePayment("rejected"),
-								className: "w-full border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto",
+								className: "motion-press w-full border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "mr-2 h-4 w-4" }), "Reject Payment"]
 							}) : null,
 							paymentStatus !== "pending" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
@@ -551,7 +608,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								variant: "ghost",
 								disabled: paymentBusy,
 								onClick: () => updatePayment("pending"),
-								className: "w-full text-muted-foreground sm:w-auto",
+								className: "motion-press w-full border-destructive/35 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { className: "mr-2 h-3.5 w-3.5" }), "Reset Payment"]
 							}) : null,
 							paymentBusy ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -563,8 +620,12 @@ function RegistrationRow({ item, busy, onDecide }) {
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("footer", {
-				className: "border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6",
+				className: "relative border-t border-primary/10 bg-background/15 px-4 py-5 sm:px-6 lg:px-7 lg:py-6",
 				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						"aria-hidden": true,
+						className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "mb-4 flex items-center gap-2",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "h-4 w-4 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -573,7 +634,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: `mb-5 border p-3 sm:p-4 ${status === "approved" ? "border-emerald-500/30 bg-emerald-500/[0.05]" : status === "rejected" ? "border-destructive/30 bg-destructive/[0.05]" : canAuthorize ? "border-primary/30 bg-primary/[0.04]" : "border-amber-500/30 bg-amber-500/[0.05]"}`,
+						className: `mb-5 border p-3 shadow-[inset_0_1px_0_hsl(var(--primary)/0.025)] backdrop-blur-sm sm:p-4 ${status === "approved" ? "border-emerald-500/35 bg-emerald-500/[0.07] shadow-[0_18px_46px_-32px_rgba(52,211,153,0.45)]" : status === "rejected" ? "border-destructive/35 bg-destructive/[0.07] shadow-[0_18px_46px_-32px_hsl(var(--destructive)/0.35)]" : canAuthorize ? "border-primary/35 bg-primary/[0.06] shadow-[0_18px_46px_-32px_hsl(var(--primary)/0.38)]" : "border-amber-500/35 bg-amber-500/[0.06] shadow-[0_18px_46px_-32px_rgba(251,191,36,0.28)]"}`,
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-start gap-3",
 							children: [status === "approved" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "mt-0.5 h-4 w-4 shrink-0 text-emerald-400" }) : status === "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "mt-0.5 h-4 w-4 shrink-0 text-destructive" }) : canAuthorize ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "mt-0.5 h-4 w-4 shrink-0 text-primary" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "mt-0.5 h-4 w-4 shrink-0 text-amber-300" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -592,7 +653,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								size: "sm",
 								disabled: busy || !canAuthorize || decisionLocked,
 								onClick: () => onDecide(item.id, "approved"),
-								className: "w-full sm:w-auto",
+								className: `motion-press w-full sm:w-auto ${canAuthorize && !decisionLocked ? "border-emerald-500/35 bg-emerald-500/[0.12] text-emerald-300 shadow-[0_0_28px_-18px_rgba(52,211,153,0.55)] hover:bg-emerald-500/[0.18] hover:text-emerald-200" : "opacity-50"}`,
 								title: canAuthorize ? "Authorize registration" : "Verify payment and confirm a receipt first",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "mr-2 h-4 w-4" }), "Authorize"]
 							}) : null,
@@ -601,7 +662,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								variant: "outline",
 								disabled: busy,
 								onClick: () => onDecide(item.id, "rejected"),
-								className: "w-full text-muted-foreground sm:w-auto",
+								className: "motion-press w-full text-muted-foreground sm:w-auto",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "mr-2 h-4 w-4" }), "Reject"]
 							}) : null,
 							status !== "pending" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
@@ -609,7 +670,7 @@ function RegistrationRow({ item, busy, onDecide }) {
 								variant: "ghost",
 								disabled: busy,
 								onClick: () => onDecide(item.id, "pending"),
-								className: "w-full text-muted-foreground hover:text-foreground sm:w-auto",
+								className: "motion-press w-full text-muted-foreground hover:text-foreground sm:w-auto",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { className: "mr-2 h-3.5 w-3.5" }), "Back to Queue"]
 							}) : null,
 							busy ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -793,128 +854,154 @@ function AdminDashboard({ items, email, onSignOut }) {
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
-				className: "pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent"
+				className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.07),transparent_26%),radial-gradient(circle_at_85%_12%,hsl(var(--primary)/0.045),transparent_22%),linear-gradient(to_bottom,hsl(var(--background)),hsl(var(--background)))]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(hsl(var(--primary)/0.5)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.5)_1px,transparent_1px)] [background-size:48px_48px]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute -left-28 top-40 h-72 w-72 rounded-full bg-primary/[0.035] blur-[120px]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute -right-28 top-[28rem] h-80 w-80 rounded-full bg-primary/[0.03] blur-[130px]"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
-				className: "relative border-b border-border/50 bg-card/20 backdrop-blur-md",
+				className: "relative border-b border-primary/10 bg-card/25 shadow-[0_18px_50px_-40px_hsl(var(--primary)/0.35)] backdrop-blur-2xl",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mx-auto flex max-w-7xl flex-col items-start gap-4 px-3 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-5",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-2.5 sm:gap-3",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-px w-8 bg-primary/80" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "font-mono text-[11px] uppercase tracking-[0.2em] text-primary sm:text-xs sm:tracking-[0.28em]",
-							children: "Hagit Tournament · Staff"
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-						className: "mt-2 font-display text-3xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-4xl sm:tracking-[0.05em]",
-						children: "Command Center"
-					})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex w-full flex-wrap items-center gap-2 sm:w-auto sm:gap-3",
-						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "w-full break-all font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground sm:w-auto sm:text-sm sm:tracking-[0.14em]",
-								children: email
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-								asChild: true,
-								variant: "outline",
-								size: "sm",
-								className: "flex-1 sm:flex-none",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-									to: "/",
-									children: "View Site"
+					className: "mx-auto flex max-w-7xl flex-col items-start gap-4 px-3 py-4 sm:px-6 md:flex-row md:items-center md:justify-between md:px-8 md:py-5",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"aria-hidden": true,
+							className: "pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-center gap-2.5 sm:gap-3",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-px w-8 bg-primary/80" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								className: "font-mono text-[11px] uppercase tracking-[0.2em] text-primary sm:text-xs sm:tracking-[0.28em]",
+								children: "Hagit Tournament · Staff"
+							})]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+							className: "mt-2 font-display text-3xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-4xl sm:tracking-[0.05em]",
+							children: "Command Center"
+						})] }),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "grid w-full grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3 md:w-auto",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "col-span-2 w-full break-all font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:w-auto sm:text-sm sm:tracking-[0.14em] md:col-span-1",
+									children: email
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+									asChild: true,
+									variant: "outline",
+									size: "sm",
+									className: "motion-press flex-1 sm:flex-none",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+										to: "/",
+										children: "View Site"
+									})
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+									variant: "ghost",
+									size: "sm",
+									onClick: onSignOut,
+									className: "motion-press flex-1 text-muted-foreground sm:flex-none",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogOut, { className: "mr-2 h-3.5 w-3.5" }), "Sign Out"]
 								})
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-								variant: "ghost",
-								size: "sm",
-								onClick: onSignOut,
-								className: "flex-1 text-muted-foreground sm:flex-none",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogOut, { className: "mr-2 h-3.5 w-3.5" }), "Sign Out"]
-							})
-						]
-					})]
+							]
+						})
+					]
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("main", {
-				className: "relative mx-auto max-w-7xl px-3 py-7 sm:px-8 sm:py-10",
+				className: "relative mx-auto max-w-7xl px-3 py-6 sm:px-5 sm:py-8 md:px-6 lg:px-8 lg:py-12",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-						className: "card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							"aria-hidden": true,
-							className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex flex-col gap-5 sm:gap-6 xl:flex-row xl:items-end xl:justify-between",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "max-w-2xl",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[11px] uppercase tracking-[0.24em] text-primary",
-										children: "Staff Verification Flow"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-										className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-4xl sm:tracking-[0.04em]",
-										children: "Review each entry in the same order"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "mt-3 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7",
-										children: "Check the registration first, verify the payment second, then make the final tournament decision."
+						className: "card-interactive card-interactive-glow motion-rise relative overflow-hidden border border-primary/15 bg-card/45 p-4 shadow-[0_24px_70px_-48px_hsl(var(--primary)/0.45)] backdrop-blur-2xl sm:p-6 lg:p-7",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/55 to-transparent"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-primary/[0.05] blur-[90px]"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex flex-col gap-5 sm:gap-6 lg:flex-row lg:items-end lg:justify-between",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "max-w-2xl",
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "font-mono text-[11px] uppercase tracking-[0.24em] text-primary",
+											children: "Staff Verification Flow"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+											className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-4xl sm:tracking-[0.04em]",
+											children: "Review each entry in the same order"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "mt-3 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7",
+											children: "Check the registration first, verify the payment second, then make the final tournament decision."
+										})
+									]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "grid gap-2 sm:grid-cols-3 sm:gap-3 lg:w-[58%] xl:w-[620px]",
+									children: [
+										{
+											step: "01",
+											title: "Registration",
+											copy: "Check team, fighter, roster, and contact details.",
+											icon: Gamepad2
+										},
+										{
+											step: "02",
+											title: "Payment",
+											copy: "Open the receipt and verify the reference.",
+											icon: CreditCard
+										},
+										{
+											step: "03",
+											title: "Decision",
+											copy: "Authorize only after the entry is fully checked.",
+											icon: ShieldCheck
+										}
+									].map((entry) => {
+										const Icon = entry.icon;
+										return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "relative overflow-hidden border border-border/45 bg-background/25 p-3 shadow-[inset_0_1px_0_hsl(var(--primary)/0.04)] backdrop-blur-md sm:p-4",
+											children: [
+												/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+													className: "flex items-center justify-between gap-3",
+													children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+														className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary",
+														children: ["Step ", entry.step]
+													}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "h-4 w-4 text-primary/70" })]
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+													className: "mt-2 font-display text-lg font-bold uppercase tracking-[0.03em] text-foreground sm:mt-3 sm:text-xl",
+													children: entry.title
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+													className: "mt-2 text-sm leading-6 text-muted-foreground",
+													children: entry.copy
+												})
+											]
+										}, entry.step);
 									})
-								]
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "grid gap-2 sm:grid-cols-3 sm:gap-3 xl:w-[620px]",
-								children: [
-									{
-										step: "01",
-										title: "Registration",
-										copy: "Check team, fighter, roster, and contact details.",
-										icon: Gamepad2
-									},
-									{
-										step: "02",
-										title: "Payment",
-										copy: "Open the receipt and verify the reference.",
-										icon: CreditCard
-									},
-									{
-										step: "03",
-										title: "Decision",
-										copy: "Authorize only after the entry is fully checked.",
-										icon: ShieldCheck
-									}
-								].map((entry) => {
-									const Icon = entry.icon;
-									return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "relative border border-border/45 bg-background/20 p-3 sm:p-4",
-										children: [
-											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-												className: "flex items-center justify-between gap-3",
-												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-													className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary",
-													children: ["Step ", entry.step]
-												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "h-4 w-4 text-primary/70" })]
-											}),
-											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "mt-2 font-display text-lg font-bold uppercase tracking-[0.03em] text-foreground sm:mt-3 sm:text-xl",
-												children: entry.title
-											}),
-											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "mt-2 text-sm leading-6 text-muted-foreground",
-												children: entry.copy
-											})
-										]
-									}, entry.step);
-								})
-							})]
-						})]
+								})]
+							})
+						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dl", {
-						className: "mt-5 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-3 lg:grid-cols-4",
+						className: "motion-rise motion-delay-1 mt-5 grid grid-cols-1 gap-2 min-[430px]:grid-cols-2 sm:mt-6 sm:gap-3 lg:grid-cols-4",
 						children: stats.map((stat) => {
 							const Icon = stat.icon;
 							return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "card-interactive relative min-w-0 overflow-hidden border border-border/50 bg-card/30 p-3 backdrop-blur-sm sm:p-5",
+								className: "card-interactive motion-status relative min-w-0 overflow-hidden border border-primary/10 bg-card/40 p-4 shadow-[0_16px_36px_-30px_hsl(var(--primary)/0.45)] backdrop-blur-xl transition-transform duration-300 sm:p-5",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "flex items-start justify-between gap-3",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", {
@@ -929,198 +1016,250 @@ function AdminDashboard({ items, email, onSignOut }) {
 						})
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-						className: "mt-6 border border-border/50 bg-card/25 p-3 backdrop-blur-sm sm:mt-8 sm:p-5",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex flex-col gap-4 sm:gap-5 xl:flex-row xl:items-end xl:justify-between",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "flex items-center gap-2",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ListFilter, { className: "h-4 w-4 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[11px] uppercase tracking-[0.22em] text-primary",
-										children: "Review Queue"
-									})]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-									className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl",
-									children: activeTab.label
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "mt-1 max-w-xl text-sm leading-6 text-muted-foreground sm:text-sm",
-									children: activeTab.description
-								})
-							] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "flex w-full gap-2 overflow-x-auto pb-1 xl:w-auto xl:flex-wrap xl:overflow-visible xl:pb-0",
-								children: TABS.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-									type: "button",
-									"aria-pressed": tab === entry.id,
-									onClick: () => setTab(entry.id),
-									className: `shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${tab === entry.id ? "border-primary/50 bg-primary/[0.07] text-primary" : "border-border/50 bg-background/15 text-muted-foreground hover:border-primary/25 hover:text-foreground"}`,
-									children: [
-										entry.label,
-										" (",
-										counts[entry.id] ?? 0,
-										")"
-									]
-								}, entry.id))
-							})]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "mt-5 grid gap-4 border-t border-border/40 pt-5 lg:grid-cols-2",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
-								children: "Bracket"
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "mt-2 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0",
-								children: GAMES.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-									type: "button",
-									"aria-pressed": game === entry.id,
-									onClick: () => setGame(entry.id),
-									className: `shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${game === entry.id ? "border-primary/45 bg-primary/[0.06] text-primary" : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"}`,
-									children: entry.label
-								}, entry.id))
-							})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
-								children: "Payment Status"
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "mt-2 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0",
-								children: PAYMENT_FILTERS.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-									type: "button",
-									"aria-pressed": paymentFilter === entry.id,
-									onClick: () => setPaymentFilter(entry.id),
-									className: `shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${paymentFilter === entry.id ? "border-primary/45 bg-primary/[0.06] text-primary" : "border-border/45 bg-background/10 text-muted-foreground hover:text-foreground"}`,
-									children: entry.label
-								}, entry.id))
-							})] })]
-						})]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "mt-6",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "mb-4 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
-									children: [
-										"Showing ",
-										visible.length,
-										" of",
-										" ",
-										items.length,
-										" entries"
-									]
-								}),
-								tab === "payment_issue" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "inline-flex w-full items-center gap-2 border border-amber-500/25 bg-amber-500/[0.05] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-300 sm:w-auto sm:tracking-[0.16em]",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "h-3.5 w-3.5" }), "Check receipts before approving"]
-								}) : null,
-								tab === "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "inline-flex w-full items-center gap-2 border border-destructive/25 bg-destructive/[0.05] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-destructive sm:w-auto sm:tracking-[0.16em]",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "h-3.5 w-3.5" }), "Rejected archive"]
-								}) : null
-							]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "space-y-3",
-							children: visible.length ? visible.map((item) => {
-								const isExpanded = expandedId === item.id;
-								const registrationStatus = statusOf(item);
-								const currentPaymentStatus = paymentStatusOf(item);
-								const isSquad = item.game === "mlbb";
-								const entryName = isSquad ? item.team_name || "Untitled Squad" : item.in_game_id || item.player_name || "Unnamed Fighter";
-								return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "overflow-hidden border border-border/50 bg-card/30 backdrop-blur-sm",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "card-interactive relative p-4 sm:p-5",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-											"aria-hidden": true,
-											className: "pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-												className: "min-w-0 flex-1",
-												children: [
-													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-														className: "flex flex-wrap items-center gap-2",
-														children: [
-															/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-																className: "border border-primary/30 bg-primary/[0.05] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary",
-																children: isSquad ? "MLBB" : "TEKKEN 8"
-															}),
-															/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-																className: `border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${registrationStatus === "approved" ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400" : registrationStatus === "rejected" ? "border-destructive/35 bg-destructive/[0.06] text-destructive" : "border-primary/30 bg-primary/[0.05] text-primary"}`,
-																children: [
-																	"Registration:",
-																	" ",
-																	registrationStatus
-																]
-															}),
-															/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-																className: `border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${currentPaymentStatus === "verified" ? "border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-400" : currentPaymentStatus === "rejected" ? "border-destructive/35 bg-destructive/[0.06] text-destructive" : "border-amber-500/30 bg-amber-500/[0.05] text-amber-300"}`,
-																children: [
-																	"Payment:",
-																	" ",
-																	currentPaymentStatus
-																]
-															})
-														]
-													}),
-													/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-														className: "mt-3 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.03em] text-foreground sm:text-4xl",
-														children: entryName
-													}),
-													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-														className: "mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase leading-5 tracking-[0.12em] text-muted-foreground",
-														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
-															"Ref:",
-															" ",
-															item.reference_code || "—"
-														] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
-															"Submitted:",
-															" ",
-															item.created_at ? new Date(item.created_at).toLocaleDateString("en-PH", {
-																year: "numeric",
-																month: "short",
-																day: "numeric"
-															}) : "—"
-														] })]
-													})
-												]
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-												type: "button",
-												variant: isExpanded ? "secondary" : "outline",
-												size: "sm",
-												onClick: () => setExpandedId(isExpanded ? null : item.id),
-												"aria-expanded": isExpanded,
-												className: "w-full shrink-0 sm:w-auto",
-												children: isExpanded ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronUp, { className: "mr-2 h-4 w-4" }), "Close Entry"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "mr-2 h-4 w-4" }), "Review Entry"] })
-											})]
+						className: "motion-rise motion-delay-2 relative mt-6 overflow-hidden border border-primary/10 bg-card/35 p-3 shadow-[0_20px_60px_-44px_hsl(var(--primary)/0.4)] backdrop-blur-2xl sm:mt-8 sm:p-5 lg:p-6",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex flex-col gap-4 sm:gap-5 xl:flex-row xl:items-end xl:justify-between",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-2",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ListFilter, { className: "h-4 w-4 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "font-mono text-[11px] uppercase tracking-[0.22em] text-primary",
+											children: "Review Queue"
 										})]
-									}), isExpanded ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										className: "border-t border-border/50 p-2 sm:p-3",
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegistrationRow, {
-											item,
-											busy: busyId === item.id,
-											paymentBusy: paymentBusyId === item.id,
-											receiptBusy: receiptBusyId === item.id,
-											onDecide: decide,
-											onPaymentDecide: decidePayment,
-											onViewReceipt: viewReceipt
-										})
-									}) : null]
-								}, item.id);
-							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "border border-dashed border-border/55 bg-card/20 p-6 text-center sm:p-10",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "mx-auto h-8 w-8 text-primary/45" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "mt-4 font-display text-xl font-bold uppercase text-foreground",
-										children: "Queue clear"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+										className: "mt-2 font-display text-2xl font-bold uppercase tracking-[0.03em] text-foreground sm:text-3xl",
+										children: activeTab.label
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground",
-										children: "Nothing matches the current queue and filters."
+										className: "mt-1 max-w-xl text-sm leading-6 text-muted-foreground sm:text-sm",
+										children: activeTab.description
 									})
-								]
+								] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "-mx-1 flex w-[calc(100%+0.5rem)] gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:w-auto lg:flex-wrap lg:overflow-visible lg:pb-0",
+									children: TABS.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+										type: "button",
+										"aria-pressed": tab === entry.id,
+										onClick: () => setTab(entry.id),
+										className: `motion-press shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${tab === entry.id ? "border-primary/50 bg-primary/[0.10] text-primary shadow-[inset_0_0_0_1px_hsl(var(--primary)/0.04)]" : "border-border/50 bg-background/20 text-muted-foreground hover:border-primary/25 hover:bg-background/30 hover:text-foreground"}`,
+										children: [
+											entry.label,
+											" (",
+											counts[entry.id] ?? 0,
+											")"
+										]
+									}, entry.id))
+								})]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "mt-5 grid gap-5 border-t border-border/40 pt-5 lg:grid-cols-2",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
+									children: "Bracket"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "-mx-1 mt-2 flex gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:overflow-visible sm:pb-0",
+									children: GAMES.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										type: "button",
+										"aria-pressed": game === entry.id,
+										onClick: () => setGame(entry.id),
+										className: `motion-press shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${game === entry.id ? "border-primary/45 bg-primary/[0.09] text-primary" : "border-border/45 bg-background/15 text-muted-foreground hover:border-primary/20 hover:bg-background/25 hover:text-foreground"}`,
+										children: entry.label
+									}, entry.id))
+								})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
+									children: "Payment Status"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "-mx-1 mt-2 flex gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:overflow-visible sm:pb-0",
+									children: PAYMENT_FILTERS.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										type: "button",
+										"aria-pressed": paymentFilter === entry.id,
+										onClick: () => setPaymentFilter(entry.id),
+										className: `motion-press shrink-0 border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${paymentFilter === entry.id ? "border-primary/45 bg-primary/[0.09] text-primary" : "border-border/45 bg-background/15 text-muted-foreground hover:border-primary/20 hover:bg-background/25 hover:text-foreground"}`,
+										children: entry.label
+									}, entry.id))
+								})] })]
 							})
-						})]
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "motion-rise motion-delay-3 relative mt-6 overflow-hidden border border-primary/10 bg-card/20 p-2.5 shadow-[0_22px_70px_-50px_hsl(var(--primary)/0.38)] backdrop-blur-xl sm:p-4 lg:p-5",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "mb-4 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+										className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground",
+										children: [
+											"Showing ",
+											visible.length,
+											" of",
+											" ",
+											items.length,
+											" entries"
+										]
+									}),
+									tab === "payment_issue" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "inline-flex w-full flex-wrap items-center gap-2 border border-amber-500/25 bg-amber-500/[0.05] px-3 py-2 font-mono text-[10px] uppercase leading-5 tracking-[0.12em] text-amber-300 sm:w-auto sm:tracking-[0.16em]",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "h-3.5 w-3.5" }), "Check receipts before approving"]
+									}) : null,
+									tab === "rejected" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "inline-flex w-full flex-wrap items-center gap-2 border border-destructive/25 bg-destructive/[0.05] px-3 py-2 font-mono text-[10px] uppercase leading-5 tracking-[0.12em] text-destructive sm:w-auto sm:tracking-[0.16em]",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, { className: "h-3.5 w-3.5" }), "Rejected archive"]
+									}) : null
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "space-y-3",
+								children: visible.length ? visible.map((item) => {
+									const isExpanded = expandedId === item.id;
+									const registrationStatus = statusOf(item);
+									const currentPaymentStatus = paymentStatusOf(item);
+									const isSquad = item.game === "mlbb";
+									const entryName = isSquad ? item.team_name || "Untitled Squad" : item.in_game_id || item.player_name || "Unnamed Fighter";
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: `group/entry relative overflow-hidden border backdrop-blur-xl transition-[transform,border-color,background-color,box-shadow] duration-300 ease-out ${isExpanded ? "border-primary/30 bg-card/55 shadow-[0_24px_60px_-38px_hsl(var(--primary)/0.45)]" : "border-border/50 bg-card/40 shadow-[0_14px_34px_-28px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5 hover:border-primary/20 hover:bg-card/50 hover:shadow-[0_20px_44px_-30px_hsl(var(--primary)/0.4)]"}`,
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												"aria-hidden": true,
+												className: `pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent transition-opacity duration-300 ${isExpanded ? "via-primary/70 opacity-100" : "via-primary/35 opacity-80"}`
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												"aria-hidden": true,
+												className: `pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-primary/[0.035] to-transparent transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0 group-hover/entry:opacity-70"}`
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "card-interactive relative p-3.5 sm:p-5 lg:p-6",
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+													className: "relative grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-6",
+													children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+														className: "min-w-0",
+														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+															className: "flex flex-wrap items-center gap-1.5 sm:gap-2",
+															children: [
+																/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+																	className: "inline-flex items-center gap-1.5 border border-primary/30 bg-primary/[0.07] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary",
+																	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+																		"aria-hidden": true,
+																		className: "h-1.5 w-1.5 rotate-45 bg-primary/80"
+																	}), isSquad ? "MLBB" : "TEKKEN 8"]
+																}),
+																/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+																	className: `motion-status inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${registrationStatus === "approved" ? "border-emerald-500/35 bg-emerald-500/[0.07] text-emerald-400" : registrationStatus === "rejected" ? "border-destructive/35 bg-destructive/[0.07] text-destructive" : "border-primary/30 bg-primary/[0.06] text-primary"}`,
+																	children: [
+																		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+																			"aria-hidden": true,
+																			className: `h-1.5 w-1.5 rounded-full ${registrationStatus === "approved" ? "bg-emerald-400" : registrationStatus === "rejected" ? "bg-destructive" : "bg-primary"}`
+																		}),
+																		"Reg ",
+																		registrationStatus
+																	]
+																}),
+																/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+																	className: `motion-status inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${currentPaymentStatus === "verified" ? "border-emerald-500/35 bg-emerald-500/[0.07] text-emerald-400" : currentPaymentStatus === "rejected" ? "border-destructive/35 bg-destructive/[0.07] text-destructive" : "border-amber-500/30 bg-amber-500/[0.06] text-amber-300"}`,
+																	children: [
+																		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+																			"aria-hidden": true,
+																			className: `h-1.5 w-1.5 rounded-full ${currentPaymentStatus === "verified" ? "bg-emerald-400" : currentPaymentStatus === "rejected" ? "bg-destructive" : "bg-amber-300"}`
+																		}),
+																		"Pay ",
+																		currentPaymentStatus
+																	]
+																})
+															]
+														}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+															className: "mt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between",
+															children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+																className: "min-w-0",
+																children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+																	className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
+																	children: isSquad ? "Squad Entry" : "Fighter Entry"
+																}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+																	className: "mt-1 break-words font-display text-2xl font-bold uppercase leading-[0.98] tracking-[0.02em] text-foreground sm:text-3xl lg:text-4xl",
+																	children: entryName
+																})]
+															}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+																className: "grid w-full grid-cols-1 gap-2 min-[430px]:grid-cols-2 md:w-auto md:shrink-0 md:flex md:items-center",
+																children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+																	className: "border border-border/45 bg-background/20 px-3 py-2 transition-colors duration-300 group-hover/entry:border-primary/15 group-hover/entry:bg-background/25",
+																	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+																		className: "font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground",
+																		children: "Reference"
+																	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+																		className: "mt-1 break-all font-mono text-[11px] uppercase leading-5 tracking-[0.06em] text-foreground/85",
+																		children: item.reference_code || "—"
+																	})]
+																}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+																	className: "border border-border/45 bg-background/20 px-3 py-2 transition-colors duration-300 group-hover/entry:border-primary/15 group-hover/entry:bg-background/25",
+																	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+																		className: "font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground",
+																		children: "Submitted"
+																	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+																		className: "mt-1 font-mono text-[11px] uppercase leading-5 tracking-[0.06em] text-foreground/85",
+																		children: item.created_at ? new Date(item.created_at).toLocaleDateString("en-PH", {
+																			year: "numeric",
+																			month: "short",
+																			day: "numeric"
+																		}) : "—"
+																	})]
+																})]
+															})]
+														})]
+													}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+														className: "flex w-full md:w-auto md:justify-end",
+														children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+															type: "button",
+															variant: isExpanded ? "secondary" : "outline",
+															size: "sm",
+															onClick: () => setExpandedId(isExpanded ? null : item.id),
+															"aria-expanded": isExpanded,
+															className: `motion-press h-11 w-full min-w-[150px] shrink-0 backdrop-blur-sm md:w-auto ${isExpanded ? "border-primary/30 bg-primary/[0.10] text-primary" : "border-primary/20 bg-background/30 hover:border-primary/35 hover:bg-primary/[0.05]"}`,
+															children: isExpanded ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronUp, { className: "mr-2 h-4 w-4" }), "Close Entry"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "mr-2 h-4 w-4" }), "Review Entry"] })
+														})
+													})]
+												})
+											}),
+											isExpanded ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "motion-fade relative border-t border-primary/15 bg-background/10 p-1.5 sm:p-3",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+													"aria-hidden": true,
+													className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegistrationRow, {
+													item,
+													busy: busyId === item.id,
+													paymentBusy: paymentBusyId === item.id,
+													receiptBusy: receiptBusyId === item.id,
+													onDecide: decide,
+													onPaymentDecide: decidePayment,
+													onViewReceipt: viewReceipt
+												})]
+											}) : null
+										]
+									}, item.id);
+								}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "motion-scale-in border border-dashed border-primary/15 bg-card/30 p-6 text-center backdrop-blur-xl sm:p-10",
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "mx-auto h-8 w-8 text-primary/45" }),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "mt-4 font-display text-xl font-bold uppercase text-foreground",
+											children: "Queue clear"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+											className: "mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground",
+											children: "Nothing matches the current queue and filters."
+										})
+									]
+								})
+							})
+						]
 					})
 				]
 			})

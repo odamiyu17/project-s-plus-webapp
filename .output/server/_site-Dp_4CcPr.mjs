@@ -5,10 +5,10 @@ import { require_jsx_runtime } from "./_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./_ssr/auth-middleware-CmY4KpCX.mjs";
 import { Button, cn } from "./_ssr/server-fns-D7ymjI7_.mjs";
 import { ArrowLeft, ArrowRight, Calendar, MapPin, Plus, Ticket, Trophy, Users } from "./_libs/lucide-react.mjs";
-import { Route$2 } from "./_ssr/router-B39Ns8ML.mjs";
+import { Route$2 } from "./_ssr/router-x0UN7VX6.mjs";
 import { Image } from "./_ssr/image-BwNFCwj5.mjs";
 import { useEmblaCarousel } from "./_libs/embla-carousel-react+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/_site-C9QN_Uf6.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_site-Dp_4CcPr.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function SectionHeading({ eyebrow, title, description, align = "left", className }) {
@@ -92,7 +92,7 @@ var SCHEDULE = [
 function FormatSection() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 		id: "format",
-		className: "relative scroll-mt-24 border-b border-border/50 py-20 sm:py-28",
+		className: "relative scroll-mt-24 border-b border-border/50 py-16 sm:py-24",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			"aria-hidden": true,
 			className: "pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.012] to-transparent"
@@ -105,7 +105,7 @@ function FormatSection() {
 					description: "Pick your bracket. Both run on the same rulebook: verified rosters, best-of series, and no second chances once the playoff bracket is drawn."
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "mt-14 grid gap-5 lg:grid-cols-2",
+					className: "mt-10 grid gap-4 sm:mt-12 sm:gap-5 lg:grid-cols-2",
 					children: BRACKETS.map((bracket) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
 						className: "card-interactive card-interactive-glow group relative flex flex-col overflow-hidden border border-border/60 bg-card/45 backdrop-blur-md",
 						children: [
@@ -114,7 +114,7 @@ function FormatSection() {
 								className: "pointer-events-none absolute inset-x-8 top-0 z-20 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent opacity-70"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "relative h-48 overflow-hidden border-b border-border/50 sm:h-56",
+								className: "relative h-44 overflow-hidden border-b border-border/50 sm:h-56",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
 										src: bracket.image,
@@ -129,23 +129,23 @@ function FormatSection() {
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 											className: "inline-flex border border-primary/20 bg-background/30 px-3 py-1 backdrop-blur-sm",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "font-mono text-[9px] uppercase tracking-[0.28em] text-primary sm:text-[10px]",
+												className: "font-mono text-[10px] uppercase tracking-[0.22em] text-primary sm:text-[11px] sm:tracking-[0.24em]",
 												children: bracket.tagline
 											})
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-											className: "card-interactive-shift mt-3 font-display text-2xl font-bold uppercase leading-tight tracking-[0.03em] text-foreground sm:text-3xl",
+											className: "card-interactive-shift mt-3 font-display text-2xl font-bold uppercase leading-tight tracking-[0.025em] text-foreground sm:text-3xl",
 											children: bracket.game
 										})]
 									})
 								]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-								className: "flex-1 p-6 sm:p-7",
+								className: "flex-1 p-5 sm:p-7",
 								children: bracket.lines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-									className: "group/row flex items-center gap-4 border-b border-border/35 py-3.5 text-sm text-muted-foreground last:border-b-0",
+									className: "group/row flex items-center gap-3.5 border-b border-border/35 py-3.5 text-sm leading-6 text-muted-foreground last:border-b-0 sm:gap-4 sm:text-[15px]",
 									children: [
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "font-mono text-[9px] tracking-[0.18em] text-primary/60 transition-colors duration-300 group-hover/row:text-primary",
+											className: "font-mono text-[10px] tracking-[0.14em] text-primary/70 transition-colors duration-300 group-hover/row:text-primary",
 											children: String(index + 1).padStart(2, "0")
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-1.5 w-1.5 rotate-45 bg-primary transition-all duration-300 group-hover/row:scale-125 group-hover/row:shadow-[0_0_10px_hsl(var(--primary)/0.5)]" }),
@@ -164,20 +164,20 @@ function FormatSection() {
 					}, bracket.game))
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mt-20",
+					className: "mt-16 sm:mt-20",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "flex items-center gap-4",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							className: "font-mono text-[11px] uppercase tracking-[0.32em] text-primary",
+							className: "font-mono text-xs uppercase tracking-[0.24em] text-primary sm:tracking-[0.28em]",
 							children: "Road to the final"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							"aria-hidden": true,
 							className: "h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent"
 						})]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ol", {
-						className: "mt-8 border-l border-border/50",
+						className: "mt-6 border-l border-border/50 sm:mt-8",
 						children: SCHEDULE.map((row, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-							className: "group relative grid gap-2 py-5 pl-7 sm:grid-cols-[185px_1fr] sm:items-baseline sm:gap-7",
+							className: "group relative grid gap-2 py-4 pl-6 sm:grid-cols-[185px_1fr] sm:items-baseline sm:gap-7 sm:py-5 sm:pl-7",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									"aria-hidden": true,
@@ -188,7 +188,7 @@ function FormatSection() {
 									className: "absolute left-0 top-[1.88rem] h-px w-5 bg-primary/45 transition-all duration-300 group-hover:w-7 group-hover:bg-primary"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "font-mono text-[10px] uppercase tracking-[0.22em] text-primary sm:text-[11px]",
+									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary sm:text-xs sm:tracking-[0.2em]",
 									children: [
 										String(index + 1).padStart(2, "0"),
 										" · ",
@@ -196,10 +196,10 @@ function FormatSection() {
 									]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "block font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground transition-transform duration-300 group-hover:translate-x-1 sm:text-xl",
+									className: "block font-display text-xl font-bold uppercase tracking-[0.035em] text-foreground transition-transform duration-300 group-hover:translate-x-1 sm:text-2xl",
 									children: row.label
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "mt-1 block max-w-xl text-sm leading-relaxed text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80",
+									className: "mt-1 block max-w-xl text-sm leading-6 text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80 sm:text-[15px]",
 									children: row.detail
 								})] })
 							]
@@ -310,7 +310,7 @@ function HeroSection({ entries = [] }) {
 				children: "S+"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "relative mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28 lg:pb-32 lg:pt-32",
+				className: "relative mx-auto max-w-7xl px-4 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:pb-28 lg:pt-28",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "max-w-4xl",
 					children: [
@@ -323,7 +323,7 @@ function HeroSection({ entries = [] }) {
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "hero-rule h-px w-10 bg-primary" }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[10px] uppercase tracking-[0.34em] text-primary sm:text-[11px]",
+										className: "font-mono text-[11px] uppercase tracking-[0.28em] text-primary sm:text-xs sm:tracking-[0.32em]",
 										children: "Hagit Esports Tournament · Season 01"
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -338,7 +338,7 @@ function HeroSection({ entries = [] }) {
 							distance: 22,
 							duration: 600,
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
-								className: "mt-6 max-w-5xl font-display text-[clamp(4rem,13vw,10rem)] font-bold uppercase leading-[0.78] tracking-[-0.015em] text-foreground",
+								className: "mt-6 max-w-5xl font-display text-[clamp(3.5rem,13vw,10rem)] font-bold uppercase leading-[0.78] tracking-[-0.015em] text-foreground",
 								children: [
 									"Project",
 									" ",
@@ -356,7 +356,7 @@ function HeroSection({ entries = [] }) {
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "mt-6 flex items-center gap-3",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-px w-20 bg-gradient-to-r from-primary via-primary/60 to-transparent" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "font-mono text-[9px] uppercase tracking-[0.25em] text-primary/60",
+									className: "font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70 sm:text-[11px]",
 									children: "Passion · Purpose · Competition"
 								})]
 							})
@@ -379,7 +379,7 @@ function HeroSection({ entries = [] }) {
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 									asChild: true,
 									size: "lg",
-									className: "group glow-pulse h-14 rounded-none px-8 font-mono text-[11px] uppercase tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_35px_hsl(var(--primary)/0.24)] active:translate-y-0 active:scale-[0.98]",
+									className: "group glow-pulse motion-press h-14 w-full rounded-none px-8 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_35px_hsl(var(--primary)/0.24)] active:translate-y-0 active:scale-[0.98] sm:w-auto",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 										to: "/join",
 										children: ["Register Now", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" })]
@@ -388,7 +388,7 @@ function HeroSection({ entries = [] }) {
 									asChild: true,
 									size: "lg",
 									variant: "outline",
-									className: "h-14 rounded-none border-border/60 bg-card/30 px-8 font-mono text-[11px] uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/[0.05] hover:text-foreground active:translate-y-0 active:scale-[0.98]",
+									className: "motion-press h-14 w-full rounded-none border-border/60 bg-card/30 px-8 font-mono text-[11px] uppercase tracking-[0.2em] text-foreground backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/[0.05] hover:text-foreground active:translate-y-0 active:scale-[0.98] sm:w-auto",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 										to: "/",
 										hash: "roster",
@@ -407,20 +407,20 @@ function HeroSection({ entries = [] }) {
 									"aria-hidden": true,
 									className: "mt-[0.35rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/60"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase leading-relaxed tracking-[0.22em] text-muted-foreground sm:text-[10px]",
+									className: "font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground sm:text-[11px] sm:tracking-[0.2em]",
 									children: "Registration closes Nov 8, 2026 · Online qualifiers, grand finals on-site"
 								})]
 							})
 						})
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dl", {
-					className: "mt-16 grid grid-cols-2 gap-3 sm:mt-20 sm:grid-cols-4",
+					className: "mt-14 grid grid-cols-2 gap-3 sm:mt-18 sm:grid-cols-4",
 					children: stats.map((stat, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
 						delay: 430 + index * 80,
 						distance: 20,
 						duration: 550,
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "card-interactive group relative h-full overflow-hidden border border-border/55 bg-card/40 p-5 backdrop-blur-md sm:p-6",
+							className: "card-interactive group relative h-full overflow-hidden border border-border/55 bg-card/40 p-4 backdrop-blur-md sm:p-6",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"aria-hidden": true,
@@ -431,11 +431,11 @@ function HeroSection({ entries = [] }) {
 									className: "pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/[0.045] blur-2xl transition-all duration-500 group-hover:bg-primary/[0.08]"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", {
-									className: "relative font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-[10px]",
+									className: "relative font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:text-[11px] sm:tracking-[0.2em]",
 									children: stat.label
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", {
-									className: "card-interactive-shift relative mt-3 font-display text-2xl font-bold uppercase tracking-[0.04em] text-primary sm:text-3xl",
+									className: "card-interactive-shift relative mt-2.5 font-display text-2xl font-bold uppercase tracking-[0.035em] text-primary sm:mt-3 sm:text-3xl",
 									children: stat.value
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -488,7 +488,7 @@ var PRIZES = [{
 function PrizesSection() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 		id: "prizes",
-		className: "relative scroll-mt-24 overflow-hidden border-b border-border/50 py-20 sm:py-28",
+		className: "relative scroll-mt-24 overflow-hidden border-b border-border/50 py-16 sm:py-24",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			"aria-hidden": true,
 			className: "pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.015] to-transparent"
@@ -501,9 +501,9 @@ function PrizesSection() {
 					description: "Paid out in cash, split across both brackets. Champions also carry the first Project S+ title into the next HAGIT circuit event."
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "mt-14 grid gap-5 lg:grid-cols-2",
+					className: "mt-10 grid gap-4 sm:mt-12 sm:gap-5 lg:grid-cols-2",
 					children: PRIZES.map((prize, prizeIndex) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-						className: "card-interactive card-interactive-glow group relative overflow-hidden border border-border/60 bg-card/45 p-6 backdrop-blur-md sm:p-8",
+						className: "card-interactive card-interactive-glow group relative overflow-hidden border border-border/60 bg-card/45 p-5 backdrop-blur-md sm:p-8",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"aria-hidden": true,
@@ -521,15 +521,15 @@ function PrizesSection() {
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "relative flex flex-wrap items-start justify-between gap-5 border-b border-border/45 pb-6",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.28em] text-primary/70 sm:text-[10px]",
+									className: "font-mono text-[10px] uppercase tracking-[0.22em] text-primary/75 sm:text-[11px] sm:tracking-[0.24em]",
 									children: "Prize Pool"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									className: "card-interactive-shift mt-2 font-display text-2xl font-bold uppercase tracking-[0.05em] text-foreground sm:text-3xl",
+									className: "card-interactive-shift mt-2 font-display text-2xl font-bold uppercase leading-tight tracking-[0.035em] text-foreground sm:text-3xl",
 									children: prize.game
 								})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "border border-primary/20 bg-primary/[0.04] px-4 py-3 text-right backdrop-blur-sm transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/[0.07]",
+									className: "border border-primary/20 bg-primary/[0.04] px-4 py-3 text-left backdrop-blur-sm transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/[0.07] sm:text-right",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[9px] uppercase tracking-[0.24em] text-muted-foreground",
+										className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground sm:text-[11px]",
 										children: "Total"
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 										className: "mt-1 font-display text-2xl font-bold tracking-[0.04em] text-primary sm:text-3xl",
@@ -540,18 +540,18 @@ function PrizesSection() {
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ol", {
 								className: "relative mt-3",
 								children: prize.tiers.map((tier, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-									className: "group/tier grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-border/35 py-5 last:border-b-0",
+									className: "group/tier grid grid-cols-[auto_1fr] items-center gap-3 border-b border-border/35 py-4 last:border-b-0 sm:grid-cols-[auto_1fr_auto] sm:gap-4 sm:py-5",
 									children: [
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-											className: "flex h-9 w-9 items-center justify-center border border-primary/15 bg-primary/[0.035] font-mono text-[9px] tracking-[0.16em] text-primary/70 transition-all duration-300 group-hover/tier:border-primary/35 group-hover/tier:text-primary",
+											className: "flex h-9 w-9 items-center justify-center border border-primary/15 bg-primary/[0.035] font-mono text-[10px] tracking-[0.12em] text-primary/75 transition-all duration-300 group-hover/tier:border-primary/35 group-hover/tier:text-primary",
 											children: String(index + 1).padStart(2, "0")
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-all duration-300 group-hover/tier:translate-x-1 group-hover/tier:text-foreground sm:text-[11px]",
+											className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-all duration-300 group-hover/tier:translate-x-1 group-hover/tier:text-foreground sm:text-xs sm:tracking-[0.2em]",
 											children: tier.place
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "font-display text-xl font-bold tracking-[0.04em] text-primary transition-all duration-300 group-hover/tier:translate-x-1 group-hover/tier:drop-shadow-[0_0_10px_hsl(var(--primary)/0.25)] sm:text-2xl",
+											className: "col-span-2 ml-12 font-display text-2xl font-bold tracking-[0.035em] text-primary transition-all duration-300 group-hover/tier:translate-x-1 group-hover/tier:drop-shadow-[0_0_10px_hsl(var(--primary)/0.25)] sm:col-span-1 sm:ml-0 sm:text-2xl",
 											children: tier.amount
 										})
 									]
@@ -565,12 +565,12 @@ function PrizesSection() {
 					}, prize.game))
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mt-8 flex max-w-3xl items-start gap-4 border-l border-primary/25 pl-5",
+					className: "mt-6 flex max-w-3xl items-start gap-3 border-l border-primary/25 pl-4 sm:mt-8 sm:gap-4 sm:pl-5",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 						"aria-hidden": true,
 						className: "mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/70"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						className: "text-sm leading-relaxed text-muted-foreground",
+						className: "text-sm leading-6 text-muted-foreground sm:text-[15px]",
 						children: "Prize pool shown in Philippine pesos, paid to the registered captain or fighter. Rosters must match the approved line-up at every stage — substitutes are handled by tournament staff before each series."
 					})]
 				})
@@ -601,7 +601,7 @@ function RegisterBand() {
 				className: "pointer-events-none absolute -right-24 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-primary/[0.055] blur-[120px]"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "relative mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28",
+				className: "relative mx-auto max-w-7xl px-4 py-16 sm:px-8 sm:py-24",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "max-w-3xl",
 					children: [
@@ -613,7 +613,7 @@ function RegisterBand() {
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-px w-8 bg-primary/80" }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-mono text-[10px] uppercase tracking-[0.34em] text-primary sm:text-[11px]",
+										className: "font-mono text-[11px] uppercase tracking-[0.28em] text-primary sm:text-xs sm:tracking-[0.3em]",
 										children: "05 — Claim your slot"
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -628,7 +628,7 @@ function RegisterBand() {
 							distance: 18,
 							duration: 550,
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-								className: "mt-5 max-w-3xl font-display text-4xl font-bold uppercase leading-[0.9] tracking-[0.02em] text-foreground sm:text-5xl lg:text-6xl",
+								className: "mt-5 max-w-3xl font-display text-4xl font-bold uppercase leading-[0.92] tracking-[0.015em] text-foreground sm:text-5xl lg:text-6xl",
 								children: "The bracket closes when the slots are gone"
 							})
 						}),
@@ -643,7 +643,7 @@ function RegisterBand() {
 							distance: 16,
 							duration: 500,
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg",
+								className: "mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8",
 								children: "Free entry, limited slots. Staff review every entry within 48 hours — the form takes a squad captain about three minutes on a phone."
 							})
 						}),
@@ -652,16 +652,16 @@ function RegisterBand() {
 							distance: 16,
 							duration: 500,
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-								className: "mt-8 grid gap-3 sm:grid-cols-3",
+								className: "mt-7 grid gap-3 sm:mt-8 sm:grid-cols-3",
 								children: CHECKLIST.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-									className: "card-interactive group relative overflow-hidden border border-border/50 bg-card/35 p-4 backdrop-blur-sm",
+									className: "card-interactive group relative overflow-hidden border border-border/50 bg-card/35 p-4 backdrop-blur-sm sm:p-5",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 										className: "flex items-start gap-3",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "mt-1 grid h-6 w-6 shrink-0 place-items-center border border-primary/25 bg-primary/[0.04] font-mono text-[8px] text-primary",
+											className: "mt-0.5 grid h-7 w-7 shrink-0 place-items-center border border-primary/25 bg-primary/[0.04] font-mono text-[10px] text-primary",
 											children: String(index + 1).padStart(2, "0")
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-sm leading-relaxed text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80",
+											className: "text-sm leading-6 text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80 sm:text-[15px]",
 											children: item
 										})]
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -676,17 +676,17 @@ function RegisterBand() {
 							distance: 16,
 							duration: 550,
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "mt-10 flex flex-col gap-3 sm:flex-row sm:items-center",
+								className: "mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 									asChild: true,
 									size: "lg",
-									className: "group glow-pulse h-14 px-8",
+									className: "group glow-pulse motion-press h-14 w-full px-8 sm:w-auto",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 										to: "/join",
 										children: ["Register Now", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "transition-transform duration-300 group-hover:translate-x-1" })]
 									})
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground sm:text-[10px]",
+									className: "font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px] sm:tracking-[0.18em]",
 									children: "Limited slots · Staff verified"
 								})]
 							})
@@ -1164,7 +1164,7 @@ function TeamsVault({ entries = [] }) {
 	const openFighters = Math.max(FIGHTER_SLOTS - fighters.length, 0);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 		id: "roster",
-		className: "relative scroll-mt-24 overflow-hidden border-b border-border/50 py-20 sm:py-28",
+		className: "relative scroll-mt-24 overflow-hidden border-b border-border/50 py-16 sm:py-24",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
 				src: SQUAD_IMAGE,
@@ -1189,16 +1189,16 @@ function TeamsVault({ entries = [] }) {
 						description: "Verified entries only. Every roster is checked by tournament staff before it appears on this board."
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "mt-10 grid gap-3 sm:grid-cols-2 lg:max-w-2xl",
+						className: "mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:max-w-2xl",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "card-interactive group relative overflow-hidden border border-border/55 bg-card/40 px-5 py-4 backdrop-blur-md",
+							className: "card-interactive group relative overflow-hidden border border-border/55 bg-card/40 px-4 py-4 backdrop-blur-md sm:px-5",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"aria-hidden": true,
 									className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground",
+									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.2em]",
 									children: "MLBB Squads"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1207,7 +1207,7 @@ function TeamsVault({ entries = [] }) {
 										className: "font-display text-3xl font-bold text-primary",
 										children: String(squads.length).padStart(2, "0")
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-										className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+										className: "font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.16em]",
 										children: [
 											"/ ",
 											SQUAD_SLOTS,
@@ -1224,14 +1224,14 @@ function TeamsVault({ entries = [] }) {
 								})
 							]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "card-interactive group relative overflow-hidden border border-border/55 bg-card/40 px-5 py-4 backdrop-blur-md",
+							className: "card-interactive group relative overflow-hidden border border-border/55 bg-card/40 px-4 py-4 backdrop-blur-md sm:px-5",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"aria-hidden": true,
 									className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground",
+									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.2em]",
 									children: "TEKKEN 8 Fighters"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1240,7 +1240,7 @@ function TeamsVault({ entries = [] }) {
 										className: "font-display text-3xl font-bold text-primary",
 										children: String(fighters.length).padStart(2, "0")
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-										className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
+										className: "font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.16em]",
 										children: [
 											"/ ",
 											FIGHTER_SLOTS,
@@ -1259,20 +1259,20 @@ function TeamsVault({ entries = [] }) {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "mt-16",
+						className: "mt-14 sm:mt-16",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.24em] text-primary/70",
+									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary/75 sm:text-xs sm:tracking-[0.2em]",
 									children: "Team Division"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									className: "mt-1 font-display text-2xl font-bold uppercase tracking-[0.06em] text-foreground sm:text-3xl",
+									className: "mt-1 font-display text-2xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-3xl",
 									children: "MLBB Squads"
 								})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: "border border-border/50 bg-card/35 px-4 py-2 backdrop-blur-sm",
+									className: "border border-border/50 bg-card/35 px-4 py-2.5 backdrop-blur-sm",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-										className: "font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground",
+										className: "font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 												className: "text-primary",
@@ -1292,7 +1292,7 @@ function TeamsVault({ entries = [] }) {
 								squads,
 								openSquads
 							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "card-interactive card-interactive-glow group relative mt-8 flex flex-col items-start gap-6 overflow-hidden border border-border/60 bg-card/45 p-8 backdrop-blur-md sm:flex-row sm:items-center sm:justify-between",
+								className: "card-interactive card-interactive-glow group relative mt-6 flex flex-col items-start gap-5 overflow-hidden border border-border/60 bg-card/45 p-5 backdrop-blur-md sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:p-8",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 										"aria-hidden": true,
@@ -1304,11 +1304,11 @@ function TeamsVault({ entries = [] }) {
 											children: "Squad Board"
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											className: "card-interactive-shift mt-2 font-display text-2xl font-bold uppercase tracking-[0.05em] text-foreground",
+											className: "card-interactive-shift mt-2 font-display text-2xl font-bold uppercase leading-tight tracking-[0.035em] text-foreground",
 											children: "The vault is still sealed"
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											className: "mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground",
+											className: "mt-2 max-w-xl text-sm leading-6 text-muted-foreground sm:text-[15px]",
 											children: [
 												"All ",
 												SQUAD_SLOTS,
@@ -1318,7 +1318,7 @@ function TeamsVault({ entries = [] }) {
 									] }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 										asChild: true,
-										className: "h-12 shrink-0 rounded-none px-6 font-mono text-[10px] uppercase tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_24px_hsl(var(--primary)/0.18)] active:translate-y-0 active:scale-[0.98]",
+										className: "motion-press h-12 w-full shrink-0 rounded-none px-6 font-mono text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_24px_hsl(var(--primary)/0.18)] active:translate-y-0 active:scale-[0.98] sm:w-auto",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 											to: "/join",
 											children: "Register now"
@@ -1333,20 +1333,20 @@ function TeamsVault({ entries = [] }) {
 						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "mt-20 border-t border-border/35 pt-16",
+						className: "mt-16 border-t border-border/35 pt-14 sm:mt-20 sm:pt-16",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[9px] uppercase tracking-[0.24em] text-primary/70",
+									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary/75 sm:text-xs sm:tracking-[0.2em]",
 									children: "Solo Division"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									className: "mt-1 font-display text-2xl font-bold uppercase tracking-[0.06em] text-foreground sm:text-3xl",
+									className: "mt-1 font-display text-2xl font-bold uppercase tracking-[0.04em] text-foreground sm:text-3xl",
 									children: "TEKKEN 8 Fighters"
 								})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: "border border-border/50 bg-card/35 px-4 py-2 backdrop-blur-sm",
+									className: "border border-border/50 bg-card/35 px-4 py-2.5 backdrop-blur-sm",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-										className: "font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground",
+										className: "font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 												className: "text-primary",
@@ -1399,7 +1399,7 @@ var FACTS = [
 function TournamentFacts() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 		id: "tournament",
-		className: "relative scroll-mt-24 border-b border-border/50 py-20 sm:py-28",
+		className: "relative scroll-mt-24 border-b border-border/50 py-16 sm:py-24",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			"aria-hidden": true,
 			className: "pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-background/[0.06] to-transparent"
@@ -1410,11 +1410,11 @@ function TournamentFacts() {
 				title: "Forged in the HAGIT arena",
 				description: "Two brackets, one stage. Squads of five grind through the MLBB group stage while solo fighters survive a double-elimination TEKKEN 8 bracket — both chasing the first Project S+ title."
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4",
+				className: "mt-10 grid gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4",
 				children: FACTS.map((fact) => {
 					const Icon = fact.icon;
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-						className: "card-interactive card-interactive-glow group relative min-h-[190px] border border-border/60 bg-card/45 p-6 backdrop-blur-md",
+						className: "card-interactive card-interactive-glow group relative min-h-[176px] border border-border/60 bg-card/45 p-5 backdrop-blur-md sm:min-h-[190px] sm:p-6",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"aria-hidden": true,
@@ -1428,15 +1428,15 @@ function TournamentFacts() {
 								})
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground",
+								className: "mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground sm:mt-6 sm:text-xs sm:tracking-[0.24em]",
 								children: fact.label
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "card-interactive-shift mt-2 font-display text-xl font-bold uppercase tracking-[0.04em] text-foreground",
+								className: "card-interactive-shift mt-2 font-display text-2xl font-bold uppercase leading-tight tracking-[0.035em] text-foreground",
 								children: fact.value
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "mt-2 text-sm leading-relaxed text-muted-foreground",
+								className: "mt-2 text-sm leading-6 text-muted-foreground sm:text-[15px]",
 								children: fact.detail
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {

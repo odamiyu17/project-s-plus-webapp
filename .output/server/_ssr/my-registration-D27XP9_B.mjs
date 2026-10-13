@@ -3,8 +3,8 @@ import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { Button } from "./server-fns-D7ymjI7_.mjs";
 import { ArrowLeft, CalendarDays, CircleCheck, CircleX, Clock3, CreditCard, ExternalLink, Gamepad2, GraduationCap, MapPin, Pencil, Phone, ShieldCheck, UserRound, Users } from "../_libs/lucide-react.mjs";
-import { Route$3 } from "./router-B39Ns8ML.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/my-registration-DTfPGUJD.js
+import { Route$3 } from "./router-x0UN7VX6.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/my-registration-D27XP9_B.js
 var import_jsx_runtime = require_jsx_runtime();
 var STATUS_STYLES = {
 	pending: "border-primary/40 bg-primary/10 text-primary",
@@ -46,7 +46,7 @@ function getPublicUrl(bucket, path) {
 function TeamIdentity({ registration }) {
 	const logoUrl = getPublicUrl("team-logos", registration.team_logo_path);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5",
+		className: "motion-fade flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "group relative grid h-24 w-24 shrink-0 place-items-center overflow-hidden border border-primary/20 bg-card/35 backdrop-blur-sm sm:h-28 sm:w-28",
 			children: logoUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
@@ -99,7 +99,7 @@ function PlayerCard({ player, index }) {
 	const photoUrl = getPublicUrl("player-photos", player.player_photo_path);
 	const isMain = (player.roster_type || (index < 5 ? "main" : "substitute")) === "main";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-		className: "card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm",
+		className: "card-interactive card-interactive-glow motion-rise group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				"aria-hidden": true,
@@ -220,7 +220,7 @@ function PlayerCard({ player, index }) {
 function TekkenDetails({ registration }) {
 	const photoUrl = getPublicUrl("player-photos", registration.player_photo_path);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "flex flex-col gap-5 sm:flex-row sm:gap-6",
+		className: "motion-fade flex flex-col gap-5 sm:flex-row sm:gap-6",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "group relative h-32 w-32 shrink-0 overflow-hidden border border-primary/20 bg-card/30 sm:h-40 sm:w-40",
 			children: photoUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
@@ -317,7 +317,7 @@ function MyRegistrationPage() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
 				className: "relative border-b border-border/50 bg-card/20 backdrop-blur-sm",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mx-auto max-w-6xl px-3 py-10 sm:px-8 sm:py-20",
+					className: "motion-rise mx-auto max-w-6xl px-3 py-10 sm:px-8 sm:py-20",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 							to: "/",
@@ -353,7 +353,7 @@ function MyRegistrationPage() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "mx-auto max-w-6xl px-3 py-7 sm:px-8 sm:py-10",
 				children: !registrations.length ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "card-interactive card-interactive-glow relative overflow-hidden border border-dashed border-border/55 bg-card/30 p-6 text-center backdrop-blur-md sm:p-10",
+					className: "card-interactive card-interactive-glow motion-scale-in relative overflow-hidden border border-dashed border-border/55 bg-card/30 p-6 text-center backdrop-blur-md sm:p-10",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Users, { className: "mx-auto h-8 w-8 text-primary" }),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
@@ -366,7 +366,7 @@ function MyRegistrationPage() {
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 							asChild: true,
-							className: "mt-6 w-full sm:w-auto",
+							className: "motion-press mt-6 w-full sm:w-auto",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 								to: "/join",
 								children: "Register now"
@@ -375,11 +375,11 @@ function MyRegistrationPage() {
 					]
 				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "space-y-8",
-					children: registrations.map((registration) => {
+					children: registrations.map((registration, registrationIndex) => {
 						const isSquad = registration.game === "mlbb";
 						const canEdit = registration.status === "pending";
 						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-							className: "card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md",
+							className: `card-interactive card-interactive-glow motion-rise relative overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md ${registrationIndex === 0 ? "" : registrationIndex === 1 ? "motion-delay-1" : registrationIndex === 2 ? "motion-delay-2" : "motion-delay-3"}`,
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"aria-hidden": true,
@@ -416,7 +416,7 @@ function MyRegistrationPage() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "grid gap-3 border-b border-border/45 p-4 sm:p-6 md:grid-cols-2",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-										className: "relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6",
+										className: "motion-scale-in relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 												className: "flex items-center gap-2",
@@ -435,7 +435,7 @@ function MyRegistrationPage() {
 											})
 										]
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-										className: "relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6",
+										className: "motion-scale-in motion-delay-1 relative min-w-0 overflow-hidden border border-border/45 bg-background/20 p-4 sm:p-6",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 												className: "flex items-center gap-2",
@@ -532,7 +532,7 @@ function MyRegistrationPage() {
 										asChild: true,
 										variant: "outline",
 										size: "sm",
-										className: "w-full text-primary sm:w-auto",
+										className: "motion-press w-full text-primary sm:w-auto",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 											to: "/edit-registration",
 											search: { id: registration.id },

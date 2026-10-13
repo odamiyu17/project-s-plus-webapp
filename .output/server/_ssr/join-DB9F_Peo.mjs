@@ -10,7 +10,7 @@ import { Image } from "./image-BwNFCwj5.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
 import { Input, Label } from "./label-DY020iIz.mjs";
 import { motion } from "../_libs/framer-motion.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/join-CNbkV-k6.js
+//#region node_modules/.nitro/vite/services/ssr/assets/join-DB9F_Peo.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var inputClass = [
@@ -1821,7 +1821,7 @@ function RegistrationWizard() {
 		className: "mx-auto w-full max-w-5xl px-3 pt-8 sm:px-8 sm:pt-16",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "card-interactive card-interactive-glow relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6",
+				className: "card-interactive card-interactive-glow motion-rise relative overflow-hidden border border-border/55 bg-card/35 p-4 backdrop-blur-md sm:p-6",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						"aria-hidden": true,
@@ -1839,14 +1839,14 @@ function RegistrationWizard() {
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "mt-2 flex items-end gap-2.5 sm:gap-3",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "font-display text-3xl font-bold uppercase leading-none text-primary xs:text-4xl sm:text-5xl",
+								className: "motion-scale-in font-display text-3xl font-bold uppercase leading-none text-primary xs:text-4xl sm:text-5xl",
 								children: String(step + 1).padStart(2, "0")
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							}, `step-number-${step}`), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "pb-0.5",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground xs:text-xl sm:text-2xl",
+									className: "motion-fade font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground xs:text-xl sm:text-2xl",
 									children: labels[step]
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+								}, `step-title-${step}`), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 									className: "mt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground",
 									children: [
 										"Step ",
@@ -1868,7 +1868,9 @@ function RegistrationWizard() {
 							const isActive = index === step;
 							const isComplete = index < step;
 							return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+								"data-active": isActive ? "true" : "false",
 								className: `
+                    motion-status
                     relative
                     overflow-hidden
                     border
@@ -1876,10 +1878,8 @@ function RegistrationWizard() {
                     px-3
                     py-3
                     sm:min-w-0
-                    transition-all
-                    duration-300
                     motion-reduce:transition-none
-                    ${isActive ? "border-primary/45 bg-primary/[0.07]" : isComplete ? "border-primary/20 bg-primary/[0.025]" : "border-border/45 bg-background/15"}
+                    ${isActive ? "border-primary/45 bg-primary/[0.07] shadow-[0_10px_28px_-22px_rgba(201,169,108,0.7)]" : isComplete ? "border-primary/20 bg-primary/[0.025]" : "border-border/45 bg-background/15"}
                   `,
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -1922,7 +1922,7 @@ function RegistrationWizard() {
 									}),
 									isComplete ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"aria-hidden": true,
-										className: "absolute bottom-2 right-2 h-1.5 w-1.5 rotate-45 bg-primary/60"
+										className: "motion-scale-in absolute bottom-2 right-2 h-1.5 w-1.5 rotate-45 bg-primary/60"
 									}) : null
 								]
 							}, label);
@@ -1939,7 +1939,7 @@ function RegistrationWizard() {
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
 				onSubmit: handleSubmit,
-				className: "card-interactive card-interactive-glow relative mt-4 overflow-hidden border border-border/55 bg-card/45 p-4 backdrop-blur-md sm:mt-6 sm:p-8",
+				className: "card-interactive card-interactive-glow motion-rise motion-delay-1 relative mt-4 overflow-hidden border border-border/55 bg-card/45 p-4 backdrop-blur-md sm:mt-6 sm:p-8",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						"aria-hidden": true,
@@ -2044,19 +2044,19 @@ function RegistrationWizard() {
 									setTransitionDirection("back");
 									setStep((current) => current - 1);
 								},
-								className: "group w-full justify-center text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none sm:w-auto sm:justify-start",
+								className: "group motion-press w-full justify-center text-muted-foreground motion-reduce:transform-none motion-reduce:transition-none sm:w-auto sm:justify-start",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "transition-transform duration-300 group-hover:-translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" }), "Back"]
 							}), step < finalStep ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								type: "button",
 								size: "lg",
 								onClick: goNext,
-								className: "group w-full sm:w-auto",
+								className: "group motion-press w-full sm:w-auto",
 								children: ["Continue", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" })]
 							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 								type: "submit",
 								size: "lg",
 								disabled: busy,
-								className: "group w-full sm:w-auto",
+								className: "group motion-press w-full sm:w-auto",
 								children: [busy ? "Transmitting…" : "Submit entry", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, { className: "transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" })]
 							})]
 						}) : null]
@@ -2064,7 +2064,7 @@ function RegistrationWizard() {
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "mt-4 flex items-start gap-3 border border-border/40 bg-card/20 px-3 py-3 backdrop-blur-sm sm:mt-5 sm:px-4",
+				className: "motion-fade motion-delay-2 mt-4 flex items-start gap-3 border border-border/40 bg-card/20 px-3 py-3 backdrop-blur-sm sm:mt-5 sm:px-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 					"aria-hidden": true,
 					className: "mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/50"

@@ -56,7 +56,7 @@ function returnToSearch(returnTo) {
 	return returnTo && returnTo !== "/" ? { returnTo } : {};
 }
 //#endregion
-//#region node_modules/.nitro/vite/services/ssr/assets/router-B39Ns8ML.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-x0UN7VX6.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var __defProp = Object.defineProperty;
@@ -244,7 +244,7 @@ function useAuth() {
 	if (!ctx) throw new Error("useAuth must be used within <AuthProvider>");
 	return ctx;
 }
-var src_default = "/assets/index-C8T_n-Pq.css";
+var src_default = "/assets/index-C-yNKXl-.css";
 var Route$12 = createRootRoute({
 	head: () => ({
 		meta: [
@@ -378,39 +378,39 @@ async function requireSignedIn({ context, location }) {
 function AuthGateError({ error }) {
 	return error instanceof NotRegisteredError ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(UserNotRegistered, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DefaultCatchBoundary, { error });
 }
-var $$splitErrorComponentImporter$1 = () => import("../_authed-S1wMSuSt.mjs");
+var $$splitErrorComponentImporter$1 = () => import("../_authed-D4-ZSl62.mjs");
 var Route$11 = createFileRoute("/_authed")({
 	ssr: false,
 	beforeLoad: requireSignedIn,
 	errorComponent: lazyRouteComponent($$splitErrorComponentImporter$1, "errorComponent")
 });
-var $$splitComponentImporter$9 = () => import("../_site-MXvLru-E.mjs");
+var $$splitComponentImporter$9 = () => import("../_site-DVjpOkr0.mjs");
 var Route$10 = createFileRoute("/_site")({ component: lazyRouteComponent($$splitComponentImporter$9, "component") });
-var $$splitComponentImporter$8 = () => import("./forgot-password-Da404xC0.mjs");
+var $$splitComponentImporter$8 = () => import("./forgot-password-dIUm1fd8.mjs");
 var Route$9 = createFileRoute("/forgot-password")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Reset your password — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
-var $$splitComponentImporter$7 = () => import("./login-C7XAb2Ou.mjs");
+var $$splitComponentImporter$7 = () => import("./login-P8DPlfRK.mjs");
 var Route$8 = createFileRoute("/login")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Staff login — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-var $$splitComponentImporter$6 = () => import("./register-DHFwqdRU.mjs");
+var $$splitComponentImporter$6 = () => import("./register-B_a_Y5e1.mjs");
 var Route$7 = createFileRoute("/register")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Create an account — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-var $$splitComponentImporter$5 = () => import("./reset-password-CxzUQzEj.mjs");
+var $$splitComponentImporter$5 = () => import("./reset-password-IgTyqHSB.mjs");
 var Route$6 = createFileRoute("/reset-password")({
 	ssr: false,
 	head: () => ({ meta: [{ title: "Set a new password — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-var $$splitComponentImporter$4 = () => import("./admin-BkE7pJm4.mjs");
+var $$splitComponentImporter$4 = () => import("./admin-hxj3ABcy.mjs");
 var Route$5 = createFileRoute("/_authed/admin")({
 	ssr: false,
 	loader: () => listRegistrations(),
@@ -418,7 +418,7 @@ var Route$5 = createFileRoute("/_authed/admin")({
 	head: () => ({ meta: [{ title: "Command Center — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-var $$splitComponentImporter$3 = () => import("./edit-registration-SnDN4u_R.mjs");
+var $$splitComponentImporter$3 = () => import("./edit-registration-aMB01cIO.mjs");
 var Route$4 = createFileRoute("/_authed/edit-registration")({
 	validateSearch: (search) => ({ id: typeof search.id === "string" ? search.id : "" }),
 	loader: async () => {
@@ -427,7 +427,7 @@ var Route$4 = createFileRoute("/_authed/edit-registration")({
 	head: () => ({ meta: [{ title: "Edit Registration — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-var $$splitComponentImporter$2 = () => import("./my-registration-DTfPGUJD.mjs");
+var $$splitComponentImporter$2 = () => import("./my-registration-D27XP9_B.mjs");
 var Route$3 = createFileRoute("/_authed/my-registration")({
 	loader: async () => {
 		return await listMyRegistrations();
@@ -435,7 +435,7 @@ var Route$3 = createFileRoute("/_authed/my-registration")({
 	head: () => ({ meta: [{ title: "My Registration — Project S+" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-var $$splitComponentImporter$1 = () => import("../_site-C9QN_Uf6.mjs");
+var $$splitComponentImporter$1 = () => import("../_site-Dp_4CcPr.mjs");
 var Route$2 = createFileRoute("/_site/")({
 	loader: () => listPublicEntries(),
 	shouldReload: true,
@@ -460,8 +460,8 @@ var Route$2 = createFileRoute("/_site/")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-var $$splitComponentImporter = () => import("./join-CNbkV-k6.mjs");
-var $$splitErrorComponentImporter = () => import("./join-nKYJWlMG.mjs");
+var $$splitComponentImporter = () => import("./join-DB9F_Peo.mjs");
+var $$splitErrorComponentImporter = () => import("./join-DeNNlWTx.mjs");
 var Route$1 = createFileRoute("/_site/join")({
 	ssr: false,
 	beforeLoad: requireSignedIn,

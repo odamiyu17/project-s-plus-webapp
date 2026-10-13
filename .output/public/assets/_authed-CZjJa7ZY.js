@@ -1,1 +1,0 @@
-import{f as e}from"./index-DhxzrK8P.js";var t=e;export{t as errorComponent};

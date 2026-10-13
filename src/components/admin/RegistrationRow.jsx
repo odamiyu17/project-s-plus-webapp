@@ -34,16 +34,16 @@ import {
 
 const STATUS_STYLES = {
   pending:
-    "border-primary/50 bg-primary/5 text-primary",
+    "border-amber-500/35 bg-amber-500/[0.08] text-amber-300 shadow-[inset_0_0_0_1px_hsl(var(--primary)/0.015)]",
 
   approved:
-    "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
+    "border-emerald-500/40 bg-emerald-500/[0.10] text-emerald-400 shadow-[0_0_24px_-16px_rgba(52,211,153,0.55)]",
 
   verified:
-    "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
+    "border-emerald-500/40 bg-emerald-500/[0.10] text-emerald-400 shadow-[0_0_24px_-16px_rgba(52,211,153,0.55)]",
 
   rejected:
-    "border-destructive/40 bg-destructive/10 text-destructive",
+    "border-destructive/45 bg-destructive/[0.10] text-destructive shadow-[0_0_24px_-16px_hsl(var(--destructive)/0.45)]",
 };
 
 function StatusBadge({
@@ -52,13 +52,25 @@ function StatusBadge({
   const value =
     status ?? "pending";
 
+  const dotClass =
+    value === "approved" ||
+    value === "verified"
+      ? "bg-emerald-400"
+      : value === "rejected"
+        ? "bg-destructive"
+        : "bg-amber-300";
+
   return (
     <span
-      className={`border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] ${
+      className={`inline-flex items-center gap-2 border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] ${
         STATUS_STYLES[value] ??
         STATUS_STYLES.pending
       }`}
     >
+      <span
+        aria-hidden
+        className={`h-1.5 w-1.5 rounded-full ${dotClass}`}
+      />
       {value}
     </span>
   );
@@ -148,7 +160,7 @@ function Detail({
 }) {
   return (
     <div
-      className={`min-w-0 border border-border/35 bg-background/15 p-3 ${className}`}
+      className={`min-w-0 border border-border/40 bg-background/20 p-3.5 shadow-[inset_0_1px_0_hsl(var(--primary)/0.025)] backdrop-blur-sm ${className}`}
     >
       <p className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
         {Icon ? (
@@ -187,12 +199,12 @@ function PlayerReviewCard({
     "main";
 
   return (
-    <article className="card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-border/55 bg-background/25 backdrop-blur-sm">
+    <article className="card-interactive card-interactive-glow group relative min-w-0 overflow-hidden border border-primary/10 bg-card/35 shadow-[0_18px_42px_-34px_hsl(var(--primary)/0.35)] backdrop-blur-xl">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
       />
-      <header className="relative flex flex-col items-start gap-3 border-b border-border/50 bg-card/35 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-4">
+      <header className="relative flex flex-col items-start gap-3 border-b border-primary/10 bg-background/20 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-4">
         <div>
           <p className="font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground">
             Player{" "}
@@ -374,7 +386,7 @@ function MlbbReview({
 
   return (
     <>
-      <section className="card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-border/55 bg-background/20 p-3 backdrop-blur-sm sm:p-5">
+      <section className="card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-primary/10 bg-card/35 p-4 shadow-[0_18px_42px_-34px_hsl(var(--primary)/0.35)] backdrop-blur-xl sm:p-5">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
@@ -497,7 +509,7 @@ function TekkenReview({
     );
 
   return (
-    <section className="card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-border/55 bg-background/20 p-3 backdrop-blur-sm sm:p-5">
+    <section className="card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-primary/10 bg-card/35 p-4 shadow-[0_18px_42px_-34px_hsl(var(--primary)/0.35)] backdrop-blur-xl sm:p-5">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
@@ -694,7 +706,7 @@ export default function RegistrationRow({
   }
 
   return (
-    <article className="card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-border/55 bg-card/40 backdrop-blur-md">
+    <article className="card-interactive card-interactive-glow relative min-w-0 overflow-hidden border border-primary/15 bg-card/45 shadow-[0_28px_80px_-54px_hsl(var(--primary)/0.5)] backdrop-blur-2xl">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
@@ -702,10 +714,15 @@ export default function RegistrationRow({
 
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/[0.035] blur-3xl"
+        className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/[0.055] blur-[100px]"
+      />
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-24 top-[38%] h-52 w-52 rounded-full bg-primary/[0.025] blur-[110px]"
       />
       {/* HEADER */}
-      <header className="relative border-b border-border/50 p-4 sm:p-6">
+      <header className="relative border-b border-primary/10 bg-background/15 p-4 sm:p-6 lg:p-7">
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-between">
           <div className="min-w-0">
             <p className="break-words font-mono text-xs uppercase leading-5 tracking-[0.12em] text-muted-foreground sm:text-sm sm:tracking-[0.16em]">
@@ -725,7 +742,7 @@ export default function RegistrationRow({
                 : ""}
             </p>
 
-            <h3 className="mt-2 break-words font-display text-3xl font-bold uppercase leading-tight tracking-[0.02em] text-foreground sm:text-4xl">
+            <h3 className="mt-2 break-words font-display text-3xl font-bold uppercase leading-[0.95] tracking-[0.02em] text-foreground sm:text-4xl lg:text-5xl">
               {isSquad
                 ? item.team_name ||
                   "Untitled Squad"
@@ -761,16 +778,83 @@ export default function RegistrationRow({
             </p>
           </div>
 
-          <StatusBadge
-            status={
-              status
-            }
-          />
+          <div className="flex flex-col items-start gap-1.5 sm:items-end">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+              Registration Status
+            </span>
+
+            <StatusBadge
+              status={
+                status
+              }
+            />
+          </div>
         </div>
       </header>
 
+      <div className="relative border-b border-primary/10 bg-card/15 px-4 py-3 sm:px-6 lg:px-7">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="mr-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+            Review Workspace
+          </span>
+
+          <span className="inline-flex items-center gap-1.5 border border-primary/25 bg-primary/[0.05] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-primary">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary" />
+            01 Registration
+          </span>
+
+          <span
+            className={`inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${
+              paymentVerified
+                ? "border-emerald-500/30 bg-emerald-500/[0.07] text-emerald-400"
+                : paymentRejected
+                  ? "border-destructive/30 bg-destructive/[0.07] text-destructive"
+                  : "border-amber-500/30 bg-amber-500/[0.06] text-amber-300"
+            }`}
+          >
+            <span
+              aria-hidden
+              className={`h-1.5 w-1.5 rounded-full ${
+                paymentVerified
+                  ? "bg-emerald-400"
+                  : paymentRejected
+                    ? "bg-destructive"
+                    : "bg-amber-300"
+              }`}
+            />
+            02 Payment
+          </span>
+
+          <span
+            className={`inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${
+              status === "approved"
+                ? "border-emerald-500/30 bg-emerald-500/[0.07] text-emerald-400"
+                : status === "rejected"
+                  ? "border-destructive/30 bg-destructive/[0.07] text-destructive"
+                  : canAuthorize
+                    ? "border-primary/30 bg-primary/[0.06] text-primary"
+                    : "border-border/40 bg-background/15 text-muted-foreground"
+            }`}
+          >
+            <span
+              aria-hidden
+              className={`h-1.5 w-1.5 rounded-full ${
+                status === "approved"
+                  ? "bg-emerald-400"
+                  : status === "rejected"
+                    ? "bg-destructive"
+                    : canAuthorize
+                      ? "bg-primary"
+                      : "bg-muted-foreground/60"
+              }`}
+            />
+            03 Decision
+          </span>
+        </div>
+      </div>
+
       {/* FULL REGISTRATION */}
-      <div className="relative p-4 sm:p-6">
+      <div className="relative p-4 sm:p-6 lg:p-7">
         {isSquad ? (
           <MlbbReview
             item={item}
@@ -783,10 +867,16 @@ export default function RegistrationRow({
       </div>
 
       {/* MAIN CONTACT */}
-      <section className="border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6">
-        <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
-          Main Contact
-        </p>
+      <section className="relative border-t border-primary/10 bg-background/15 px-4 py-5 sm:px-6 lg:px-7 lg:py-6">
+        <div className="flex items-center justify-between gap-3">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
+            Main Contact
+          </p>
+
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Registration
+          </span>
+        </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Detail
@@ -839,7 +929,11 @@ export default function RegistrationRow({
       </section>
 
       {/* PAYMENT REVIEW */}
-      <section className="border-t border-border/45 bg-background/15 px-4 py-5 sm:px-6">
+      <section className="relative border-t border-primary/10 bg-card/20 px-4 py-5 sm:px-6 lg:px-7 lg:py-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+        />
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
@@ -870,7 +964,7 @@ export default function RegistrationRow({
               onClick={
                 openReceipt
               }
-              className="w-full text-primary sm:w-auto"
+              className="motion-press w-full border-primary/20 bg-background/25 text-primary backdrop-blur-sm sm:w-auto"
             >
               <Eye className="mr-2 h-4 w-4" />
 
@@ -887,12 +981,12 @@ export default function RegistrationRow({
         </div>
 
         <div
-          className={`mt-5 border p-3 sm:p-4 ${
+          className={`mt-5 border p-3 shadow-[inset_0_1px_0_hsl(var(--primary)/0.025)] backdrop-blur-sm sm:p-4 ${
             paymentVerified
-              ? "border-emerald-500/30 bg-emerald-500/[0.05]"
+              ? "border-emerald-500/35 bg-emerald-500/[0.07] shadow-[0_16px_40px_-30px_rgba(52,211,153,0.45)]"
               : paymentRejected
-                ? "border-destructive/30 bg-destructive/[0.05]"
-                : "border-amber-500/30 bg-amber-500/[0.05]"
+                ? "border-destructive/35 bg-destructive/[0.07] shadow-[0_16px_40px_-30px_hsl(var(--destructive)/0.35)]"
+                : "border-amber-500/35 bg-amber-500/[0.06] shadow-[0_16px_40px_-30px_rgba(251,191,36,0.30)]"
           }`}
         >
           <div className="flex items-start gap-3">
@@ -954,7 +1048,7 @@ export default function RegistrationRow({
           </Detail>
         </div>
 
-        <div className="mt-5 flex flex-col gap-2 border-t border-border/60 pt-5 sm:flex-row sm:flex-wrap sm:gap-3">
+        <div className="mt-5 flex flex-col gap-2 border-t border-border/60 pt-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
           {paymentStatus !==
           "verified" ? (
             <Button
@@ -969,7 +1063,7 @@ export default function RegistrationRow({
                   "verified",
                 )
               }
-              className="w-full sm:w-auto"
+              className="motion-press w-full border-emerald-500/35 bg-emerald-500/[0.10] text-emerald-300 shadow-[0_0_26px_-18px_rgba(52,211,153,0.55)] hover:bg-emerald-500/[0.16] hover:text-emerald-200 sm:w-auto"
             >
               <CheckCircle2 className="mr-2 h-4 w-4" />
 
@@ -991,7 +1085,7 @@ export default function RegistrationRow({
                   "rejected",
                 )
               }
-              className="w-full border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto"
+              className="motion-press w-full border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto"
             >
               <XCircle className="mr-2 h-4 w-4" />
 
@@ -1013,7 +1107,7 @@ export default function RegistrationRow({
                   "pending",
                 )
               }
-              className="w-full text-muted-foreground sm:w-auto"
+              className="motion-press w-full border-destructive/35 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto"
             >
               <RotateCcw className="mr-2 h-3.5 w-3.5" />
 
@@ -1030,7 +1124,11 @@ export default function RegistrationRow({
       </section>
 
       {/* REGISTRATION DECISION */}
-      <footer className="border-t border-border/45 bg-background/10 px-4 py-5 sm:px-6">
+      <footer className="relative border-t border-primary/10 bg-background/15 px-4 py-5 sm:px-6 lg:px-7 lg:py-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+        />
         <div className="mb-4 flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-primary" />
 
@@ -1040,14 +1138,14 @@ export default function RegistrationRow({
         </div>
 
         <div
-          className={`mb-5 border p-3 sm:p-4 ${
+          className={`mb-5 border p-3 shadow-[inset_0_1px_0_hsl(var(--primary)/0.025)] backdrop-blur-sm sm:p-4 ${
             status === "approved"
-              ? "border-emerald-500/30 bg-emerald-500/[0.05]"
+              ? "border-emerald-500/35 bg-emerald-500/[0.07] shadow-[0_18px_46px_-32px_rgba(52,211,153,0.45)]"
               : status === "rejected"
-                ? "border-destructive/30 bg-destructive/[0.05]"
+                ? "border-destructive/35 bg-destructive/[0.07] shadow-[0_18px_46px_-32px_hsl(var(--destructive)/0.35)]"
                 : canAuthorize
-                  ? "border-primary/30 bg-primary/[0.04]"
-                  : "border-amber-500/30 bg-amber-500/[0.05]"
+                  ? "border-primary/35 bg-primary/[0.06] shadow-[0_18px_46px_-32px_hsl(var(--primary)/0.38)]"
+                  : "border-amber-500/35 bg-amber-500/[0.06] shadow-[0_18px_46px_-32px_rgba(251,191,36,0.28)]"
           }`}
         >
           <div className="flex items-start gap-3">
@@ -1101,7 +1199,11 @@ export default function RegistrationRow({
                   "approved",
                 )
               }
-              className="w-full sm:w-auto"
+              className={`motion-press w-full sm:w-auto ${
+                canAuthorize && !decisionLocked
+                  ? "border-emerald-500/35 bg-emerald-500/[0.12] text-emerald-300 shadow-[0_0_28px_-18px_rgba(52,211,153,0.55)] hover:bg-emerald-500/[0.18] hover:text-emerald-200"
+                  : "opacity-50"
+              }`}
               title={
                 canAuthorize
                   ? "Authorize registration"
@@ -1126,7 +1228,7 @@ export default function RegistrationRow({
                   "rejected",
                 )
               }
-              className="w-full text-muted-foreground sm:w-auto"
+              className="motion-press w-full text-muted-foreground sm:w-auto"
             >
               <X className="mr-2 h-4 w-4" />
 
@@ -1146,7 +1248,7 @@ export default function RegistrationRow({
                   "pending",
                 )
               }
-              className="w-full text-muted-foreground hover:text-foreground sm:w-auto"
+              className="motion-press w-full text-muted-foreground hover:text-foreground sm:w-auto"
             >
               <RotateCcw className="mr-2 h-3.5 w-3.5" />
 

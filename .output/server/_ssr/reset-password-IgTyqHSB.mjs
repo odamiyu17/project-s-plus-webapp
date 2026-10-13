@@ -4,10 +4,10 @@ import { Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { LoaderCircle, Lock, TriangleAlert } from "../_libs/lucide-react.mjs";
-import { AuthLayout } from "./router-B39Ns8ML.mjs";
+import { AuthLayout } from "./router-x0UN7VX6.mjs";
 import { Input, Label } from "./label-DY020iIz.mjs";
 import { AuthError, SubmitButton } from "./parts-Cv-yST__.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/reset-password-CxzUQzEj.js
+//#region node_modules/.nitro/vite/services/ssr/assets/reset-password-IgTyqHSB.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function ResetPasswordPage() {
