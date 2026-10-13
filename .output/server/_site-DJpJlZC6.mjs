@@ -4,11 +4,10 @@ import { Link } from "./_libs/@tanstack/react-router+[...].mjs";
 import { require_jsx_runtime } from "./_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./_ssr/auth-middleware-CmY4KpCX.mjs";
 import { Button, cn } from "./_ssr/server-fns-D7ymjI7_.mjs";
-import { ArrowLeft, ArrowRight, Calendar, MapPin, Plus, Ticket, Trophy, Users } from "./_libs/lucide-react.mjs";
-import { Route$2 } from "./_ssr/router-x0UN7VX6.mjs";
+import { ArrowRight, Calendar, MapPin, Plus, Ticket, Trophy, Users } from "./_libs/lucide-react.mjs";
+import { Route$2 } from "./_ssr/router-CC8f71q3.mjs";
 import { Image } from "./_ssr/image-BwNFCwj5.mjs";
-import { useEmblaCarousel } from "./_libs/embla-carousel-react+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/_site-Dp_4CcPr.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_site-DJpJlZC6.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function SectionHeading({ eyebrow, title, description, align = "left", className }) {
@@ -47,6 +46,8 @@ var BRACKETS = [{
 	tagline: "5v5 squad bracket",
 	image: "/images/site/arena.png",
 	imageAlt: "Futuristic obsidian arena floor with glowing emerald energy veins",
+	accent: "from-emerald-500/[0.12] via-primary/[0.04] to-transparent",
+	glow: "bg-emerald-500/[0.07]",
 	lines: [
 		"One squad of five",
 		"16 team slots",
@@ -59,6 +60,8 @@ var BRACKETS = [{
 	tagline: "Solo fighter bracket",
 	image: "/images/site/fist.png",
 	imageAlt: "Bronze fist striking dark stone, sparks fracturing like lightning",
+	accent: "from-amber-500/[0.10] via-primary/[0.04] to-transparent",
+	glow: "bg-amber-500/[0.06]",
 	lines: [
 		"Solo entry, no team needed",
 		"32 fighter slots",
@@ -71,143 +74,260 @@ var SCHEDULE = [
 	{
 		date: "Oct 7 – Nov 8",
 		label: "Registration window",
-		detail: "Free entry for MLBB squads and TEKKEN 8 fighters"
+		detail: "Free entry for MLBB squads and TEKKEN 8 fighters",
+		stage: "Entry Phase",
+		state: "open"
 	},
 	{
 		date: "Nov 14 – 15",
 		label: "MLBB group stage",
-		detail: "Sixteen squads, best-of-three, played online"
+		detail: "Sixteen squads, best-of-three, played online",
+		stage: "Stage One",
+		state: "upcoming"
 	},
 	{
 		date: "Nov 21",
 		label: "TEKKEN 8 bracket",
-		detail: "Double elimination, best-of-three, played online"
+		detail: "Double elimination, best-of-three, played online",
+		stage: "Stage Two",
+		state: "upcoming"
 	},
 	{
 		date: "Nov 28",
 		label: "Grand finals",
-		detail: "Best-of-five, live on the HAGIT stage"
+		detail: "Best-of-five, live on the HAGIT stage",
+		stage: "Final Stage",
+		state: "final"
 	}
 ];
 function FormatSection() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 		id: "format",
-		className: "relative scroll-mt-24 border-b border-border/50 py-16 sm:py-24",
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"aria-hidden": true,
-			className: "pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.012] to-transparent"
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "relative mx-auto max-w-7xl px-4 sm:px-8",
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SectionHeading, {
-					eyebrow: "02 — Format",
-					title: "Two realms, one proving ground",
-					description: "Pick your bracket. Both run on the same rulebook: verified rosters, best-of series, and no second chances once the playoff bracket is drawn."
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "mt-10 grid gap-4 sm:mt-12 sm:gap-5 lg:grid-cols-2",
-					children: BRACKETS.map((bracket) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-						className: "card-interactive card-interactive-glow group relative flex flex-col overflow-hidden border border-border/60 bg-card/45 backdrop-blur-md",
+		className: "relative isolate scroll-mt-24 overflow-hidden border-b border-border/50 py-16 sm:py-24 lg:py-28",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,hsl(var(--primary)/0.055),transparent_25%),radial-gradient(circle_at_84%_42%,hsl(var(--primary)/0.035),transparent_24%),linear-gradient(to_bottom,transparent,hsl(var(--primary)/0.012),transparent)]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(hsl(var(--primary)/0.35)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.35)_1px,transparent_1px)] [background-size:44px_44px]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute -left-24 top-40 h-72 w-72 rounded-full bg-primary/[0.035] blur-[120px]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute -right-28 top-[32rem] h-80 w-80 rounded-full bg-primary/[0.03] blur-[130px]"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "relative mx-auto max-w-7xl px-4 sm:px-8",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "motion-rise",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SectionHeading, {
+							eyebrow: "02 — Format",
+							title: "Two realms, one proving ground",
+							description: "Pick your bracket. Both run on the same rulebook: verified rosters, best-of series, and no second chances once the playoff bracket is drawn."
+						})
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "mt-10 grid gap-5 sm:mt-12 sm:gap-6 lg:grid-cols-2",
+						children: BRACKETS.map((bracket, bracketIndex) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
+							className: `card-interactive card-interactive-glow group relative flex flex-col overflow-hidden border border-primary/10 bg-card/45 shadow-[0_24px_70px_-50px_hsl(var(--primary)/0.5)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_34px_90px_-56px_hsl(var(--primary)/0.6)] motion-rise ${bracketIndex === 0 ? "motion-delay-1" : "motion-delay-2"}`,
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									"aria-hidden": true,
+									className: `pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b ${bracket.accent} opacity-70 transition-opacity duration-500 group-hover:opacity-100`
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									"aria-hidden": true,
+									className: `pointer-events-none absolute -right-16 -top-20 z-0 h-52 w-52 rounded-full ${bracket.glow} blur-[90px] transition-transform duration-700 group-hover:scale-125`
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									"aria-hidden": true,
+									className: "pointer-events-none absolute inset-x-8 top-0 z-30 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent opacity-80 transition-all duration-500 group-hover:inset-x-4 group-hover:opacity-100"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "relative h-48 overflow-hidden border-b border-primary/10 sm:h-60 lg:h-64",
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
+											src: bracket.image,
+											alt: bracket.imageAlt,
+											fittingType: "fill",
+											className: "card-interactive-image absolute inset-0 h-full w-full scale-[1.02] opacity-55 transition-[transform,opacity,filter] duration-700 ease-out group-hover:scale-[1.07] group-hover:opacity-90 group-hover:saturate-125"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" }),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-r from-background/35 via-transparent to-background/10" }),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											"aria-hidden": true,
+											className: "absolute inset-0 opacity-[0.05] [background-image:linear-gradient(transparent_50%,rgba(255,255,255,0.45)_50%)] [background-size:100%_4px]"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											"aria-hidden": true,
+											className: "absolute -left-1/2 top-0 h-full w-1/3 skew-x-[-18deg] bg-gradient-to-r from-transparent via-white/[0.07] to-transparent opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100"
+										}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "absolute bottom-5 left-5 right-5 z-10 sm:bottom-6 sm:left-6 sm:right-6",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "inline-flex border border-primary/25 bg-background/45 px-3 py-1.5 shadow-[inset_0_1px_0_hsl(var(--primary)/0.05)] backdrop-blur-md",
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+													className: "font-mono text-[10px] uppercase tracking-[0.22em] text-primary sm:text-[11px] sm:tracking-[0.24em]",
+													children: bracket.tagline
+												})
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+												className: "card-interactive-shift mt-3 max-w-[90%] font-display text-2xl font-bold uppercase leading-[0.95] tracking-[0.025em] text-foreground drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)] sm:text-3xl lg:text-4xl",
+												children: bracket.game
+											})]
+										})
+									]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "relative flex-1 bg-gradient-to-b from-background/[0.06] to-transparent",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center justify-between border-b border-border/35 px-5 py-3 sm:px-7",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground sm:text-[10px]",
+											children: "Bracket Protocol"
+										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+											className: "inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-primary/80 sm:text-[10px]",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.6)]" }), "Active Format"]
+										})]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+										className: "p-5 sm:p-7",
+										children: bracket.lines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+											className: "group/row relative flex items-center gap-3.5 border-b border-border/35 py-3.5 text-sm leading-6 text-muted-foreground transition-all duration-300 last:border-b-0 hover:pl-1 hover:text-foreground sm:gap-4 sm:text-[15px]",
+											children: [
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+													className: "font-mono text-[10px] tracking-[0.14em] text-primary/70 transition-colors duration-300 group-hover/row:text-primary",
+													children: String(index + 1).padStart(2, "0")
+												}),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-1.5 w-1.5 rotate-45 bg-primary transition-all duration-300 group-hover/row:scale-150 group-hover/row:shadow-[0_0_14px_hsl(var(--primary)/0.7)]" }),
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+													className: "transition-[color,transform] duration-300 group-hover/row:translate-x-0.5 group-hover/row:text-foreground",
+													children: line
+												})
+											]
+										}, line))
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									"aria-hidden": true,
+									className: "pointer-events-none absolute bottom-0 right-0 h-8 w-8 border-b border-r border-primary/25 transition-all duration-500 group-hover:h-14 group-hover:w-14 group-hover:border-primary/55"
+								})
+							]
+						}, bracket.game))
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "motion-rise motion-delay-3 relative mt-16 overflow-hidden border border-primary/10 bg-card/30 p-4 shadow-[0_26px_80px_-54px_hsl(var(--primary)/0.5)] backdrop-blur-2xl sm:mt-20 sm:p-7 lg:p-8",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"aria-hidden": true,
-								className: "pointer-events-none absolute inset-x-8 top-0 z-20 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent opacity-70"
+								className: "pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute -right-20 top-8 h-52 w-52 rounded-full bg-primary/[0.045] blur-[100px]"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-primary/[0.025] blur-[110px]"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								"aria-hidden": true,
+								className: "pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-primary/[0.015] to-transparent"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "relative h-44 overflow-hidden border-b border-border/50 sm:h-56",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
-										src: bracket.image,
-										alt: bracket.imageAlt,
-										fittingType: "fill",
-										className: "card-interactive-image absolute inset-0 h-full w-full opacity-60 group-hover:opacity-90"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-transparent" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "absolute bottom-5 left-5 right-5",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-											className: "inline-flex border border-primary/20 bg-background/30 px-3 py-1 backdrop-blur-sm",
-											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "font-mono text-[10px] uppercase tracking-[0.22em] text-primary sm:text-[11px] sm:tracking-[0.24em]",
-												children: bracket.tagline
-											})
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-											className: "card-interactive-shift mt-3 font-display text-2xl font-bold uppercase leading-tight tracking-[0.025em] text-foreground sm:text-3xl",
-											children: bracket.game
-										})]
-									})
-								]
+								className: "relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground",
+									children: "Tournament Journey"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+									className: "mt-1 font-mono text-xs uppercase tracking-[0.24em] text-primary sm:tracking-[0.28em]",
+									children: "Road to the final"
+								})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "flex items-center gap-3 sm:min-w-[240px] sm:justify-end",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										"aria-hidden": true,
+										className: "h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "inline-flex items-center gap-2 border border-primary/20 bg-background/20 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-primary/80 backdrop-blur-sm sm:text-[10px]",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.55)]" }), "4 Milestones"]
+									})]
+								})]
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-								className: "flex-1 p-5 sm:p-7",
-								children: bracket.lines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-									className: "group/row flex items-center gap-3.5 border-b border-border/35 py-3.5 text-sm leading-6 text-muted-foreground last:border-b-0 sm:gap-4 sm:text-[15px]",
-									children: [
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "font-mono text-[10px] tracking-[0.14em] text-primary/70 transition-colors duration-300 group-hover/row:text-primary",
-											children: String(index + 1).padStart(2, "0")
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "h-1.5 w-1.5 rotate-45 bg-primary transition-all duration-300 group-hover/row:scale-125 group-hover/row:shadow-[0_0_10px_hsl(var(--primary)/0.5)]" }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "transition-colors duration-300 group-hover/row:text-foreground",
-											children: line
-										})
-									]
-								}, line))
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ol", {
+								className: "relative mt-6 border-l border-primary/15 sm:mt-8",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										"aria-hidden": true,
+										className: "pointer-events-none absolute -left-px top-0 h-full w-px bg-gradient-to-b from-primary/80 via-primary/35 to-primary/5"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										"aria-hidden": true,
+										className: "pointer-events-none absolute -left-[2px] top-0 h-[24%] w-[3px] bg-gradient-to-b from-primary via-primary/45 to-transparent blur-[1px]"
+									}),
+									SCHEDULE.map((row, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+										className: `group relative py-3 pl-6 motion-rise sm:py-4 sm:pl-7 ${index === 0 ? "motion-delay-1" : index === 1 ? "motion-delay-2" : index === 2 ? "motion-delay-3" : "motion-delay-4"}`,
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												"aria-hidden": true,
+												className: `absolute -left-[6px] top-7 h-3 w-3 rotate-45 border bg-background shadow-[0_0_0_4px_hsl(var(--background))] transition-all duration-300 group-hover:scale-125 ${row.state === "open" ? "border-primary bg-primary shadow-[0_0_18px_hsl(var(--primary)/0.5)]" : row.state === "final" ? "border-primary/70 bg-primary/20" : "border-primary/40"}`
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												"aria-hidden": true,
+												className: "absolute left-0 top-[1.88rem] h-px w-5 bg-primary/40 transition-all duration-300 group-hover:w-8 group-hover:bg-primary"
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative overflow-hidden border border-border/35 bg-background/15 p-4 transition-[transform,border-color,background-color,box-shadow] duration-300 group-hover:translate-x-1 group-hover:border-primary/20 group-hover:bg-background/22 group-hover:shadow-[0_14px_36px_-30px_hsl(var(--primary)/0.4)] sm:p-5",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+													"aria-hidden": true,
+													className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+													className: "grid gap-3 sm:grid-cols-[170px_minmax(0,1fr)_auto] sm:items-center sm:gap-5",
+													children: [
+														/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+															className: "font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground",
+															children: row.stage
+														}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+															className: "mt-1 block font-mono text-[11px] uppercase tracking-[0.16em] text-primary sm:text-xs sm:tracking-[0.18em]",
+															children: [
+																String(index + 1).padStart(2, "0"),
+																" · ",
+																row.date
+															]
+														})] }),
+														/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+															className: "min-w-0",
+															children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+																className: "block font-display text-xl font-bold uppercase tracking-[0.03em] text-foreground transition-[transform,color] duration-300 group-hover:translate-x-1 group-hover:text-primary sm:text-2xl",
+																children: row.label
+															}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+																className: "mt-1 block max-w-xl text-sm leading-6 text-muted-foreground transition-colors duration-300 group-hover:text-foreground/85 sm:text-[15px]",
+																children: row.detail
+															})]
+														}),
+														/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+															className: `inline-flex w-fit items-center gap-2 border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] sm:justify-self-end ${row.state === "open" ? "border-primary/30 bg-primary/[0.07] text-primary" : row.state === "final" ? "border-primary/25 bg-primary/[0.04] text-primary/80" : "border-border/45 bg-background/15 text-muted-foreground"}`,
+															children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `h-1.5 w-1.5 rounded-full ${row.state === "open" ? "bg-primary shadow-[0_0_9px_hsl(var(--primary)/0.6)]" : row.state === "final" ? "bg-primary/75" : "bg-muted-foreground/55"}` }), row.state === "open" ? "Entry Open" : row.state === "final" ? "Finale" : "Upcoming"]
+														})
+													]
+												})]
+											})
+										]
+									}, row.label))
+								]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"aria-hidden": true,
-								className: "pointer-events-none absolute bottom-0 right-0 h-7 w-7 border-b border-r border-primary/20 transition-all duration-300 group-hover:h-10 group-hover:w-10 group-hover:border-primary/40"
+								className: "pointer-events-none absolute bottom-0 right-0 h-10 w-10 border-b border-r border-primary/25"
 							})
 						]
-					}, bracket.game))
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mt-16 sm:mt-20",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-4",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							className: "font-mono text-xs uppercase tracking-[0.24em] text-primary sm:tracking-[0.28em]",
-							children: "Road to the final"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							"aria-hidden": true,
-							className: "h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent"
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ol", {
-						className: "mt-6 border-l border-border/50 sm:mt-8",
-						children: SCHEDULE.map((row, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-							className: "group relative grid gap-2 py-4 pl-6 sm:grid-cols-[185px_1fr] sm:items-baseline sm:gap-7 sm:py-5 sm:pl-7",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									"aria-hidden": true,
-									className: "absolute -left-[4px] top-[1.65rem] h-2 w-2 rotate-45 border border-primary/40 bg-background transition-all duration-300 group-hover:border-primary group-hover:bg-primary"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									"aria-hidden": true,
-									className: "absolute left-0 top-[1.88rem] h-px w-5 bg-primary/45 transition-all duration-300 group-hover:w-7 group-hover:bg-primary"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "font-mono text-[11px] uppercase tracking-[0.18em] text-primary sm:text-xs sm:tracking-[0.2em]",
-									children: [
-										String(index + 1).padStart(2, "0"),
-										" · ",
-										row.date
-									]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "block font-display text-xl font-bold uppercase tracking-[0.035em] text-foreground transition-transform duration-300 group-hover:translate-x-1 sm:text-2xl",
-									children: row.label
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "mt-1 block max-w-xl text-sm leading-6 text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80 sm:text-[15px]",
-									children: row.detail
-								})] })
-							]
-						}, row.label))
-					})]
-				})
-			]
-		})]
+					})
+				]
+			})
+		]
 	});
 }
 function Reveal({ children, delay = 0, direction = "up", distance = 28, duration = 700, once = true, className = "" }) {
@@ -697,81 +817,192 @@ function RegisterBand() {
 		]
 	});
 }
-function FighterList({ fighters }) {
-	if (!fighters.length) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
+var CARD$1 = "w-[86vw] max-w-[420px] shrink-0 sm:w-[46vw] sm:max-w-[430px] lg:w-[31.5%] lg:max-w-none";
+var BASE_DURATION$1 = 88;
+function FighterCard({ fighter, slot }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
+		className: "card-interactive group relative flex h-full min-h-[150px] items-center gap-4 overflow-hidden border border-border/55 bg-card/40 p-4 backdrop-blur-md sm:min-h-[160px] sm:p-5",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent opacity-70"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: "card-interactive-icon grid h-11 w-11 shrink-0 place-items-center border border-primary/25 bg-primary/[0.035] font-mono text-[10px] font-medium tracking-[0.18em] text-primary transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/[0.07]",
+				children: String(slot).padStart(2, "0")
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "min-w-0 flex-1",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "font-mono text-[8px] uppercase tracking-[0.2em] text-primary/60",
+						children: "Solo Fighter"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "card-interactive-shift mt-1 truncate font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground",
+						children: fighter.in_game_id || fighter.player_name
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "mt-1 truncate font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/70",
+						children: fighter.region || "TEKKEN 8"
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "ml-auto h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/35 transition-all duration-300 group-hover:scale-125 group-hover:bg-primary"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-primary/15 transition-all duration-300 group-hover:h-7 group-hover:w-7 group-hover:border-primary/35"
+			})
+		]
+	});
+}
+function OpenFighterSlotCard({ slot }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
+		className: "card-interactive group relative flex h-full min-h-[150px] items-center gap-4 overflow-hidden border border-dashed border-primary/20 bg-card/25 p-4 backdrop-blur-md sm:min-h-[160px] sm:p-5",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: "grid h-11 w-11 shrink-0 place-items-center border border-primary/20 bg-primary/[0.025] font-mono text-[10px] tracking-[0.18em] text-primary/70 transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/[0.05] group-hover:text-primary",
+				children: String(slot).padStart(2, "0")
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "min-w-0 flex-1",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "font-mono text-[8px] uppercase tracking-[0.2em] text-primary/50",
+						children: "Fighter Slot"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "mt-1 font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground/80 transition-colors duration-300 group-hover:text-foreground",
+						children: "Open Fighter Slot"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "mt-1 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground",
+						children: "Awaiting verified entry"
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"aria-hidden": true,
+				className: "ml-auto h-1.5 w-1.5 shrink-0 rotate-45 border border-primary/30 transition-all duration-300 group-hover:scale-125 group-hover:border-primary group-hover:bg-primary/25"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				"aria-hidden": true,
+				className: "pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-primary/10 transition-all duration-300 group-hover:h-7 group-hover:w-7 group-hover:border-primary/30"
+			})
+		]
+	});
+}
+function FighterList({ fighters = [], openFighters = 0, totalSlots = 32 }) {
+	const [isPaused, setIsPaused] = (0, import_react.useState)(false);
+	const items = (0, import_react.useMemo)(() => {
+		const availableSlots = Math.max(Math.min(openFighters, totalSlots - fighters.length), 0);
+		const verified = fighters.map((fighter, index) => ({
+			type: "fighter",
+			key: `fighter-${fighter.id}`,
+			fighter,
+			slot: index + 1
+		}));
+		const open = Array.from({ length: availableSlots }, (_, index) => ({
+			type: "open",
+			key: `fighter-open-${fighters.length + index + 1}`,
+			slot: fighters.length + index + 1
+		}));
+		return [...verified, ...open];
+	}, [
+		fighters,
+		openFighters,
+		totalSlots
+	]);
+	const duration = Math.max(BASE_DURATION$1, items.length * 2.8);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
+		delay: 120,
 		distance: 16,
-		duration: 500,
+		duration: 520,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "card-interactive card-interactive-glow group relative mt-8 overflow-hidden border border-dashed border-border/60 bg-card/35 p-6 backdrop-blur-md sm:p-8",
+			className: "group/fighter-roll relative mt-8 overflow-hidden",
+			onMouseEnter: () => setIsPaused(true),
+			onMouseLeave: () => setIsPaused(false),
+			onFocusCapture: () => setIsPaused(true),
+			onBlurCapture: (event) => {
+				if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
+			},
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"aria-hidden": true,
-					className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+					className: "pointer-events-none absolute inset-y-0 left-0 z-20 w-10 bg-gradient-to-r from-background/95 to-transparent sm:w-16"
 				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "font-mono text-[9px] uppercase tracking-[0.22em] text-primary/70",
-					children: "Fighter Board"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground",
-					children: "No fighters verified yet — the TEKKEN 8 bracket fills up as soon as staff approve the first solo entries."
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"aria-hidden": true,
-					className: "pointer-events-none absolute bottom-0 right-0 h-7 w-7 border-b border-r border-primary/20 transition-all duration-300 group-hover:h-10 group-hover:w-10 group-hover:border-primary/40"
-				})
+					className: "pointer-events-none absolute inset-y-0 right-0 z-20 w-10 bg-gradient-to-l from-background/95 to-transparent sm:w-16"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					"aria-hidden": true,
+					className: "pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "overflow-hidden py-1",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "flex w-max gap-4 will-change-transform motion-reduce:transform-none",
+						style: {
+							animation: items.length > 1 ? `fighter-vault-roll ${duration}s linear infinite` : "none",
+							animationPlayState: isPaused ? "paused" : "running"
+						},
+						children: [0, 1].map((copyIndex) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"aria-hidden": copyIndex === 1,
+							className: "flex shrink-0 gap-4",
+							children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: CARD$1,
+								children: item.type === "fighter" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FighterCard, {
+									fighter: item.fighter,
+									slot: item.slot
+								}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(OpenFighterSlotCard, { slot: item.slot })
+							}, `${copyIndex}-${item.key}`))
+						}, `fighter-track-${copyIndex}`))
+					})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "mt-6 flex flex-col gap-3 border-t border-border/35 pt-5 sm:flex-row sm:items-center sm:justify-between",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center gap-3",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							"aria-hidden": true,
+							className: `h-1.5 w-1.5 rotate-45 transition-all duration-300 ${isPaused ? "bg-muted-foreground/45" : "bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.5)]"}`
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground sm:text-[10px] sm:tracking-[0.22em]",
+							children: isPaused ? "Fighter roll paused" : `Live fighter roll · ${items.length} fighter slots`
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground/70 sm:text-[10px]",
+						children: "Hover or focus to pause"
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("style", { children: `
+          @keyframes fighter-vault-roll {
+            from {
+              transform: translate3d(0, 0, 0);
+            }
+
+            to {
+              transform: translate3d(calc(-50% - 0.5rem), 0, 0);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .group\\/fighter-roll > div > div[style] {
+              animation: none !important;
+              transform: none !important;
+            }
+          }
+        ` })
 			]
 		})
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-		className: "mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3",
-		children: fighters.map((fighter, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-			className: "h-full",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
-				delay: index * 60,
-				distance: 16,
-				duration: 500,
-				className: "h-full",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
-					className: "card-interactive group relative flex h-full items-center gap-4 overflow-hidden border border-border/55 bg-card/40 p-4 backdrop-blur-md sm:p-5",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							"aria-hidden": true,
-							className: "pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent opacity-70"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "card-interactive-icon grid h-11 w-11 shrink-0 place-items-center border border-primary/25 bg-primary/[0.035] font-mono text-[10px] font-medium tracking-[0.18em] text-primary transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/[0.07]",
-							children: String(index + 1).padStart(2, "0")
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "min-w-0 flex-1",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "font-mono text-[8px] uppercase tracking-[0.2em] text-primary/60",
-									children: "Solo Fighter"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "card-interactive-shift mt-1 truncate font-display text-lg font-bold uppercase tracking-[0.04em] text-foreground",
-									children: fighter.in_game_id || fighter.player_name
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "mt-1 truncate font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/70",
-									children: fighter.region || "TEKKEN 8"
-								})
-							]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							"aria-hidden": true,
-							className: "ml-auto h-1.5 w-1.5 shrink-0 rotate-45 bg-primary/35 transition-all duration-300 group-hover:scale-125 group-hover:bg-primary"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							"aria-hidden": true,
-							className: "pointer-events-none absolute bottom-0 right-0 h-5 w-5 border-b border-r border-primary/15 transition-all duration-300 group-hover:h-7 group-hover:w-7 group-hover:border-primary/35"
-						})
-					]
-				})
-			})
-		}, fighter.id))
 	});
 }
 function OpenSlotCard({ slot }) {
@@ -965,193 +1196,115 @@ function SquadCard({ squad, index }) {
 		]
 	});
 }
-var CarouselContext = import_react.createContext(null);
-function useCarousel() {
-	const context = import_react.useContext(CarouselContext);
-	if (!context) throw new Error("useCarousel must be used within a <Carousel />");
-	return context;
-}
-var Carousel = import_react.forwardRef(({ orientation = "horizontal", opts, setApi, plugins, className, children, ...props }, ref) => {
-	const [carouselRef, api] = useEmblaCarousel({
-		...opts,
-		axis: orientation === "horizontal" ? "x" : "y"
-	}, plugins);
-	const [canScrollPrev, setCanScrollPrev] = import_react.useState(false);
-	const [canScrollNext, setCanScrollNext] = import_react.useState(false);
-	const onSelect = import_react.useCallback((api) => {
-		if (!api) return;
-		setCanScrollPrev(api.canScrollPrev());
-		setCanScrollNext(api.canScrollNext());
-	}, []);
-	const scrollPrev = import_react.useCallback(() => {
-		api?.scrollPrev();
-	}, [api]);
-	const scrollNext = import_react.useCallback(() => {
-		api?.scrollNext();
-	}, [api]);
-	const handleKeyDown = import_react.useCallback((event) => {
-		if (event.key === "ArrowLeft") {
-			event.preventDefault();
-			scrollPrev();
-		} else if (event.key === "ArrowRight") {
-			event.preventDefault();
-			scrollNext();
-		}
-	}, [scrollPrev, scrollNext]);
-	import_react.useEffect(() => {
-		if (!api || !setApi) return;
-		setApi(api);
-	}, [api, setApi]);
-	import_react.useEffect(() => {
-		if (!api) return;
-		onSelect(api);
-		api.on("reInit", onSelect);
-		api.on("select", onSelect);
-		return () => {
-			api?.off("select", onSelect);
-		};
-	}, [api, onSelect]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CarouselContext.Provider, {
-		value: {
-			carouselRef,
-			api,
-			opts,
-			orientation: orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-			scrollPrev,
-			scrollNext,
-			canScrollPrev,
-			canScrollNext
-		},
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			ref,
-			onKeyDownCapture: handleKeyDown,
-			className: cn("relative", className),
-			role: "region",
-			"aria-roledescription": "carousel",
-			...props,
-			children
-		})
-	});
-});
-Carousel.displayName = "Carousel";
-var CarouselContent = import_react.forwardRef(({ className, ...props }, ref) => {
-	const { carouselRef, orientation } = useCarousel();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref: carouselRef,
-		className: "overflow-hidden",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			ref,
-			className: cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className),
-			...props
-		})
-	});
-});
-CarouselContent.displayName = "CarouselContent";
-var CarouselItem = import_react.forwardRef(({ className, ...props }, ref) => {
-	const { orientation } = useCarousel();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		role: "group",
-		"aria-roledescription": "slide",
-		className: cn("min-w-0 shrink-0 grow-0 basis-full", orientation === "horizontal" ? "pl-4" : "pt-4", className),
-		...props
-	});
-});
-CarouselItem.displayName = "CarouselItem";
-var CarouselPrevious = import_react.forwardRef(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-	const { orientation, scrollPrev, canScrollPrev } = useCarousel();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-		ref,
-		variant,
-		size,
-		className: cn("absolute  h-8 w-8 rounded-full", orientation === "horizontal" ? "-left-12 top-1/2 -translate-y-1/2" : "-top-12 left-1/2 -translate-x-1/2 rotate-90", className),
-		disabled: !canScrollPrev,
-		onClick: scrollPrev,
-		...props,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "h-4 w-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: "sr-only",
-			children: "Previous slide"
-		})]
-	});
-});
-CarouselPrevious.displayName = "CarouselPrevious";
-var CarouselNext = import_react.forwardRef(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-	const { orientation, scrollNext, canScrollNext } = useCarousel();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-		ref,
-		variant,
-		size,
-		className: cn("absolute h-8 w-8 rounded-full", orientation === "horizontal" ? "-right-12 top-1/2 -translate-y-1/2" : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90", className),
-		disabled: !canScrollNext,
-		onClick: scrollNext,
-		...props,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "h-4 w-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: "sr-only",
-			children: "Next slide"
-		})]
-	});
-});
-CarouselNext.displayName = "CarouselNext";
-var OPEN_SLOT_TILES = 3;
-var SLIDE = "basis-full pl-4 sm:basis-1/2 lg:basis-1/3";
-function VaultCarousel({ squads = [], openSquads = 0 }) {
-	const openSlides = Array.from({ length: Math.min(openSquads, OPEN_SLOT_TILES) });
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Carousel, {
-		opts: { align: "start" },
-		className: "relative mt-10",
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"aria-hidden": true,
-				className: "pointer-events-none absolute inset-x-0 -top-4 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CarouselContent, { children: [squads.map((squad, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CarouselItem, {
-				className: SLIDE,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
-					delay: index * 70,
-					distance: 18,
-					duration: 550,
+var CARD = "w-[86vw] max-w-[420px] shrink-0 sm:w-[46vw] sm:max-w-[430px] lg:w-[31.5%] lg:max-w-none";
+var BASE_DURATION = 52;
+function VaultCarousel({ squads = [], openSquads = 0, totalSlots = 16 }) {
+	const [isPaused, setIsPaused] = (0, import_react.useState)(false);
+	const items = (0, import_react.useMemo)(() => {
+		const availableSlots = Math.max(Math.min(openSquads, totalSlots - squads.length), 0);
+		const verified = squads.map((squad, index) => ({
+			type: "squad",
+			key: `squad-${squad.id}`,
+			squad,
+			slot: index + 1
+		}));
+		const open = Array.from({ length: availableSlots }, (_, index) => ({
+			type: "open",
+			key: `open-${squads.length + index + 1}`,
+			slot: squads.length + index + 1
+		}));
+		return [...verified, ...open];
+	}, [
+		openSquads,
+		squads,
+		totalSlots
+	]);
+	const duration = Math.max(BASE_DURATION, items.length * 3.25);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
+		delay: 120,
+		distance: 18,
+		duration: 550,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "group/roll relative mt-10 overflow-hidden",
+			onMouseEnter: () => setIsPaused(true),
+			onMouseLeave: () => setIsPaused(false),
+			onFocusCapture: () => setIsPaused(true),
+			onBlurCapture: (event) => {
+				if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
+			},
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					"aria-hidden": true,
+					className: "pointer-events-none absolute inset-y-0 left-0 z-20 w-10 bg-gradient-to-r from-background/95 to-transparent sm:w-16"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					"aria-hidden": true,
+					className: "pointer-events-none absolute inset-y-0 right-0 z-20 w-10 bg-gradient-to-l from-background/95 to-transparent sm:w-16"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					"aria-hidden": true,
+					className: "pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "overflow-hidden py-1",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "h-full",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SquadCard, {
-							squad,
-							index
-						})
+						className: "flex w-max gap-4 will-change-transform motion-reduce:transform-none",
+						style: {
+							animation: items.length > 1 ? `vault-roll ${duration}s linear infinite` : "none",
+							animationPlayState: isPaused ? "paused" : "running"
+						},
+						children: [0, 1].map((copyIndex) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"aria-hidden": copyIndex === 1,
+							className: "flex shrink-0 gap-4",
+							children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: CARD,
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "h-full",
+									children: item.type === "squad" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SquadCard, {
+										squad: item.squad,
+										index: item.slot - 1
+									}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(OpenSlotCard, { slot: item.slot })
+								})
+							}, `${copyIndex}-${item.key}`))
+						}, `track-${copyIndex}`))
 					})
-				})
-			}, squad.id)), openSlides.map((_, slot) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CarouselItem, {
-				className: SLIDE,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
-					delay: (squads.length + slot) * 70,
-					distance: 18,
-					duration: 550,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "h-full",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(OpenSlotCard, { slot: squads.length + slot + 1 })
-					})
-				})
-			}, `open-${slot}`))] }),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reveal, {
-				delay: 150,
-				distance: 12,
-				duration: 500,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mt-7 flex flex-col gap-4 border-t border-border/35 pt-5 sm:flex-row sm:items-center sm:justify-between",
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "mt-6 flex flex-col gap-3 border-t border-border/35 pt-5 sm:flex-row sm:items-center sm:justify-between",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-2",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CarouselPrevious, { className: "\r\n                static\r\n                left-auto\r\n                top-auto\r\n                h-10\r\n                w-10\r\n                translate-y-0\r\n                rounded-none\r\n                border-border/60\r\n                bg-card/35\r\n                backdrop-blur-md\r\n                transition-all\r\n                duration-300\r\n                hover:-translate-y-0.5\r\n                hover:border-primary/50\r\n                hover:bg-primary/[0.06]\r\n                hover:text-primary\r\n                hover:shadow-[0_0_18px_hsl(var(--primary)/0.12)]\r\n                active:translate-y-0\r\n                active:scale-95\r\n              " }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CarouselNext, { className: "\r\n                static\r\n                right-auto\r\n                top-auto\r\n                h-10\r\n                w-10\r\n                translate-y-0\r\n                rounded-none\r\n                border-border/60\r\n                bg-card/35\r\n                backdrop-blur-md\r\n                transition-all\r\n                duration-300\r\n                hover:-translate-y-0.5\r\n                hover:border-primary/50\r\n                hover:bg-primary/[0.06]\r\n                hover:text-primary\r\n                hover:shadow-[0_0_18px_hsl(var(--primary)/0.12)]\r\n                active:translate-y-0\r\n                active:scale-95\r\n              " })]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "flex items-center gap-3",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							"aria-hidden": true,
-							className: "h-1.5 w-1.5 rotate-45 bg-primary/60"
+							className: `h-1.5 w-1.5 rotate-45 transition-all duration-300 ${isPaused ? "bg-muted-foreground/45" : "bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.5)]"}`
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[10px]",
-							children: "Drag or swipe to scroll the board"
+							className: "font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground sm:text-[10px] sm:tracking-[0.22em]",
+							children: isPaused ? "Roster roll paused" : `Live roster roll · ${items.length} tournament slots`
 						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground/70 sm:text-[10px]",
+						children: "Hover or focus to pause"
 					})]
-				})
-			})
-		]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("style", { children: `
+          @keyframes vault-roll {
+            from {
+              transform: translate3d(0, 0, 0);
+            }
+
+            to {
+              transform: translate3d(calc(-50% - 0.5rem), 0, 0);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .group\\/roll > div > div[style] {
+              animation: none !important;
+              transform: none !important;
+            }
+          }
+        ` })
+			]
+		})
 	});
 }
 var SQUAD_IMAGE = "/images/site/squad.png";
@@ -1288,47 +1441,10 @@ function TeamsVault({ entries = [] }) {
 								"aria-hidden": true,
 								className: "mt-5 h-px w-full bg-gradient-to-r from-primary/30 via-border/40 to-transparent"
 							}),
-							squads.length ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VaultCarousel, {
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VaultCarousel, {
 								squads,
-								openSquads
-							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "card-interactive card-interactive-glow group relative mt-6 flex flex-col items-start gap-5 overflow-hidden border border-border/60 bg-card/45 p-5 backdrop-blur-md sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:p-8",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"aria-hidden": true,
-										className: "pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											className: "font-mono text-[9px] uppercase tracking-[0.22em] text-primary/70",
-											children: "Squad Board"
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											className: "card-interactive-shift mt-2 font-display text-2xl font-bold uppercase leading-tight tracking-[0.035em] text-foreground",
-											children: "The vault is still sealed"
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											className: "mt-2 max-w-xl text-sm leading-6 text-muted-foreground sm:text-[15px]",
-											children: [
-												"All ",
-												SQUAD_SLOTS,
-												" squad slots are open. Register your team and your name goes on this board once staff approve your roster."
-											]
-										})
-									] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-										asChild: true,
-										className: "motion-press h-12 w-full shrink-0 rounded-none px-6 font-mono text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_24px_hsl(var(--primary)/0.18)] active:translate-y-0 active:scale-[0.98] sm:w-auto",
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-											to: "/join",
-											children: "Register now"
-										})
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										"aria-hidden": true,
-										className: "pointer-events-none absolute bottom-0 right-0 h-8 w-8 border-b border-r border-primary/20 transition-all duration-300 group-hover:h-11 group-hover:w-11 group-hover:border-primary/45"
-									})
-								]
+								openSquads,
+								totalSlots: SQUAD_SLOTS
 							})
 						]
 					}),
@@ -1362,7 +1478,11 @@ function TeamsVault({ entries = [] }) {
 								"aria-hidden": true,
 								className: "mt-5 h-px w-full bg-gradient-to-r from-primary/30 via-border/40 to-transparent"
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FighterList, { fighters })
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FighterList, {
+								fighters,
+								openFighters,
+								totalSlots: FIGHTER_SLOTS
+							})
 						]
 					})
 				]

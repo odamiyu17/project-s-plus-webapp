@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
+
 import Reveal from "@/components/motion/Reveal";
 import OpenSlotCard from "@/components/site/OpenSlotCard";
 import SquadCard from "@/components/site/SquadCard";
@@ -10,30 +12,98 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-// How many "still open" tiles trail
-// the verified squads on the board.
-const OPEN_SLOT_TILES = 3;
-
 const SLIDE =
   "basis-full pl-4 sm:basis-1/2 lg:basis-1/3";
+
+const AUTOPLAY_DELAY = 3600;
 
 export default function VaultCarousel({
   squads = [],
   openSquads = 0,
+  totalSlots = 16,
 }) {
-  const openSlides = Array.from({
-    length: Math.min(
-      openSquads,
-      OPEN_SLOT_TILES,
-    ),
-  });
+  const [api, setApi] = useState(null);
+  const [isPaused, setIsPaused] =
+    useState(false);
+
+  const openSlides = useMemo(() => {
+    const availableSlots = Math.max(
+      Math.min(
+        openSquads,
+        totalSlots - squads.length,
+      ),
+      0,
+    );
+
+    return Array.from(
+      { length: availableSlots },
+      (_, index) =>
+        squads.length + index + 1,
+    );
+  }, [
+    openSquads,
+    squads.length,
+    totalSlots,
+  ]);
+
+  const totalCards =
+    squads.length + openSlides.length;
+
+  useEffect(() => {
+    if (!api || isPaused) {
+      return undefined;
+    }
+
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const reduceMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+    if (reduceMotion || totalCards <= 1) {
+      return undefined;
+    }
+
+    const timer = window.setInterval(() => {
+      api.scrollNext();
+    }, AUTOPLAY_DELAY);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [api, isPaused, totalCards]);
+
+  function pauseAutoplay() {
+    setIsPaused(true);
+  }
+
+  function resumeAutoplay() {
+    setIsPaused(false);
+  }
 
   return (
     <Carousel
+      setApi={setApi}
       opts={{
         align: "start",
+        loop: true,
       }}
       className="relative mt-10"
+      onMouseEnter={pauseAutoplay}
+      onMouseLeave={resumeAutoplay}
+      onFocusCapture={pauseAutoplay}
+      onBlurCapture={(event) => {
+        if (
+          !event.currentTarget.contains(
+            event.relatedTarget,
+          )
+        ) {
+          resumeAutoplay();
+        }
+      }}
     >
       {/* Subtle board line */}
       <div
@@ -49,7 +119,10 @@ export default function VaultCarousel({
               className={SLIDE}
             >
               <Reveal
-                delay={index * 70}
+                delay={Math.min(
+                  index * 70,
+                  280,
+                )}
                 distance={18}
                 duration={550}
               >
@@ -65,27 +138,24 @@ export default function VaultCarousel({
         )}
 
         {openSlides.map(
-          (_, slot) => (
+          (slotNumber, index) => (
             <CarouselItem
-              key={`open-${slot}`}
+              key={`open-${slotNumber}`}
               className={SLIDE}
             >
               <Reveal
-                delay={
+                delay={Math.min(
                   (squads.length +
-                    slot) *
-                  70
-                }
+                    index) *
+                    45,
+                  360,
+                )}
                 distance={18}
                 duration={550}
               >
                 <div className="h-full">
                   <OpenSlotCard
-                    slot={
-                      squads.length +
-                      slot +
-                      1
-                    }
+                    slot={slotNumber}
                   />
                 </div>
               </Reveal>
@@ -150,14 +220,20 @@ export default function VaultCarousel({
             />
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <span
               aria-hidden
-              className="h-1.5 w-1.5 rotate-45 bg-primary/60"
+              className={`h-1.5 w-1.5 rotate-45 ${
+                isPaused
+                  ? "bg-muted-foreground/50"
+                  : "bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.45)]"
+              }`}
             />
 
-            <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[10px]">
-              Drag or swipe to scroll the board
+            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground sm:text-[10px] sm:tracking-[0.22em]">
+              {isPaused
+                ? "Autoplay paused · drag or swipe"
+                : `Autoplay · ${totalCards} tournament slots`}
             </span>
           </div>
         </div>

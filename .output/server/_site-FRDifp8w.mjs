@@ -5,8 +5,8 @@ import { require_jsx_runtime } from "./_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./_ssr/auth-middleware-CmY4KpCX.mjs";
 import { Button } from "./_ssr/server-fns-D7ymjI7_.mjs";
 import { ClipboardList, LogIn, LogOut, Mail, Menu, Shield, X } from "./_libs/lucide-react.mjs";
-import { useAuth } from "./_ssr/router-x0UN7VX6.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/_site-DVjpOkr0.js
+import { useAuth } from "./_ssr/router-CC8f71q3.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/_site-FRDifp8w.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var NAV$1 = [

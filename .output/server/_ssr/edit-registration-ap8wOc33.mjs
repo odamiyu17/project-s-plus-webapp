@@ -6,10 +6,10 @@ import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { Button, updateMyPayment, updateMyRegistration } from "./server-fns-D7ymjI7_.mjs";
 import { toast } from "../_libs/sonner.mjs";
 import { ArrowLeft, CircleCheck, CreditCard, ImagePlus, ImageUp, Save, Upload, UserRound } from "../_libs/lucide-react.mjs";
-import { Route$4 } from "./router-x0UN7VX6.mjs";
+import { Route$4 } from "./router-CC8f71q3.mjs";
 import { useServerFn } from "./useServerFn-BffWjH4-.mjs";
 import { Input, Label } from "./label-DY020iIz.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/edit-registration-aMB01cIO.js
+//#region node_modules/.nitro/vite/services/ssr/assets/edit-registration-ap8wOc33.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var MLBB_ROLES = [

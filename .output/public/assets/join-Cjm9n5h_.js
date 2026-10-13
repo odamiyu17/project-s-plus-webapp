@@ -1,0 +1,1 @@
+import{f as e}from"./index-KqnCCGq_.js";var t=e;export{t as errorComponent};

@@ -3,10 +3,10 @@ import { require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { require_jsx_runtime } from "../_libs/@radix-ui/react-label+[...].mjs";
 import { supabase } from "./auth-middleware-CmY4KpCX.mjs";
 import { ArrowLeft, Mail } from "../_libs/lucide-react.mjs";
-import { AuthLayout, safeReturnTo } from "./router-x0UN7VX6.mjs";
+import { AuthLayout, safeReturnTo } from "./router-CC8f71q3.mjs";
 import { Input, Label } from "./label-DY020iIz.mjs";
 import { AuthLink, SubmitButton } from "./parts-Cv-yST__.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/forgot-password-dIUm1fd8.js
+//#region node_modules/.nitro/vite/services/ssr/assets/forgot-password-511tucTg.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function ForgotPasswordPage() {

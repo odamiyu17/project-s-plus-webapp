@@ -1,9 +1,6 @@
-import { Link } from "@tanstack/react-router";
-
 import FighterList from "@/components/site/FighterList";
 import SectionHeading from "@/components/site/SectionHeading";
 import VaultCarousel from "@/components/site/VaultCarousel";
-import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 
 const SQUAD_IMAGE = "/images/site/squad.png";
@@ -169,51 +166,11 @@ export default function TeamsVault({
             className="mt-5 h-px w-full bg-gradient-to-r from-primary/30 via-border/40 to-transparent"
           />
 
-          {squads.length ? (
-            <VaultCarousel
-              squads={squads}
-              openSquads={openSquads}
-            />
-          ) : (
-            <div className="card-interactive card-interactive-glow group relative mt-6 flex flex-col items-start gap-5 overflow-hidden border border-border/60 bg-card/45 p-5 backdrop-blur-md sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent"
-              />
-
-              <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary/70">
-                  Squad Board
-                </p>
-
-                <p className="card-interactive-shift mt-2 font-display text-2xl font-bold uppercase leading-tight tracking-[0.035em] text-foreground">
-                  The vault is still sealed
-                </p>
-
-                <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground sm:text-[15px]">
-                  All {SQUAD_SLOTS} squad
-                  slots are open. Register
-                  your team and your name
-                  goes on this board once
-                  staff approve your roster.
-                </p>
-              </div>
-
-              <Button
-                asChild
-                className="motion-press h-12 w-full shrink-0 rounded-none px-6 font-mono text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_24px_hsl(var(--primary)/0.18)] active:translate-y-0 active:scale-[0.98] sm:w-auto"
-              >
-                <Link to="/join">
-                  Register now
-                </Link>
-              </Button>
-
-              <span
-                aria-hidden
-                className="pointer-events-none absolute bottom-0 right-0 h-8 w-8 border-b border-r border-primary/20 transition-all duration-300 group-hover:h-11 group-hover:w-11 group-hover:border-primary/45"
-              />
-            </div>
-          )}
+          <VaultCarousel
+            squads={squads}
+            openSquads={openSquads}
+            totalSlots={SQUAD_SLOTS}
+          />
         </div>
 
         {/* =====================================================
@@ -248,6 +205,8 @@ export default function TeamsVault({
 
           <FighterList
             fighters={fighters}
+            openFighters={openFighters}
+            totalSlots={FIGHTER_SLOTS}
           />
         </div>
       </div>
